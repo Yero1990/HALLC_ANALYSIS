@@ -1,0 +1,20 @@
+#Kinematic Change for H(e,e'K+): Q2=2.115, W=2.95
+#SHMS: P = +4.983 GeV/c, theta_shms = 13.743 deg
+#HMS:  P = -5.292 GeV/c, theta_hms  = 11.159 deg
+4892
+4893
+4894
+4895
+4896
+4897
+#Modifications to KAON-LT Production Trigger -> https://logbooks.jlab.org/entry/3602842
+4898
+4899
+4900
+4901
+4904
+4905
+4906
+4907
+4908
+4909

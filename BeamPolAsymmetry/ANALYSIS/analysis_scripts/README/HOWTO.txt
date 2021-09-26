@@ -1,0 +1,45 @@
+========================================
+HOWTO: Run the Generic Hall C Analyzer 
+========================================
+
+
+1) Open 'set_basic_cuts.inp' file to set the ROOTfile and REPORTfile
+   directory path and name pattern.
+
+   In this file, you may also set BCM type, daq triggre to analyze,
+   tracking efficiency cuts definitions, and basic data analysis cuts
+
+
+2) Open 'set_basic_histos.inp' file to set histograms of interest
+   number of bins and range.
+
+
+3) Open 'main.cpp' file to ensure that the correct 'run_list.txt'
+   file is being read, as the analyzer will loop over all runs
+   in the file. Also, make sure to understand the initialization
+   parameters taken by the baseAnalyzer.
+
+
+4) Run: root -l main.cpp
+
+
+NOTE: Currently, the code is ONLY set up to analyze coincidence mode daq
+and only experimental data. The code needs to be updated to analyze SIMC
+as well.
+
+5) Assuming "coin" and "data" have been used as initialization parameters,
+   the code will loop over each run, which will be corrected for
+   inefficiencies and normalized by the total charge. The code will output
+   the following:
+
+   --> basic_data_histos_RunNumber.root (charge normalized, inefficiency corrected histos)
+   --> basic_data_histos_combined.root (combined histograms which have been added bin-by-bin for each run)
+   --> basic_data__report.txt (a report file with relevant information for each run, such as charge, current, ineffieiencies, rates, etc.)
+
+
+IMPORTANT:  NOTE THAT THIS CODE ASSUMES THAT THE USER HAS ALREADY COMPILED A LIST
+	    OF RUNS CORRESPONDING TO A SPECIFIC KINEMATICS (NO SPECTROMETER CHANGE)
+	    AND ALL RUNS WILL BE COMBINED TO GAIN BETTER STATISTICS.
+
+	    IF THE USER ONLY WANTS TO ANALYZE A SINGLE RUN, SIMPLY INPUT A SINGLE RUN
+	    NUMBER IN THE RUN LIST. 

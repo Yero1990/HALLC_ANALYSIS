@@ -1,0 +1,25 @@
+#ifndef BIRTHDAY_H
+#define BIRTHDAY_H
+
+#include "Friend.h"
+class Birthday
+{
+
+ public:
+  Birthday(int m, int d, int y);  //constructor
+  void printDate();
+  void acceptFriend();
+  friend class Friend;
+
+
+ private:
+  int month;
+  int day;
+  int year;
+
+
+  
+};
+
+
+#endif 

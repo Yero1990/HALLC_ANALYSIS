@@ -1,0 +1,22 @@
+#SHMS Lumi Scans, Ps2=0 (SHMS EL-REAL), rest=-1 (Apr. 02, 2018) -- buffer level 1
+#ROOTfiles: /w/hallc-scifs17exp/E12-10-003/ROOTfiles/SHMS_tgtboil_April02_2018/shms_replay_tgt_boiling_%d_-1.root
+#Reportfiles: /w/hallc-scifs17exp/E12-10-003/REPORT_OUTPUT/SHMS/PRODUCTION/replay_shms_tgt_boiling_%d_-1.report               
+3204 
+3205 
+3217 
+3218 
+3219 
+3220 
+3221                                       
+3206 
+3207 
+3210 
+3211 
+3212 
+3213 
+3214 
+3215                                   
+3223 
+3224 
+3225                                       
+3226

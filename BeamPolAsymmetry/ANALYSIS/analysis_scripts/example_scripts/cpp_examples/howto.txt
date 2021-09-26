@@ -1,0 +1,5 @@
+# Compiling C++
+
+One needs to link all .cpp files main utilizes before creating executable
+>> g++ main.cpp Birthday.cpp People.cpp -o main
+>> ./main

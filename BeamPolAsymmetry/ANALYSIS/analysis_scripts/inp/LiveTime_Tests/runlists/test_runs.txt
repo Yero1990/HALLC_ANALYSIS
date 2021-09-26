@@ -1,0 +1,8 @@
+#Kaon LT Production Data (Oct. ~ 1- 22, 2018), HMS (electron-arm) SHMS (hadron arm), ptrig5--> coin. trigger
+#ROOTfiles: /lustre19/expphy/cache/hallc/kaonlt/Pass1_100k/coin_replay_Full_%d_100000.root 
+#Reportfiles: /lustre19/expphy/volatile/hallc/c-kaonlt/sjdkay/REPORT_OUTPUT/Pass1_Testing/COIN/PRODUCTION/replay_coin_production_%d_100000.report
+#==KIN-1==
+4865
+4866
+4867
+4868

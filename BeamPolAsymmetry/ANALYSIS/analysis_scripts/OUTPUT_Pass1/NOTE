@@ -1,0 +1,3 @@
+From KIN-1 to KIN-6, the counts were normalized by total charge. 
+After Kin-6, all runs were NOT normalized by charge. Asymmetry cancels the charge
+anyways, so it is better to not include charge normalization for now.

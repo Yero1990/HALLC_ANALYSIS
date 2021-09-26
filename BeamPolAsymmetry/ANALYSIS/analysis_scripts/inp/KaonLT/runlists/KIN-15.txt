@@ -1,0 +1,21 @@
+#Kinematics changed for H(e,e'K+): Q2=5.5, ?W=3.02?
+#SHMS: P = +6.842 GeV/c, theta_shms = 12.565 deg
+#HMS:  P = -3.266 GeV/c, theta_hms  = 23.00 deg
+5237
+5238
+5239
+5240
+5241
+5242
+5243
+5244
+5245
+5246
+5247
+5248
+#part 2(spec. moved, so treat separately, even though statiioned at same kinematics as before)
+#5262 ??
+5271
+5272
+5273
+5274

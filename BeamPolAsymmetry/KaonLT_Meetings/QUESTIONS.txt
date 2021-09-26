@@ -1,0 +1,21 @@
+This .txt file contains a list of questions I have about beam polarization,
+polarimetry detectors, and physics/analysis of beam-spin asymmetry.
+
+--Polarimetry--
+The Moller / Compton polarimeters in Hall C are clearly
+invasive to the beam, since they require the beam to be scattered
+by a specific target material.
+
+1) How often in a run-period must Moller measurements be taken?
+
+2) When the measurements determine the averge beam polarization,
+   are these average values used for the entire run period? What
+   if the acelerator changes beam energy? What factors, apart from
+   beam energy changes, can affet the beam polarization such that the
+   polarization measurements need to be done again?
+
+3) What is the Half-Wave Plate used for? flipping the quartet structure of
+polarized beam
+
+4) What is the Wien filter used for? (selecting electrons with
+   a specific velocity?) The Wein filter is set once per run period

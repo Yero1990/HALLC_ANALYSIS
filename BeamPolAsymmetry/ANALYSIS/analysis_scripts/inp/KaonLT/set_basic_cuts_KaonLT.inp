@@ -1,0 +1,123 @@
+#--------------------------------------------
+#------Basic Input Cuts Parameter File-------
+#--------------------------------------------
+
+#------TURN BASIC CUTS FLAG ON/OFF------
+# TRUE (ON) = 1, FALSE (OFF) = 0
+
+
+#-------TRACKING EFFICIENCY CUTS (MAY BE STRICTER THAN DATA-ANALYSIS CUTS)-----
+
+# HMS tracking efficiency cuts (modify cuts depending on whether e- or hadron is detected)
+
+# DO NOT TOUCH ! ! !  ::  did = should && require at least (min. number of tracks --> c_hdc_ntrk_min) tracks
+hdc_ntrk_cut_flag = 1
+c_hdc_ntrk_min = 1
+
+# should (cuts MUST NOT be track-biased)
+hScinGood_cut_flag = 1
+
+hcer_cut_flag = 1
+c_hnpeSum_min = 0.5
+c_hnpeSum_max = 90.
+
+hetotnorm_cut_flag = 1
+c_hetotnorm_min = 0.7
+c_hetotnorm_max = 1.6
+
+hBeta_notrk_cut_flag = 1
+c_hBetaNtrk_min = 0.5
+c_hBetaNtrk_max = 1.5
+
+
+# SHMS tracking efficiency cuts (modify cuts depending on whether e- or hadron is detected)
+
+# DO NOT TOUCH ! ! !  ::  did = should && require at least (min. number of tracks --> c_pdc_ntrk_min) tracks
+pdc_ntrk_cut_flag = 1
+c_pdc_ntrk_min = 1
+
+# should (cuts MUST NOT be track-biased)
+pScinGood_cut_flag = 1
+
+pngcer_cut_flag = 0
+c_pngcer_npeSum_min = 0.5
+c_pngcer_npeSum_max = 100.
+
+phgcer_cut_flag = 1
+c_phgcer_npeSum_min = 0.
+c_phgcer_npeSum_max = 1.5
+
+petotnorm_cut_flag = 1
+c_petotnorm_min = 0.
+c_petotnorm_max = 0.6
+
+pBeta_notrk_cut_flag = 1
+c_pBetaNtrk_min = 0.5
+c_pBetaNtrk_max = 1.5
+
+
+#---------DATA/SIMC ANALYSIS CUTS (SPECIFIC FORMAT FOR HELICITY ANALYSIS)----------
+
+# For a the description of each of these cuts: See the 'helicityAnalyzer.h' header file 
+# Three analysis are done in the same code (Kaon, Pion, Proton) beam asymmetry (use the cuts for the relevant analyses)
+
+#------Acceptance Cuts------
+# Electron (HMS) Arm Momentum Acceptance, Delta [%] 
+edelta_min = -8.
+edelta_max = 8.
+
+# Hadron (SHMS) Arm Momentum Acceptance, Delta [%] 
+hdelta_min = -10.
+hdelta_max = 22.
+
+#------PID Cuts------
+#-electron PID-
+elec_hcer_npe_thrs = 0.5
+elec_hcal_thrs = 0.7
+
+#-Kaon PID-
+K_paero_npe_thrs = 1.5
+K_phgcer_npe_thrs = 1.5
+K_beta_min = 0.5
+K_beta_max = 1.5
+eK_ctime_thrs = 5.
+
+#-Pion PID-
+Pi_phgcer_npe_thrs = 1.5
+Pi_beta_min = 0.5
+Pi_beta_max = 1.5
+ePi_ctime_thrs = 4.
+
+#-Proton PID-
+P_paero_npe_thrs = 1.5
+P_phgcer_npe_thrs = 1.5
+P_beta_min = 0.5
+P_beta_max = 1.5
+eP_ctime_thrs = 4.
+
+#-----Kinematics Cuts-----
+
+# Missing Mass, MM [GeV]
+# -Kaons- (seleting a lmabda 1.115)
+MM_K_min = 1.08
+MM_K_max = 1.15
+
+# -Pions- (selecting a neutron)
+MM_Pi_min = 0.9
+MM_Pi_max = 1.05
+
+# -Protons- (selecting elastic??)
+MM_P_min = -0.1
+MM_P_max = 0.1
+
+#----Coincidence Time Parameters----
+
+#time offset [ns] to center coin time about zero
+K_ctime_offset = 43.8
+Pi_ctime_offset = 43.8
+P_ctime_offset = 42.6
+
+#multiple of coincidence randoms selection (must be >=2)
+eK_mult = 2.
+ePi_mult = 2.
+eP_mult = 2.

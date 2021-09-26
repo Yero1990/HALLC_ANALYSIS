@@ -1,0 +1,26 @@
+MY GOAL IN THE KAON/PION LT DATA ANALYSIS:
+** EXTRACT BEAM-SPIN ASYMMETRY USING THE EXACT SAME RUNS / DATA-ANALYSIS CUTS BEING USED BY THE KAON/PION LT GROUPS.
+
+
+#-----Questions to ask at Kaon LT Meeting-----
+
+1) What is the status of the Kaon LT (Fall 2018) full replay ROOTfiles?
+   Can you provide the runlist being analyzed? 
+   What data analysis (and BCM) cuts are being applied to the Kaon LT?   Rough cuts for now. Will need to fine tune cuts (I can also contribute to determining which cuts are needed.)
+
+2) What is the status of the Pion LT (Summer 2019 run period) full replay ROOTfiles?
+   Can you provide the runlist being analyzed?
+   Is the helicity information also included in the Pion LT data (including the helicity frequency of 30 Hz or 120 Hz)?
+   What data analysis (and BCM) cuts are being applied to the Pion LT?
+
+
+** Steve Wood was interested in the learning more about what Kaon group was doing the analysis in python? Is there any
+   slides that explain what is being done?  Or some example codes for S. Wood?
+   
+
+#-----MY TO DO LIST----
+
+* FINISH WRITING C++ class to analyze beam asymmetry of Kaon/Pion LT
+* Extract the trigger/scaler rates for +/- helicity. I might have to write an hcana class to write the helicity
+  scaler information to a ROOTfile.
+* Learn about the spinDoctor application which could be used to estimate the beam polarization at Hall C.

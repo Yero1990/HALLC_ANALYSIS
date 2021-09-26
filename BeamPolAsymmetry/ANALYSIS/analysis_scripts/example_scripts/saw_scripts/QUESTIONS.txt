@@ -1,0 +1,41 @@
+Questions to Ask Steve Wood about scripts/runlist of Kaon LT
+
+-----Questions about initial compiled run list for kaon LT------
+
+I have run lists from S. Wood, indicating when the IHWP was in or out,
+which I can use to flip the sign on the helicity quartet signal.
+The run list Steve compiled was from: 4865 - 8138
+
+From the Kaon LT page: https://redmine.jlab.org/issues/423#note-3,
+R. Trotta has compiled a list of runs: 4865 - 5232, which are good for analysis
+
+What about runs from: 5300 ~ 8000 ??? Why doesn't R. Trotta
+have these runs listed?  Peter Bosted mention Kaon LT
+had two run periods: Fall 2018 (4800 - 5200 or so, same beam energy from Halls C,B, used formula theta_prec) an Spring 2019 (7800-8100)
+
+The second Kaon LT run period, Hall Beam beam energy was mostly 6-8 GeV,
+Did Hall C had enough polarization at these energies?
+
+Ask Steve about the formula for calculating the precession. What is gamma?  DONE
+
+-------Questions about ROOTfiles------
+
+What are the current state of the existing ROOTfiles?
+
+     -Do they have the beam helicity leaves (P.Bosted suggested I used his Kaon LT ROOTfiles,
+      since the Kaon LT group had not done studies on polarization, and he had done for both SIDIS/Kaon-LT)
+
+     -Do they have already the ref. time subtraction, det. time windows and det. calibrations applied?
+
+     -Were these runs replayed with the corrected spec. momentum / angle obtained from camera?
+      I would also need the standard.kinematics file containing the spec. moemntum and angle so I can
+      actually use in SIMC. Also, have any spectrometer/angle offsets been applied? Xptar, Yptar, fOop, etc.
+
+NOTE: MAKE URE TO USE THE EXACT SAME CUTS AND, USE THEIR PYTHON SCRIPTS TO APPLY CUTS (ASK THEM TO DO IT NEXT PASS, IF THEY DONT HAVE IT!)
+
+***| Basically, are the Kaon LT runs ROOTfiles in state where we don't have to do a replay again? |***
+
+
+theta_prec = gamma (g/2 - 1) theta_bend
+gamma = SQRt{1 - beta**2),  gamma = e / m_e  
+g/2: anomalous electromagnetic ratio

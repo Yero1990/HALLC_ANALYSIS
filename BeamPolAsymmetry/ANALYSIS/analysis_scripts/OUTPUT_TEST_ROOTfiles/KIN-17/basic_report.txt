@@ -1,0 +1,15 @@
+#-------------------------------------
+#        Data Analysis Summary        
+#-------------------------------------
+#                                     
+# BCM4A  | Beam Current Threshold: > 10.00 uA 
+#                                     
+# DAQ Mode: coin | Trigger: trig5              
+# electron arm: HMS                        
+#                                              
+#---Cuts still need to be defined (testing for now) . . . --- 
+#                       
+# Units: charge [mC] | currnet [uA] | rates [kHz] |  efficiencies [fractional form]                       
+#                       
+#! Run[i,0]/             charge[f,1]/        avg_current[f,2]/            hTrkEff[f,3]/        hTrkEff_err[f,4]/            pTrkEff[f,5]/        pTrkEff_err[f,6]/    tgt_boil_factor[f,7]/      tgt_boil_factor_err[f,8]      hadAbs_factor[f,9]/      hadAbs_factor_err[f,10]/             cpuLT[f,11]/         cpuLT_err[f,12]/               tLT[f,13]/           tLT_err[f,14]/          S1X_rate[f,15]/     shms_Ps1_3of4_rate[f,16]/     hms_Ps3_elreal_rate[f,17]     coin_Ps5_rate[f,18]/         edtm_rate[f,19]/        Ps1_factor[f,20]/        Ps3_factor[f,21]/        Ps5_factor[f,22]/       hTrkEff_pos[f,23]/   hTrkEff_err_pos[f,24]/       hTrkEff_neg[f,25]/   hTrkEff_err_neg[f,26]/       pTrkEff_pos[f,27]/   pTrkEff_err_pos[f,28]/       pTrkEff_neg[f,29]/   pTrkEff_err_neg[f,30]/
+   5313                  3.13782                  30.2215                 0.997678              0.000313039                 0.915366               0.00416963                        1                       -1                        1                       -1                  1.00034                       -1                 0.958614                       -1                  1753.18                        576.17                       16.7409                 0.852038                 0.010007                     8193                      513                        1                 0.997411              0.000480775                 0.997952              0.000427131                 0.921941               0.00573902                 0.907789               0.00642466

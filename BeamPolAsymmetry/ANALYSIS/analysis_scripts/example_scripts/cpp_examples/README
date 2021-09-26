@@ -1,0 +1,21 @@
+This directory contains example C++ code that shows how
+multiple .cpp files and their corresponding .h files can
+be utilized by a main code, main.cpp.
+
+This example is helpful when building large C++ projects that
+require multiple .cpp files that must work together in a single
+main.cpp steering code.
+
+In this example, the concept of composition is introduced,
+which consists of using object of other classes into your
+own class. Also, the concept of friend is introduced, which is
+used by your class to make friend with another function or class,
+basically enabling that other [funct. or class] access to the member
+functions of your class.
+
+To compile using the g++ compiler, do:
+
+1. This links all the .cpp files together and creates an executable main
+>> g++ main.cpp People.cpp Birthday.cpp -o main
+>> ./main
+   

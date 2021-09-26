@@ -1,0 +1,80 @@
+#-----------------------------------------
+#   Set Input/Output FileName Patterns
+-----------------------------------------
+
+#-----------------------------------------------------------------------------------
+#-----Select Input ROOTfilePattern (the %d indicates a placeholder for the run)-----
+#-----------------------------------------------------------------------------------
+
+#iMac
+input_ROOTfilePattern = /Users/nuclear/HallC_PostDoc/BeamPolAsymmetry/ANALYSIS/analysis_scripts/ROOTfiles/coin_replay_Full_%d_100000.root
+
+#MacBookPro
+#input_ROOTfilePattern = /Users/deuteron/HallC/HallC_PostDoc/BeamPolAsymmetry/ANALYSIS/analysis_scripts/ROOTfiles/coin_replay_Full_%d_100000.root
+
+#Kaon LT 100k prod. replays (ifarm)
+#input_ROOTfilePattern = ./Pass1_100k/coin_replay_Full_%d_100000.root 
+
+#Kaon LT Lumi Scans for R. Trotta's tests (ifarm)
+input_ROOTfilePattern = ./kaon_lt_runs/coin_replay_Full_Lumi_%d_-1.root
+
+#Kaon LT Lumi Scans (Oct 2018) for Live Time tests (ifarm)
+#input_ROOTfilePattern = /volatile/hallc/comm2017/mkjones/ROOTfiles/coin_replay_production_%d_1000024.root 
+
+#-----------------------------------------------------------------------------------
+#---Select Input REPORTfilePattern (the %d indicates a placeholder for the run)-----
+#-----------------------------------------------------------------------------------
+
+#iMac
+input_REPORTPattern = /Users/nuclear/HallC_PostDoc/BeamPolAsymmetry/ANALYSIS/analysis_scripts/REPORT_OUTPUT/replay_coin_production_%d_-1.report
+
+#MacBookPro
+#input_REPORTPattern = /Users/deuteron/HallC/HallC_PostDoc/BeamPolAsymmetry/ANALYSIS/analysis_scripts/REPORT_OUTPUT/replay_coin_production_%d_-1.report
+
+#Kaon LT 100k prod. replays (ifarm)
+#input_REPORTPattern = kaonlt_report/replay_coin_production_%d_100000.report
+
+#Kaon LT Lumi Scans for R. Trotta's tests (ifarm)
+#input_REPORTPattern = kaonlt_report/replay_coin_Lumi_%d_-1.report
+
+#Kaon LT Lumi Scans for LiveTime tests (ifarm)
+#input_REPORTPattern = /volatile/hallc/comm2017/mkjones/REPORT_OUTPUT/replay_coin_%d_1000024.report
+
+#-----------------------------------------------------------------------------------
+#---Select Output ROOTfilePattern (the %d indicates a placeholder for the run)------
+#-----------------------------------------------------------------------------------
+
+#iMac ROOTfile output
+output_ROOTfilePattern = /Users/nuclear/HallC_PostDoc/BeamPolAsymmetry/ANALYSIS/analysis_scripts/basic_histos_%d.root
+
+#ifarm Full replay ROOTfile output
+#output_ROOTfilePattern = /u/group/c-kaonlt/USERS/cyero/BeamPolAsymmetry/ANALYSIS/analysis_scripts/OUTPUT_Pass1_Full/KIN-1/basic_histos_%d.root
+
+#ifarm default ROOTfile output (current directory)
+#output_ROOTfilePattern = /u/group/c-kaonlt/USERS/cyero/BeamPolAsymmetry/ANALYSIS/analysis_scripts/basic_histos_%d.root
+
+#------------------------------------------------------------------------------------
+#--Select Output ROOTfilePattern for final combined root file (all ROOTfiles added)--
+#------------------------------------------------------------------------------------
+
+#iMac ROOTfile output
+output_ROOTfilePattern_final = /Users/nuclear/HallC_PostDoc/BeamPolAsymmetry/ANALYSIS/analysis_scripts/basic_histos_final.root
+
+#ifarm Full replay ROOTfile output
+#output_ROOTfilePattern_final = /u/group/c-kaonlt/USERS/cyero/BeamPolAsymmetry/ANALYSIS/analysis_scripts/OUTPUT_Pass1_Full/KIN-1/basic_histos_final.root
+
+#ifarm default ROOTfile output (current directory)
+#output_ROOTfilePattern_final = /u/group/c-kaonlt/USERS/cyero/BeamPolAsymmetry/ANALYSIS/analysis_scripts/basic_histos_final.root 
+
+#---------------------------------------------------------------------------------------------------
+#--Select Output REPORTfilePattern (report file with summary of relevant quantities for all runs)---
+#---------------------------------------------------------------------------------------------------
+
+#iMac REPORT output
+output_REPORTPattern = /Users/nuclear/HallC_PostDoc/BeamPolAsymmetry/ANALYSIS/analysis_scripts/basic_report.txt
+
+#ifarm Full replay REPORT output
+#output_REPORTPattern = /u/group/c-kaonlt/USERS/cyero/BeamPolAsymmetry/ANALYSIS/analysis_scripts/OUTPUT_Pass1_Full/KIN-1/basic_report.txt
+
+#ifarm default REPORT output (current directory)
+#output_REPORTPattern = /u/group/c-kaonlt/USERS/cyero/BeamPolAsymmetry/ANALYSIS/analysis_scripts/basic_report.txt

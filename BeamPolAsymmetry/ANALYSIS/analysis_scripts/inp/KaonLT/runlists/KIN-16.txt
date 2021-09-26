@@ -1,0 +1,19 @@
+#Kinematics changed for H(e,e'K+): Q2=5.5, ?W=3.02?
+#SHMS: P = +6.842 GeV/c, theta_shms = 9.555 deg
+#HMS:  P = -3.266 GeV/c, theta_hms  = 23.00 deg
+5251
+5253
+5254
+5255
+5256
+5257
+5258
+5259
+5260
+5261
+#PART 2: SPECTROMETER MOVED, SO TREAT SEPARATELY IN ANALYSIS (theta_shms = 9.560 deg)
+5266
+5267
+5268
+5269
+5270

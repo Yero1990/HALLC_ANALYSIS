@@ -1,0 +1,16 @@
+#This kinematics has larger Kaon than Pion missing mass peak (all previous kinematics do NOT!)
+#Kinematics changed for H(e,e'K+): Q2=4.4, W=2.74
+#SHMS: P = +5.389 GeV/c, theta_shms = 12.81 deg
+#HMS:  P = -4.712 GeV/c, theta_hms  = 17.08 deg
+4982
+4983
+4984
+4985
+4986
+4987
+4990
+4991
+4995
+4996
+4997
+4998

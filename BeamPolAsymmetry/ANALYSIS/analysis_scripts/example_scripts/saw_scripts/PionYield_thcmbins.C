@@ -1,0 +1,1109 @@
+#define MMLOWCUT 0.0
+#define MMHIGHCUT 1.0
+//#define MMLOWCUT 1.1
+//#define MMHIGHCUT 1.35
+#define PionYield_thcmbins_cxx
+// The class definition in PionYield_thcmbins.h has been generated automatically
+// by the ROOT utility TTree::MakeSelector(). This class is derived
+// from the ROOT class TSelector. For more information on the TSelector
+// framework see $ROOTSYS/README/README.SELECTOR or the ROOT User Manual.
+
+
+// The following methods are defined in this file:
+//    Begin():        called every time a loop on the tree starts,
+//                    a convenient place to create your histograms.
+//    SlaveBegin():   called after Begin(), when on PROOF called only on the
+//                    slave servers.
+//    Process():      called for each event, in this function you decide what
+//                    to read and fill your histograms.
+//    SlaveTerminate: called at the end of the loop on the tree, when on PROOF
+//                    called only on the slave servers.
+//    Terminate():    called at the end of the loop on the tree,
+//                    a convenient place to draw/fit your histograms.
+//
+// To use this file, try the following session on your Tree T:
+//
+// root> T->Process("PionYield_thcmbins.C")
+// root> T->Process("PionYield_thcmbins.C","some options")
+// root> T->Process("PionYield_thcmbins.C+")
+//
+
+#define PHIBINS 25
+#define THBINS 8
+#define THMAX 25.0
+
+#include "PionYield_thcmbins.h"
+#include <TStyle.h>
+#include <TCanvas.h>
+#include <TLine.h>
+#include <TPaveText.h>
+
+void PionYield_thcmbins::Begin(TTree * /*tree*/)
+{
+  // The Begin() function is called at the start of the query.
+  // When running with PROOF Begin() is only called on the client.
+  // The tree argument is deprecated (on PROOF 0 is passed).
+
+  TString option = GetOption();
+
+  Info("Begin", "Starting Good particle Selection");
+
+  
+}
+
+void PionYield_thcmbins::SlaveBegin(TTree * /*tree*/)
+{
+  // The SlaveBegin() function is called after the Begin() function.
+  // When running with PROOF SlaveBegin() is called on each slave server.
+  // The tree argument is deprecated (on PROOF 0 is passed).
+
+  TString option = GetOption();
+
+  h2ROC1_Coin_Beta_noID_kaon = new TH2F("ROC1_Coin_Beta_noCut_kaon","Kaon Coincident Time vs #beta for ROC1 (w/ particle ID);Time (ns);#beta",800,-40,40,200,0.0,2.0);
+  h2ROC1_Coin_Beta_kaon = new TH2F("ROC1_Coin_Beta_kaon","Kaon Coincident Time vs #beta for ROC1;Time (ns);#beta",800,-40,40,200,0.0,2.0);
+  h2ROC1_Coin_Beta_noID_pion = new TH2F("ROC1_Coin_Beta_noCut_pion","Pion Coincident Time vs #beta for ROC1 (w/ particle ID);Time (ns);#beta",800,-40,40,200,0.0,2.0);
+  h2ROC1_Coin_Beta_pion = new TH2F("ROC1_Coin_Beta_pion","Pion Coincident Time vs #beta for ROC1;Time (ns);#beta",800,-40,40,200,0.0,2.0);
+  h2ROC1_Coin_Beta_noID_proton = new TH2F("ROC1_Coin_Beta_noCut_proton","Proton Coincident Time vs #beta for ROC1 (w/ particle ID);Time (ns);#beta",800,-40,40,200,0.0,2.0);
+  h2ROC1_Coin_Beta_proton = new TH2F("ROC1_Coin_Beta_proton","Proton Coincident Time vs #beta for ROC1;Time (ns);#beta",800,-40,40,200,0.0,2.0);
+
+  h2HMS_electron        = new TH2F("HMS_electron","Normalized HMS Calorimeter Energy vs Cherenkov;Normalized Energy;CER NPE",200,0.01,1.5,60,0.1,30);
+  h2HMS_electron_cut    = new TH2F("HMS_electron_cut","Normalized HMS Calorimeter Energy vs Cherenkov, Electrons Selected;Normalized Energy;CER NPE",200,0.01,1.5,60,0.0,30);
+
+  h1SHMS_electron        = new TH1F("SHMS_electron","Normalized SHMS Calorimeter Energy;Normalized Energy;Counts",200,0.01,1.5);
+  h1SHMS_electron_cut    = new TH1F("SHMS_electron_cut","Normalized SHMS Calorimeter Energy, Electrons Removed;Normalized Energy;Counts",200,0.01,1.5);
+
+  h2SHMSK_kaon            = new TH2F("SHMSK_kaon","NPE in SHMS Aerogel and Heavy Gas;Aerogel NPE;HGC NPE",50,0.1,25,50,0.1,10);
+  h2SHMSK_kaon_cut        = new TH2F("SHMSK_kaon_cut","NPE in SHMS Aerogel and Heavy Gas, Kaons Selected;Aerogel NPE;HGC NPE",50,0.0,25,50,0.0,10);
+  h2SHMSK_pion            = new TH2F("SHMSK_pion","Normalized SHMS Calorimeter Energy and NPE in Heavy Gas;Normalized Energy;HGC NPE",50,0.1,2.0,50,0.1,30);
+  h2SHMSK_pion_cut        = new TH2F("SHMSK_pion_cut","Normalized SHMS Calorimeter Energy and NPE in Heavy Gas, Pions Selected;Normalized Energy;HGC NPE",50,0.0,2.0,50,0.0,30);
+
+  h2SHMSpi_kaon            = new TH2F("SHMSpi_kaon","NPE in SHMS Aerogel and Heavy Gas;Aerogel NPE;HGC NPE",50,0.1,25,150,0.1,30);
+  h2SHMSpi_kaon_cut        = new TH2F("SHMSpi_kaon_cut","NPE in SHMS Aerogel and Heavy Gas, Kaons Selected;Aerogel NPE;HGC NPE",50,0.0,25,150,0.0,30);
+  h2SHMSpi_pion            = new TH2F("SHMSpi_pion","Normalized SHMS Calorimeter Energy and NPE in Heavy Gas;Normalized Energy;HGC NPE",50,0.1,2.0,50,0.1,30);
+  h2SHMSpi_pion_cut        = new TH2F("SHMSpi_pion_cut","Normalized SHMS Calorimeter Energy and NPE in Heavy Gas, Pions Selected;Normalized Energy;HGC NPE",50,0.0,2.0,50,0.0,30);
+
+  h2SHMSp_kaon            = new TH2F("SHMSp_kaon","NPE in SHMS Aerogel and Heavy Gas;Aerogel NPE;HGC NPE",50,0.1,25,50,0.1,10);
+  h2SHMSp_kaon_cut        = new TH2F("SHMSp_kaon_cut","NPE in SHMS Aerogel and Heavy Gas, Kaons Selected;Aerogel NPE;HGC NPE",50,0.0,25,50,0.0,10);
+  h2SHMSp_pion            = new TH2F("SHMSp_pion","Normalized SHMS Calorimeter Energy and NPE in Heavy Gas;Normalized Energy;HGC NPE",50,0.1,2.0,50,0.1,30);
+  h2SHMSp_pion_cut        = new TH2F("SHMSp_pion_cut","Normalized SHMS Calorimeter Energy and NPE in Heavy Gas, Pions Selected;Normalized Energy;HGC NPE",50,0.0,2.0,50,0.0,30);
+
+  h1SHMS_delta           = new TH1F("SHMS_delta","SHMS #delta;#delta;Counts",100,-50,50);
+  h1SHMS_delta_cut       = new TH1F("SHMS_delta_cut","SHMS #delta Cut;#delta;Counts",100,-50,50);
+  h1HMS_delta            = new TH1F("HMS_delta","HMS #delta;#delta;Counts",100,-50,50);
+  h1HMS_delta_cut        = new TH1F("HMS_delta_cut","HMS #delta Cut;#delta;Counts",100,-50,50);
+
+  h1SHMS_th              = new TH1F("SHMS_th","SHMS Theta Acceptance;#theta;Counts",100,-0.1,0.1);
+  h1SHMS_th_cut          = new TH1F("SHMS_th_cut","SHMS Theta Acceptance with Cut;#theta;Counts",100,-0.1,0.1);
+  h1SHMS_ph              = new TH1F("SHMS_ph","SHMS Theta Acceptance;#phi;Counts",100,-0.1,0.1);
+  h1SHMS_ph_cut          = new TH1F("SHMS_ph_cut","SHMS Theta Acceptance with Cut;#phi;Counts",100,-0.1,0.1);
+
+  h1HMS_th              = new TH1F("HMS_th","HMS Theta Acceptance;#theta;Counts",100,-0.1,0.1);
+  h1HMS_th_cut          = new TH1F("HMS_th_cut","HMS Theta Acceptance with Cut;#theta;Counts",100,-0.1,0.1);
+  h1HMS_ph              = new TH1F("HMS_ph","HMS Theta Acceptance;#phi;Counts",100,-0.1,0.1);
+  h1HMS_ph_cut          = new TH1F("HMS_ph_cut","HMS Theta Acceptance with Cut;#phi;Counts",100,-0.1,0.1);
+
+  h1mmissK                = new TH1F("mmissK","Kaon Missing mass;Mass (GeV/c^{2});Counts",200,0.8,1.8);
+  h1mmissK_rand           = new TH1F("mmissK_rand","Kaon Missing mass from Random Coincidence;Mass (GeV/c^{2});Counts",200,0.8,1.8);
+  h1mmissK_cut            = new TH1F("mmissK_cut","Kaon Missing mass with Cuts;Mass (GeV/c^{2});Counts",200,0.8,1.8);
+  h1mmissK_remove         = new TH1F("mmissK_remove","Kaon Missing mass with Cuts (Random Subtracted);Mass (GeV/c^{2});Counts",200,0.8,1.8);
+
+  h1mmisspi               = new TH1F("mmisspi","Pion Missing mass;Mass (GeV/c^{2});Counts",300,-0.1,2.9);
+  h1mmisspi_rand          = new TH1F("mmisspi_rand","Pion Missing mass from Random Coincidence;Mass (GeV/c^{2});Counts",300,-0.1,2.9);
+  h1mmisspi_cut           = new TH1F("mmisspi_cut","Pion Missing mass with Cuts;Mass (GeV/c^{2});Counts",300,-0.1,2.9);
+  h1mmisspi_remove        = new TH1F("mmisspi_remove","Pion Missing mass with Cuts (Random Subtracted);Mass (GeV/c^{2});Counts",300,-0.1,2.9);
+
+  h1mmissp                = new TH1F("mmissp","Proton Missing mass;Mass (GeV/c^{2});Counts",200,-0.1,2.9);
+  h1mmissp_rand           = new TH1F("mmissp_rand","Proton Missing mass from Random Coincidence;Mass (GeV/c^{2});Counts",200,-0.1,2.9);
+  h1mmissp_cut            = new TH1F("mmissp_cut","Proton Missing mass with Cuts;Mass (GeV/c^{2});Counts",200,-0.1,2.9);
+  h1mmissp_remove         = new TH1F("mmissp_remove","Proton Missing mass with Cuts (Random Subtracted);Mass (GeV/c^{2});Counts",200,-0.1,2.9);
+
+  h2WvsQ2                 = new TH2F("WvsQ2","Q2 vs W;Q2;W",375,0.0,6.0,100,1.0,4.0);
+  h2tvsph_q               = new TH2F("tvsph_q",";#phi;t",25,-3.14,3.14,16,0.0,1.6);
+  h1epsilon               = new TH1F("epsilon","Plot of Epsilon;#epsilon;Counts",100,0.0,1.0);
+
+  // SAW These define histograms in phi for pions from positive
+  // and negative helicity beam
+  h1ph_q_p_pi              = new TH1F("phip_pi","Phi about q +",PHIBINS,-3.14,3.14);
+  h1ph_q_m_pi              = new TH1F("phim_pi","Phi about q -",PHIBINS,-3.14,3.14);
+  // For Random subtraction
+  h1ph_q_p_pi_rand         = new TH1F("phip_pi_rand","Phi about q + randoms",PHIBINS,-3.14,3.14);
+  h1ph_q_m_pi_rand         = new TH1F("phim_pi_rand","Phi about q - randoms",PHIBINS,-3.14,3.14);
+
+  // SAW Same thing for Kaons
+  h1ph_q_p_K               = new TH1F("phip_K","Phi about q +",PHIBINS,-3.14,3.14);
+  h1ph_q_m_K               = new TH1F("phim_K","Phi about q -",PHIBINS,-3.14,3.14);
+  // For Random subtraction
+  h1ph_q_p_K_rand          = new TH1F("phip_K_rand","Phi about q + randoms",PHIBINS,-3.14,3.14);
+  h1ph_q_m_K_rand          = new TH1F("phim_K_rand","Phi about q - randoms",PHIBINS,-3.14,3.14);
+
+  // SAW These are histograms in phi and theta_center of mass
+  // angles are angle of pion with respect to the q vector
+  h2ph_q_thxcm_p_pi        = new TH2F("thvsph_p","Phi vs THcm +",PHIBINS,-3.14159,3.14159,THBINS,0.0,3.14159*THMAX/180.0);
+  h2ph_q_thxcm_m_pi        = new TH2F("thvsph_m","Phi vs THcm -",PHIBINS,-3.14159,3.14159,THBINS,0.0,3.14159*THMAX/180.0);
+
+  asym_pi                  = new TH1F("A_pi","Pion Asymmetry", PHIBINS, -3.14,3.14);
+  asym_pi_rand             = new TH1F("A_pi_rand","Pion Randoms Asymmetry", PHIBINS, -3.14,3.14);
+  asym_pi_subrand          = new TH1F("A_pi_sub","Pion Asymmetry Randoms Subtracted", PHIBINS, -3.14,3.14);
+  asym_K                   = new TH1F("A_K","Kaon Asymmetry", PHIBINS, -3.14,3.14);
+  asym_K_rand              = new TH1F("A_K_rand","Kaon Randoms Asymmetry", PHIBINS, -3.14,3.14);
+  asym_K_subrand           = new TH1F("A_K_sub","Kaon Asymmetry Randoms Subracted", PHIBINS, -3.14,3.14);
+
+#if 0
+  for(Int_t i=0;i<THBINS;i++) {
+    Float_t thmin=(THMAX/THBINS)*i;
+    Float_t thmax=(THMAX/THBINS)*(i+1);
+    // Need to put angle ranges in name with Form
+    asym_pi_th[i]           = new TH1F(Form("A_pi_%.1f-%.1f",thmin,thmax),
+				       Form("Pion Asymmetry %.1f - %.1f",thmin,thmax),
+				       PHIBINS, -3.14,3.14);
+    asym_K_th[i]           = new TH1F(Form("A_K_%.1f-%.1f",thmin,thmax),
+				       Form("Kaon Asymmetry %.1f - %.1f",thmin,thmax),
+				       PHIBINS, -3.14,3.14);
+  }
+#endif
+
+  h1EDTM                  = new TH1F("EDTM","EDTM Time;EDTM TDC Time;Counts",10000,-5000,5000);
+  h1TRIG5                 = new TH1F("TRIG5","TRIG5 Time;TRIG5 TDC Time;Counts",10000,-5000,5000);
+
+  GetOutputList()->Add(h2ROC1_Coin_Beta_noID_kaon);
+  GetOutputList()->Add(h2ROC1_Coin_Beta_kaon);
+  GetOutputList()->Add(h2ROC1_Coin_Beta_noID_pion);
+  GetOutputList()->Add(h2ROC1_Coin_Beta_pion);
+  GetOutputList()->Add(h2ROC1_Coin_Beta_noID_proton);
+  GetOutputList()->Add(h2ROC1_Coin_Beta_proton);
+  GetOutputList()->Add(h2HMS_electron);
+  GetOutputList()->Add(h2HMS_electron_cut);
+  GetOutputList()->Add(h1SHMS_electron);
+  GetOutputList()->Add(h1SHMS_electron_cut);
+  GetOutputList()->Add(h2SHMSK_kaon);
+  GetOutputList()->Add(h2SHMSK_kaon_cut);
+  GetOutputList()->Add(h2SHMSK_pion);
+  GetOutputList()->Add(h2SHMSK_pion_cut);
+  GetOutputList()->Add(h2SHMSpi_kaon);
+  GetOutputList()->Add(h2SHMSpi_kaon_cut);
+  GetOutputList()->Add(h2SHMSpi_pion);
+  GetOutputList()->Add(h2SHMSpi_pion_cut);
+  GetOutputList()->Add(h2SHMSp_kaon);
+  GetOutputList()->Add(h2SHMSp_kaon_cut);
+  GetOutputList()->Add(h2SHMSp_pion);
+  GetOutputList()->Add(h2SHMSp_pion_cut);
+  GetOutputList()->Add(h1SHMS_delta);
+  GetOutputList()->Add(h1SHMS_delta_cut);
+  GetOutputList()->Add(h1HMS_delta);
+  GetOutputList()->Add(h1HMS_delta_cut);
+  GetOutputList()->Add(h1SHMS_th);
+  GetOutputList()->Add(h1SHMS_th_cut);
+  GetOutputList()->Add(h1SHMS_ph);
+  GetOutputList()->Add(h1SHMS_ph_cut);
+  GetOutputList()->Add(h1HMS_th);
+  GetOutputList()->Add(h1HMS_th_cut);
+  GetOutputList()->Add(h1HMS_ph);
+  GetOutputList()->Add(h1HMS_ph_cut);
+  GetOutputList()->Add(h1mmissK);
+  GetOutputList()->Add(h1mmissK_rand);
+  GetOutputList()->Add(h1mmissK_cut);
+  GetOutputList()->Add(h1mmissK_remove);
+  GetOutputList()->Add(h1mmisspi);
+  GetOutputList()->Add(h1mmisspi_rand);
+  GetOutputList()->Add(h1mmisspi_cut);
+  GetOutputList()->Add(h1mmisspi_remove);
+  GetOutputList()->Add(h1mmissp);
+  GetOutputList()->Add(h1mmissp_rand);
+  GetOutputList()->Add(h1mmissp_cut);
+  GetOutputList()->Add(h1mmissp_remove);
+  GetOutputList()->Add(h2WvsQ2);
+  GetOutputList()->Add(h2tvsph_q);
+  GetOutputList()->Add(h1epsilon);
+  GetOutputList()->Add(h1ph_q_p_pi);
+  GetOutputList()->Add(h1ph_q_m_pi);
+  GetOutputList()->Add(h1ph_q_p_pi_rand);
+  GetOutputList()->Add(h1ph_q_m_pi_rand);
+  GetOutputList()->Add(h1ph_q_p_K);
+  GetOutputList()->Add(h1ph_q_m_K);
+  GetOutputList()->Add(h1ph_q_p_K_rand);
+  GetOutputList()->Add(h1ph_q_m_K_rand);
+  GetOutputList()->Add(h2ph_q_thxcm_p_pi);
+  GetOutputList()->Add(h2ph_q_thxcm_m_pi);
+  GetOutputList()->Add(h2ROC1_Coin_Beta_noID_kaon);
+  GetOutputList()->Add(h2ROC1_Coin_Beta_kaon);
+  GetOutputList()->Add(h2ROC1_Coin_Beta_noID_pion);
+  GetOutputList()->Add(h2ROC1_Coin_Beta_pion);
+  GetOutputList()->Add(h2ROC1_Coin_Beta_noID_proton);
+  GetOutputList()->Add(h2ROC1_Coin_Beta_proton);
+  GetOutputList()->Add(h2HMS_electron);
+  GetOutputList()->Add(h2HMS_electron_cut);
+  GetOutputList()->Add(h1SHMS_electron);
+  GetOutputList()->Add(h1SHMS_electron_cut);
+  GetOutputList()->Add(h2SHMSK_kaon);
+  GetOutputList()->Add(h2SHMSK_kaon_cut);
+  GetOutputList()->Add(h2SHMSK_pion);
+  GetOutputList()->Add(h2SHMSK_pion_cut);
+  GetOutputList()->Add(h2SHMSpi_kaon);
+  GetOutputList()->Add(h2SHMSpi_kaon_cut);
+  GetOutputList()->Add(h2SHMSpi_pion);
+  GetOutputList()->Add(h2SHMSpi_pion_cut);
+  GetOutputList()->Add(h2SHMSp_kaon);
+  GetOutputList()->Add(h2SHMSp_kaon_cut);
+  GetOutputList()->Add(h2SHMSp_pion);
+  GetOutputList()->Add(h2SHMSp_pion_cut);
+  GetOutputList()->Add(h1SHMS_delta);
+  GetOutputList()->Add(h1SHMS_delta_cut);
+  GetOutputList()->Add(h1HMS_delta);
+  GetOutputList()->Add(h1HMS_delta_cut);
+  GetOutputList()->Add(h1SHMS_th);
+  GetOutputList()->Add(h1SHMS_th_cut);
+  GetOutputList()->Add(h1SHMS_ph);
+  GetOutputList()->Add(h1SHMS_ph_cut);
+  GetOutputList()->Add(h1HMS_th);
+  GetOutputList()->Add(h1HMS_th_cut);
+  GetOutputList()->Add(h1HMS_ph);
+  GetOutputList()->Add(h1HMS_ph_cut);
+  GetOutputList()->Add(h1mmissK);
+  GetOutputList()->Add(h1mmissK_rand);
+  GetOutputList()->Add(h1mmissK_cut);
+  GetOutputList()->Add(h1mmissK_remove);
+  GetOutputList()->Add(h1mmisspi);
+  GetOutputList()->Add(h1mmisspi_rand);
+  GetOutputList()->Add(h1mmisspi_cut);
+  GetOutputList()->Add(h1mmisspi_remove);
+  GetOutputList()->Add(h1mmissp);
+  GetOutputList()->Add(h1mmissp_rand);
+  GetOutputList()->Add(h1mmissp_cut);
+  GetOutputList()->Add(h1mmissp_remove);
+  GetOutputList()->Add(h2WvsQ2);
+  GetOutputList()->Add(h2tvsph_q);
+  GetOutputList()->Add(h1epsilon);
+  GetOutputList()->Add(h1ph_q_p_pi);
+  GetOutputList()->Add(h1ph_q_m_pi);
+  GetOutputList()->Add(h1ph_q_p_pi_rand);
+  GetOutputList()->Add(h1ph_q_m_pi_rand);
+  GetOutputList()->Add(h1ph_q_p_K);
+  GetOutputList()->Add(h1ph_q_m_K);
+  GetOutputList()->Add(h1ph_q_p_K_rand);
+  GetOutputList()->Add(h1ph_q_m_K_rand);
+  GetOutputList()->Add(h2ph_q_thxcm_p_pi);
+  GetOutputList()->Add(h2ph_q_thxcm_m_pi);
+  GetOutputList()->Add(asym_pi);
+  GetOutputList()->Add(asym_pi_rand);
+  GetOutputList()->Add(asym_pi_subrand);
+  GetOutputList()->Add(asym_K);
+  GetOutputList()->Add(asym_K_rand);
+  GetOutputList()->Add(asym_K_subrand);
+#if 0
+  for(Int_t i=0;i<THBINS;i++) {
+    GetOutputList()->Add(asym_pi_th[i]);
+    GetOutputList()->Add(asym_K_th[i]);
+  }
+#endif
+  GetOutputList()->Add(h1EDTM);
+  GetOutputList()->Add(h1TRIG5);
+}
+
+Bool_t PionYield_thcmbins::Process(Long64_t entry)
+{
+  // The Process() function is called for each entry in the tree (or possibly
+  // keyed object in the case of PROOF) to be processed. The entry argument
+  // specifies which entry in the currently loaded tree is to be processed.
+  // When processing keyed objects with PROOF, the object is already loaded
+  // and is available via the fObject pointer.
+  //
+  // This function should contain the \"body\" of the analysis. It can contain
+  // simple or elaborate selection criteria, run algorithms on the data
+  // of the event and typically fill histograms.
+  //
+  // The processing can be stopped by calling Abort().
+  //
+  // Use fStatus to set the return value of TTree::Process().
+  //
+  // The return value is currently not used.
+
+  fReader.SetEntry(entry);
+
+
+  //C.Y. SET THE HELICITY SIGN ON AN EVENT-BY-EVENT BASIS (FLIP SIGN CORRESPONDING TO IHWP CONFIG CHANGE)
+  Int_t Helicity_sign=0;
+  if(*fMPS < 0.5) {		// Not in a settle period
+    if(*fHelicity>0.5) {
+    //    if(*fHelrep>0.5) {
+      Helicity_sign = 1;
+    } else if(*fHelicity<-0.5) {
+      //    } else if(*fHelrep<-0.5) {
+      Helicity_sign = -1;
+    }
+    if(((*fRun > 5033) && (*fRun < 5155)) ||
+       ((*fRun > 5335) && (*fRun < 5668)) ||
+       ((*fRun > 5962) && (*fRun < 6147))) {
+      Helicity_sign = -Helicity_sign;
+    }
+  }
+      
+  //if (*fEvtType != 4) return kTRUE;
+
+  h1EDTM->Fill(*pEDTM);
+  //h1TRIG5->Fill(*pTRIG5);
+  
+  h2HMS_electron->Fill(H_cal_etotnorm[0],H_cer_npeSum[0]);
+  h1SHMS_electron->Fill(P_cal_etotnorm[0]);
+
+  h2SHMSK_kaon->Fill(P_aero_npeSum[0],P_hgcer_npeSum[0]);
+  h2SHMSK_pion->Fill(P_cal_etotnorm[0],P_hgcer_npeSum[0]);
+  h2SHMSpi_kaon->Fill(P_aero_npeSum[0],P_hgcer_npeSum[0]);
+  h2SHMSpi_pion->Fill(P_cal_etotnorm[0],P_hgcer_npeSum[0]);
+  h2SHMSp_kaon->Fill(P_aero_npeSum[0],P_hgcer_npeSum[0]);
+  h2SHMSp_pion->Fill(P_cal_etotnorm[0],P_hgcer_npeSum[0]);
+  
+  h1SHMS_delta->Fill(P_gtr_dp[0]);
+  h1HMS_delta->Fill(H_gtr_dp[0]);
+
+  h1SHMS_th->Fill(P_gtr_th[0]);
+  h1SHMS_ph->Fill(P_gtr_ph[0]);
+  h1HMS_th->Fill(H_gtr_th[0]);
+  h1HMS_ph->Fill(H_gtr_ph[0]);
+
+  //C.Y. Define Missing Mass of Kaon (Should be the same as M_recoil if Kaon mass was used in std kinematics file)
+  Double_t mmissK = sqrt(pow(emiss[0],2)-pow(pmiss[0],2));
+  h1mmissK->Fill(mmissK);
+
+  //C.Y. Define Missing Mass of Pion
+  Double_t mmisspi = sqrt(pow(emiss[0] + sqrt(pow(0.493677,2) + pow(P_gtr_p[0],2)) - sqrt(pow(0.13957018,2) + pow(P_gtr_p[0],2)),2)-pow(pmiss[0],2));
+  h1mmisspi->Fill(mmisspi);
+
+  //C.Y. Define Missing Mass for pions
+  h1mmissp->Fill(sqrt(pow(emiss[0] + sqrt(pow(0.493677,2) + pow(P_gtr_p[0],2)) - sqrt(pow(0.93828,2) + pow(P_gtr_p[0],2)),2)-pow(pmiss[0],2)));
+
+  if (H_cal_etotnorm[0] < 0.9 || H_cer_npeSum[0] < 1.5) return kTRUE;
+  if (P_cal_etotnorm[0] > 0.6) return kTRUE;
+
+  if (TMath::Abs(H_gtr_dp[0]) > 10.0) return kTRUE;
+  if (P_gtr_dp[0] > 20.0 || P_gtr_dp[0] < -10.0) return kTRUE;
+
+  if (TMath::Abs(P_gtr_th[0]) > 0.040) return kTRUE;
+  if (TMath::Abs(P_gtr_ph[0]) > 0.024) return kTRUE;
+  if (TMath::Abs(H_gtr_th[0]) > 0.080) return kTRUE;
+  if (TMath::Abs(H_gtr_ph[0]) > 0.035) return kTRUE;
+
+  h2HMS_electron_cut->Fill(H_cal_etotnorm[0],H_cer_npeSum[0]);
+  h1SHMS_electron_cut->Fill(P_cal_etotnorm[0]);
+  
+  h1SHMS_delta_cut->Fill(P_gtr_dp[0]);
+  h1HMS_delta_cut->Fill(H_gtr_dp[0]);
+
+  h1SHMS_th_cut->Fill(P_gtr_th[0]);
+  h1SHMS_ph_cut->Fill(P_gtr_ph[0]);
+  h1HMS_th_cut->Fill(H_gtr_th[0]);
+  h1HMS_ph_cut->Fill(H_gtr_ph[0]);
+
+  //C.Y. Make PID Cuts on Aerogel and HGC to select Kaons
+
+  //==================================================================================
+  // C.Y. Select Kaons in SHMS by requiring HGCER_NPE_SUM < 1.5 && AERO_NPE_SUM > 1.5
+  //=================================================================================
+  if (P_aero_npeSum[0] > 1.5 && P_hgcer_npeSum[0] < 1.5) { //Event identified as Kaon
+
+    //C.Y. Fill eK coincidence time vs. beta (no PID --> no coin time cut)
+    h2ROC1_Coin_Beta_noID_kaon->Fill((CTime_eKCoinTime_ROC1[0] - 44),P_gtr_beta[0]); 
+
+    if (abs(P_gtr_beta[0]-1.00) > 0.15) return kTRUE;
+
+    //C.Y. Make an eK coincidence time cut abs(eK_ctime) < 2.5 ns
+    if (abs((CTime_eKCoinTime_ROC1[0] - 44)) < 2.5) {
+
+      //C.Y. Fill eK coincidence timw (with coin. time cut AND PID on Kaon)
+      h2ROC1_Coin_Beta_kaon->Fill((CTime_eKCoinTime_ROC1[0] - 44),P_gtr_beta[0]);
+
+      
+      h2SHMSK_kaon_cut->Fill(P_aero_npeSum[0],P_hgcer_npeSum[0]);
+
+      
+      h2SHMSK_pion_cut->Fill(P_cal_etotnorm[0],P_hgcer_npeSum[0]);
+
+      //C.Y. Fill Kaon MISSING MASS, MM = sqrt[(Em**2 -Pm**2)], with Kaons PID && eK_ctime_cut 
+      h1mmissK_cut->Fill(sqrt(pow(emiss[0],2)-pow(pmiss[0],2)));
+
+      
+      // Fill these with pions
+      //      h2WvsQ2->Fill(Q2[0],W[0]);
+      //      h2tvsph_q->Fill(ph_q[0],-MandelT[0]);
+      //      h1epsilon->Fill(epsilon[0]);
+
+
+      //C.Y.  Make a Kaon  Missing Mass Cut :
+      // 1.07 < MM_K < 1.15 to select the "missing" Lambda(1.115 GeV)
+      if(mmissK > 1.07 && mmissK < 1.15) {
+
+	//C.Y. Check if Helicity sign is "+"
+	if(Helicity_sign>0) {
+
+	  //C.Y. Fill Out-of-plane angle, ph_qx (pos helicity) for the Kaons
+	  h1ph_q_p_K->Fill(ph_q[0]);
+	} // end "+" helicity requirement
+
+	//C.Y. Check if Helicity is negative
+	else if (Helicity_sign<0) {
+	  
+	  //C.Y. Fill Out-of-plane angle, ph_qx (neg helicity) for the Kaons
+	  h1ph_q_m_K->Fill(ph_q[0]);
+	} // end "-" helicity requirement
+      } //end Kaon missing mass cut around Lambda (1115)
+    } // end eK coin. time cut
+
+    
+    //C.Y. require eK coincidence time "OUTSIDE" the main peak to select "RANDOMS"
+    if (abs((CTime_eKCoinTime_ROC1[0] - 44)) > 10.5 && abs((CTime_eKCoinTime_ROC1[0] - 44)) < 31.5) {
+
+      //C.Y. Fill Kaon Missing Mass for randoms (has pid cut to select kaons, and eK coin time cut to select randoms)
+      h1mmissK_rand->Fill(mmissK);
+      
+      //h1mmissK_remove->Fill(sqrt(pow(emiss[0],2)-pow(pmiss[0],2)));
+
+      //C.Y. Select Kaon Missing Mass around Lambda peak (to select randoms beneath the lambda peak)
+      if(mmissK > 1.07 && mmissK < 1.15) {
+
+	
+	if(Helicity_sign>0) {
+
+	  h1ph_q_p_K_rand->Fill(ph_q[0]);
+	  //	  h2ph_q_thxcm_p_K->Fill(ph_q[0],thx_cm[0]);
+	}
+
+	else if (Helicity_sign<0) {
+
+	  h1ph_q_m_K_rand->Fill(ph_q[0]);
+	  //	  h2ph_q_thxcm_m_K->Fill(ph_q[0],thx_cm[0]);
+	}
+      } // end missing mass cut around Lambda
+    } // end eK coincidence time cut selecting randoms
+
+
+  } // end Kaon selection PID cuts
+
+
+  //================================================================
+  // C.Y. Select Pions in SHMS by requiring HGCER_NPE_SUM > 1.5
+  //================================================================
+  
+  if (P_hgcer_npeSum[0] > 1.5) { //Event identified as Pion
+
+    // C.Y. Fill ePi coin time vs. Beta (cuts: hgcer_npesum > 1.5)
+    h2ROC1_Coin_Beta_noID_pion->Fill((CTime_ePiCoinTime_ROC1[0] - 44.5),P_gtr_beta[0]);
+
+    
+    if (abs(P_gtr_beta[0]-1.00) > 0.1) return kTRUE;
+
+    // C.Y. Require a ePi coin. time cut to select "real" coincidence
+    if (abs((CTime_ePiCoinTime_ROC1[0] - 44.5)) < 2.0) {
+
+      // C.Y. Fill ePi coin time 
+      h2ROC1_Coin_Beta_pion->Fill((CTime_ePiCoinTime_ROC1[0] - 44.5),P_gtr_beta[0]);
+
+      // C.Y. Fill 2D PID: aero_npe_sum vs. hgcer_npe_sum: to identify/isolate Kaons from Pions
+      h2SHMSpi_kaon_cut->Fill(P_aero_npeSum[0],P_hgcer_npeSum[0]);
+      // C.Y. Fill 2D PID: cal_etotnorm vs. hgcer_npe_sum: to identify/isolate positrons from Pions
+      h2SHMSpi_pion_cut->Fill(P_cal_etotnorm[0],P_hgcer_npeSum[0]);
+
+      //h1mmisspi_cut->Fill(sqrt(pow(emiss[0],2)-pow(pmiss[0],2)));
+
+      // C.Y. Fill Pion Missing Mass (cuts: hgcer_npe_sum > 1.5 && abs(ePi_coin_time)<2 ns )
+      h1mmisspi_cut->Fill(mmisspi);
+
+      // C.Y. Fill 2D Kinematics
+      h2WvsQ2->Fill(Q2[0],W[0]);
+      h2tvsph_q->Fill(ph_q[0],-MandelT[0]);
+      h1epsilon->Fill(epsilon[0]);
+
+      // C.Y. Apply Pion Missing Mass cut about the ?? "neutron" mass ??
+      if((mmisspi > MMLOWCUT) && (mmisspi < MMHIGHCUT)) {
+
+	// Require "+" helicity 
+	if(Helicity_sign>0) {
+
+	  // C.Y. Fill Out-of-plane angle, ph_qx (pos helicity) for the Pions
+	  h1ph_q_p_pi->Fill(ph_q[0]);
+
+	  // C.Y. Fill ph_xq vs. th_xq_cm for Pions selected (cuts: hgcer_npe_sum>1.5 && abs(ePi_ctime)<2 ns &&  (mmisspi > MMLOWCUT && mmisspi < MMHIGHCUT))
+	  h2ph_q_thxcm_p_pi->Fill(ph_q[0],thx_cm[0]);
+
+	  cout << "+ " << ph_q[0] << " " << thx_cm[0] <<endl;
+	}
+
+	// Require "-" helicity
+	else if (Helicity_sign<0) {
+
+	  //Fill Out-of-plane ph_xq for + helicity Pions
+	  h1ph_q_m_pi->Fill(ph_q[0]);
+
+	  // C.Y. Fill ph_xq vs. th_xq_cm for Pions selected (cuts: hgcer_npe_sum>1.5 && abs(ePi_ctime)<2 ns &&  (mmisspi > MMLOWCUT && mmisspi < MMHIGHCUT))
+	  h2ph_q_thxcm_m_pi->Fill(ph_q[0],thx_cm[0]);
+
+	  cout << "- " << ph_q[0] << " " << thx_cm[0] <<endl;
+	} // end "-" helicity requirement
+      } // end Pion missing mass cut ??around neutron??
+    } // end ePi coin. time cut
+    
+    // SAW this fills a missing mass spectrum with random concidence events so that it can
+    // be subracted from the h1mmisspi_cut spectrum.
+    // We need to similar for the helicity phi and phi/theta spectra
+    // These spectra will need to have the same missing mass cut as used to fill the _m_ and _p_ histos
+
+    // //C.Y. require ePi coincidence time "OUTSIDE" the main peak to select "RANDOMS"
+    if (abs((CTime_ePiCoinTime_ROC1[0] - 44.5)) > 10.0 && abs((CTime_ePiCoinTime_ROC1[0] - 44.5)) < 30.0) {
+      //      h1mmisspi_rand->Fill(pow(emiss[0] + sqrt(pow(0.493677,2) + pow(P_gtr_p[0],2)) - sqrt(pow(0.13957018,2) + pow(P_gtr_p[0],2)),2)-pow(pmiss[0],2));
+
+      //C.Y. Fill Pion Missing Mass for randoms (has pid cut to select pions, and ePi coin time cut to select randoms)
+      h1mmisspi_rand->Fill(mmisspi);
+      
+      //h1mmisspi_remove->Fill(pow(emiss[0] + sqrt(pow(0.493677,2) + pow(P_gtr_p[0],2)) - sqrt(pow(0.13957018,2) + pow(P_gtr_p[0],2)),2)-pow(pmiss[0],2));
+      //h1mmisspi_rand->Fill(sqrt(pow(emiss[0],2)-pow(pmiss[0],2)));
+      //h1mmisspi_remove->Fill(sqrt(pow(emiss[0],2)-pow(pmiss[0],2)));
+
+      // C.Y. Apply a Pion missing mass cut around the neutron to estimate the randoms underneath the missing mass peak (PID pio cut && randoms coin cut)
+      if((mmisspi > MMLOWCUT) && (mmisspi < MMHIGHCUT)) {
+	//C.Y. require "+" helcity 
+	if(Helicity_sign>0) {
+	  //C.Y. Fill Out-of-plane ph_xq, (pos helicity) Pions angle relative to q-vector (randoms selected in coin cut.)
+	  h1ph_q_p_pi_rand->Fill(ph_q[0]);
+	  //	  h2ph_q_thxcm_p_pi->Fill(ph_q[0],thx_cm[0]);
+	}
+	//C.Y. require "-" helcity 
+	else if (Helicity_sign<0) {
+	  
+	  //C.Y. Fill Out-of-plane ph_xq, (pos helicity) Pions angle relative to q-vector (randoms selected in coin cut.)
+	  h1ph_q_m_pi_rand->Fill(ph_q[0]);
+	  //	  h2ph_q_thxcm_m_pi->Fill(ph_q[0],thx_cm[0]);
+	} //end "-" helicity requirement
+      } //end Pion missing mass cut
+    } // ePi coin. time to select randoms
+  } //end hgcer npe sum > 1.5 cut to select Pions
+  
+  
+  //=====================================================================================
+  // C.Y. Select Protons in SHMS by requiring HGCER_NPE_SUM < 1.5 && AERO_NPE_SUM < 1.5
+  //=====================================================================================
+
+  if (P_aero_npeSum[0] < 1.5 && P_hgcer_npeSum[0] < 1.5) { //Event identified as Proton
+    h2ROC1_Coin_Beta_noID_proton->Fill((CTime_epCoinTime_ROC1[0] - 45),P_gtr_beta[0]);
+    
+    if (abs(P_gtr_beta[0]-0.95) > 0.1) return kTRUE;
+  
+    if (abs((CTime_epCoinTime_ROC1[0] - 45)) < 2.0) {
+      h2ROC1_Coin_Beta_proton->Fill((CTime_epCoinTime_ROC1[0] - 45),P_gtr_beta[0]);
+      h2SHMSp_kaon_cut->Fill(P_aero_npeSum[0],P_hgcer_npeSum[0]);
+      h2SHMSp_pion_cut->Fill(P_cal_etotnorm[0],P_hgcer_npeSum[0]);
+      h1mmissp_cut->Fill(sqrt(pow(emiss[0] + sqrt(pow(0.13957018,2) + pow(P_gtr_p[0],2)) - sqrt(pow(0.93828,2) + pow(P_gtr_p[0],2)),2)-pow(pmiss[0],2)));
+    }
+
+    if (abs((CTime_epCoinTime_ROC1[0] - 45)) > 10.0 && abs((CTime_epCoinTime_ROC1[0] - 45)) < 30.0) {
+      h1mmissp_rand->Fill(pow(emiss[0] + sqrt(pow(0.13957018,2) + pow(P_gtr_p[0],2)) - sqrt(pow(0.93828,2) + pow(P_gtr_p[0],2)),2)-pow(pmiss[0],2));
+      //h1mmissp_remove->Fill(pow(emiss[0] + sqrt(pow(0.13957018,2) + pow(P_gtr_p[0],2)) - sqrt(pow(0.93828,2) + pow(P_gtr_p[0],2)),2)-pow(pmiss[0],2));
+    }
+  }
+
+  return kTRUE;
+}
+
+void PionYield_thcmbins::SlaveTerminate()
+{
+  // The SlaveTerminate() function is called after all entries or objects
+  // have been processed. When running with PROOF SlaveTerminate() is called
+  // on each slave server.
+
+}
+
+void PionYield_thcmbins::Terminate()
+{
+  // The Terminate() function is the last function to be called during
+  // a query. It always runs on the client, it can be used to present
+  // the results graphically or save the results to file.
+
+  Info("Terminate", "Outputting Good Kaon Selection");
+
+  TString option = GetOption();
+
+  TH1F* EDTM = dynamic_cast<TH1F*> (GetOutputList()->FindObject("EDTM"));
+  TH2F* HMS_electron = dynamic_cast<TH2F*> (GetOutputList()->FindObject("HMS_electron"));
+  TH2F* HMS_electron_cut = dynamic_cast<TH2F*> (GetOutputList()->FindObject("HMS_electron_cut"));
+
+  //Perform Random Subtraction
+  h1mmissK_rand->Scale(1.0/5.0);
+  h1mmisspi_rand->Scale(1.0/5.0);
+  h1mmissp_rand->Scale(1.0/5.0);
+  h1mmissK_remove->Add(h1mmissK_cut,h1mmissK_rand,1,-1);
+  h1mmisspi_remove->Add(h1mmisspi_cut,h1mmisspi_rand,1,-1);
+  h1mmissp_remove->Add(h1mmissp_cut,h1mmissp_rand,1,-1);
+
+  //Perform Background Subtraction
+  /*TF1 *Back_Fit = new TF1("Back_Fit","[0]*exp(-0.5*((x-[1])/[2])*((x-[1])/[2]))",1.3,1.8);
+  Back_Fit->SetParName(0,"Amplitude");
+  Back_Fit->SetParName(1,"Mean");
+  Back_Fit->SetParName(2,"Sigma");
+  Back_Fit->SetParLimits(0,0.0,10000.0);
+  Back_Fit->SetParLimits(1,1.3,1.8);
+  Back_Fit->SetParLimits(2,0.0,1.0);
+  Back_Fit->SetParameter(0,20);
+  Back_Fit->SetParameter(1,1.44);
+  Back_Fit->SetParameter(2,0.16);*/
+  TF1 *Back_Fit = new TF1("Back_Fit","[A] + [B]*x",1.0,1.4);
+  Back_Fit->FixParameter(1,0);
+  h1mmissK_remove->Fit("Back_Fit","RMQN");
+  
+  TF1 *GausBack = new TF1("GausBack","[Constant]*exp(-0.5*((x-[Mean])/[Sigma])*((x-[Mean])/[Sigma])) + [A] + [B]*x",1.0,1.4);
+  GausBack->FixParameter(0,Back_Fit->GetParameter(0));
+  GausBack->FixParameter(1,Back_Fit->GetParameter(1));  
+  GausBack->SetParameter(2,500);
+  GausBack->SetParameter(3,1.105);
+  GausBack->SetParameter(4,0.015);
+  GausBack->SetParLimits(2,0,5000);
+  GausBack->SetParLimits(3,1.08,1.12);
+  GausBack->SetParLimits(4,0.01,0.1);
+  h1mmissK_remove->Fit("GausBack","RMQN");
+
+  TF1 *Gauss_Fit = new TF1("Gauss_Fit","[Constant]*exp(-0.5*((x-[Mean])/[Sigma])*((x-[Mean])/[Sigma]))",1.0,1.4);
+  Gauss_Fit->FixParameter(0,GausBack->GetParameter(2));
+  Gauss_Fit->FixParameter(1,GausBack->GetParameter(3));
+  Gauss_Fit->FixParameter(2,GausBack->GetParameter(4));
+
+  TH1F *h1mmissK_noback = (TH1F*) h1mmissK_remove->Clone();
+  h1mmissK_noback->Add(Back_Fit,-1);
+
+  //Fit the Lambda Missing Mass
+  TF1 *Lambda_Fit = new TF1("Lambda_Fit","[0]*exp(-0.5*((x-[1])/[2])*((x-[1])/[2]))",1.105,1.15);
+  Lambda_Fit->SetParName(0,"Amplitude");
+  Lambda_Fit->SetParName(1,"Mean");
+  Lambda_Fit->SetParName(2,"Sigma");
+  Lambda_Fit->SetParLimits(0,0.0,10000.0);
+  Lambda_Fit->SetParLimits(1,1.10,1.15);
+  Lambda_Fit->SetParLimits(2,0.0,0.1);
+  Lambda_Fit->SetParameter(0,100);
+  Lambda_Fit->SetParameter(1,1.1075);
+  Lambda_Fit->SetParameter(2,0.011);
+  h1mmissK_remove->Fit("Lambda_Fit","RMQN");
+  TF1 *Lambda_Fit_Full = new TF1("Lambda_Fit_Full","[0]*exp(-0.5*((x-[1])/[2])*((x-[1])/[2]))",1.0,1.25);
+  Lambda_Fit_Full->SetParName(0,"Amplitude");
+  Lambda_Fit_Full->SetParName(1,"Mean");
+  Lambda_Fit_Full->SetParName(2,"Sigma");
+  Lambda_Fit_Full->SetParameter(0,Lambda_Fit->GetParameter(0));
+  Lambda_Fit_Full->SetParameter(1,Lambda_Fit->GetParameter(1));
+  Lambda_Fit_Full->SetParameter(2,Lambda_Fit->GetParameter(2));
+
+  
+  //Start of Canvas Painting
+  /*
+  TCanvas *cCuts = new TCanvas("Cuts","Summary of Common Cuts");
+  cCuts->Divide(2,4);
+  cCuts->cd(1); h1HMS_delta->Draw();
+  cCuts->cd(2); h1HMS_delta_cut->Draw();
+  cCuts->cd(3); h1SHMS_delta->Draw();
+  cCuts->cd(4); h1SHMS_delta_cut->Draw();
+  cCuts->cd(5); HMS_electron->Draw();
+  cCuts->cd(6); HMS_electron_cut->Draw();
+  cCuts->cd(7); h1SHMS_electron->Draw();
+  cCuts->cd(8); h1SHMS_electron_cut->Draw();
+
+  TCanvas *cAngles = new TCanvas("Angles","Summary of Angular Cuts");
+  cAngles->Divide(2,4);
+  cAngles->cd(1); h1HMS_th->Draw();
+  cAngles->cd(2); h1HMS_th_cut->Draw();
+  cAngles->cd(3); h1HMS_ph->Draw();
+  cAngles->cd(4); h1HMS_ph_cut->Draw();
+  cAngles->cd(5); h1SHMS_th->Draw();
+  cAngles->cd(6); h1SHMS_th_cut->Draw();
+  cAngles->cd(7); h1SHMS_ph->Draw();
+  cAngles->cd(8); h1SHMS_ph_cut->Draw();
+  
+  TCanvas *cRand = new TCanvas("Rand","Summary of Random Correction");
+  cRand->Divide(3,3);
+  cRand->cd(1); h1mmissK_cut->Draw();
+  cRand->cd(2); h1mmisspi_cut->Draw();
+  cRand->cd(3); h1mmissp_cut->Draw();
+  cRand->cd(4); h1mmissK_rand->Draw("hist");
+  cRand->cd(5); h1mmisspi_rand->Draw("hist");
+  cRand->cd(6); h1mmissp_rand->Draw("hist");
+  cRand->cd(7); h1mmissK_remove->Draw("hist");
+  cRand->cd(8); h1mmisspi_remove->Draw("hist");
+  cRand->cd(9); h1mmissp_remove->Draw("hist");
+  
+
+  //TCanvas *cBack = new TCanvas("Back","Summary of Background Removal");
+  //cBack->Divide(2,1);
+  //cBack->cd(1); h1mmissK_remove->Draw("hist");
+  //Back_Fit->Draw("same");
+  //cBack->cd(2); h1mmissK_noback->Draw("hist");
+  
+  */
+  TCanvas *cID = new TCanvas("ID","Summary of Kaon Particle ID Cuts");
+  cID->Divide(2,4);
+  cID->cd(1); h2SHMSK_kaon->Draw("Colz");
+  cID->cd(2); h2SHMSK_kaon_cut->Draw("Colz");
+  cID->cd(3); h2SHMSK_pion->Draw("Colz");
+  cID->cd(4); h2SHMSK_pion_cut->Draw("Colz");
+  cID->cd(5); h2ROC1_Coin_Beta_noID_kaon->Draw("Colz");
+  cID->Update();
+  TLine *LowerRand = new TLine(10.0,gPad->GetUymin(),10.0,gPad->GetUymax()); 
+  LowerRand->SetLineColor(kRed); LowerRand->SetLineWidth(1); LowerRand->Draw();
+  TLine *UpperRand = new TLine(30,gPad->GetUymin(),30,gPad->GetUymax()); 
+  UpperRand->SetLineColor(kRed); UpperRand->SetLineWidth(1); UpperRand->Draw();
+  cID->cd(6); h2ROC1_Coin_Beta_kaon->Draw("Colz");
+  cID->cd(7); h1mmissK->Draw();
+  cID->cd(8); h1mmissK_remove->Draw("hist");
+  cID->Update();
+  TLine *LambdaMass = new TLine(1.1156,0,1.1156,gPad->GetUymax()); 
+  LambdaMass->SetLineColor(kBlack); LambdaMass->SetLineWidth(3);
+  LambdaMass->Draw();
+  //Lambda_Fit_Full->Draw("same");
+  Back_Fit->DrawClone("same");
+  GausBack->DrawClone("same");
+  
+  
+  TCanvas *cpiID = new TCanvas("piID","Summary of Pion Particle ID Cuts");
+  cpiID->Divide(2,4);
+  cpiID->cd(1); h2SHMSpi_kaon->Draw("Colz");
+  cpiID->cd(2); h2SHMSpi_kaon_cut->Draw("Colz");
+  cpiID->cd(3); h2SHMSpi_pion->Draw("Colz");
+  cpiID->cd(4); h2SHMSpi_pion_cut->Draw("Colz");
+  cpiID->cd(5); h2ROC1_Coin_Beta_noID_pion->Draw("Colz");
+  TLine *piLowerRand = new TLine(10.0,gPad->GetUymin(),10.0,gPad->GetUymax()); 
+  piLowerRand->SetLineColor(kRed); piLowerRand->SetLineWidth(1); piLowerRand->Draw();
+  TLine *piUpperRand = new TLine(30.0,gPad->GetUymin(),30.0,gPad->GetUymax()); 
+  piUpperRand->SetLineColor(kRed); piUpperRand->SetLineWidth(1); piUpperRand->Draw();
+  cpiID->cd(6); h2ROC1_Coin_Beta_pion->Draw("Colz");
+  cpiID->cd(7); h1mmisspi->Draw();
+  cpiID->cd(8); h1mmisspi_remove->Draw("hist");
+  cpiID->Update();
+  TLine *NeutronMass = new TLine(0.93957,0,0.93957,gPad->GetUymax()); 
+  NeutronMass->SetLineColor(kBlack); NeutronMass->SetLineWidth(3);
+  NeutronMass->Draw();/*
+  TF1 *Neutron_Fit = new TF1("Neutron_Fit","[0]*exp(-0.5*((x-[1])/[2])*((x-[1])/[2]))",0.8,1.0);
+  Neutron_Fit->SetParName(0,"Amplitude");
+  Neutron_Fit->SetParName(1,"Mean");
+  Neutron_Fit->SetParName(2,"Sigma");
+  Neutron_Fit->SetParLimits(0,0.0,10000.0);
+  Neutron_Fit->SetParLimits(1,0.9,1.0);
+  Neutron_Fit->SetParLimits(2,0.0,1.0);
+  Neutron_Fit->SetParameter(0,100);
+  Neutron_Fit->FixParameter(1,0.93957);
+  Neutron_Fit->SetParameter(2,0.011);
+  h1mmisspi_remove->Fit("Neutron_Fit","RMQ");
+  Neutron_Fit->Draw("same");*/
+
+  TCanvas *cpID = new TCanvas("pID","Summary of Proton Particle ID Cuts");
+  cpID->Divide(2,4);
+  cpID->cd(1); h2SHMSp_kaon->Draw("Colz");
+  cpID->cd(2); h2SHMSp_kaon_cut->Draw("Colz");
+  cpID->cd(3); h2SHMSp_pion->Draw("Colz");
+  cpID->cd(4); h2SHMSp_pion_cut->Draw("Colz");
+  cpID->cd(5); h2ROC1_Coin_Beta_noID_proton->Draw("Colz");
+  TLine *pLowerRand = new TLine(-10.0,gPad->GetUymin(),-10.0,gPad->GetUymax()); 
+  pLowerRand->SetLineColor(kRed); pLowerRand->SetLineWidth(1); pLowerRand->Draw();
+  TLine *pUpperRand = new TLine(-30.0,gPad->GetUymin(),-30.0,gPad->GetUymax()); 
+  pUpperRand->SetLineColor(kRed); pUpperRand->SetLineWidth(1); pUpperRand->Draw();
+  cpID->cd(6); h2ROC1_Coin_Beta_proton->Draw("Colz");
+  cpID->cd(7); h1mmissp->Draw();
+  cpID->cd(8); h1mmissp_remove->Draw("hist");
+  
+  TCanvas *cKine = new TCanvas("Kine","Summary of Higher Order Kinematics");
+  cKine->Divide(2,2);
+
+  cKine->cd(1); h2WvsQ2->Draw("Colz"); 
+  h2WvsQ2->SetTitleOffset(1.0,"Y");
+  cKine->cd(3); h2tvsph_q->Draw("SURF1 POL");
+  gPad->SetTheta(90); gPad->SetPhi(180);
+  TPaveText *tvsphi_title = new TPaveText(0.0277092,0.89779,0.096428,0.991854,"NDC");
+  tvsphi_title->AddText("t vs #phi"); tvsphi_title->Draw();
+  TLine *phizero = new TLine(0,0,1,0); 
+  phizero->SetLineColor(kBlack); phizero->SetLineWidth(2); phizero->Draw();  
+  TPaveText *ptphizero = new TPaveText(0.923951,0.513932,0.993778,0.574551,"NDC");
+  ptphizero->AddText("#phi = 0"); ptphizero->Draw();
+  TLine *phihalfpi = new TLine(0,0,0,1); 
+  phihalfpi->SetLineColor(kBlack); phihalfpi->SetLineWidth(2); phihalfpi->Draw();  
+  TPaveText *ptphihalfpi = new TPaveText(0.417855,0.901876,0.486574,0.996358,"NDC");
+  ptphihalfpi->AddText("#phi = #frac{#pi}{2}"); ptphihalfpi->Draw();
+  TLine *phipi = new TLine(0,0,-1,0); 
+  phipi->SetLineColor(kBlack); phipi->SetLineWidth(2); phipi->Draw();  
+  TPaveText *ptphipi = new TPaveText(0.0277092,0.514217,0.096428,0.572746,"NDC");
+  ptphipi->AddText("#phi = #pi"); ptphipi->Draw();
+  TLine *phithreepi = new TLine(0,0,0,-1); 
+  phithreepi->SetLineColor(kBlack); phithreepi->SetLineWidth(2); phithreepi->Draw();  
+  TPaveText *ptphithreepi = new TPaveText(0.419517,0.00514928,0.487128,0.0996315,"NDC");
+  ptphithreepi->AddText("#phi = #frac{3#pi}{2}"); ptphithreepi->Draw();
+  cKine->cd(2); h1epsilon->Draw();
+  h1epsilon->SetTitleOffset(1.0,"Y");
+  //  cKine->cd(4); h1mmissK_remove->Draw("hist"); /*Lambda_Fit_Full->Draw("same");*/ Gauss_Fit->DrawClone("same");
+  cKine->cd(4); h1mmisspi_remove->Draw("hist"); /*Lambda_Fit_Full->Draw("same");*/ Gauss_Fit->DrawClone("same");
+  cKine->Update();
+  h1mmissK_remove->SetTitleOffset(1.0,"Y"); /*h1mmissK_remove->SetAxisRange(1.0,1.25,"X");*/ h1mmissK_remove->SetAxisRange(0.0,gPad->GetUymax(),"Y");
+  //  cKine->Update();
+  TLine *LambdaMass_Full = new TLine(1.1156,gPad->GetUymin(),1.1156,gPad->GetUymax()); 
+  LambdaMass_Full->SetLineColor(kBlack); LambdaMass_Full->SetLineWidth(3);
+  LambdaMass_Full->Draw();
+  TPaveText *ptLambdaEvt = new TPaveText(0.527698,0.652567,0.738421,0.791456,"NDC");
+  //ptLambdaEvt->AddText(Form("# of #Lambda Events: %.0f",200*Lambda_Fit_Full->Integral(1.0,1.25))); ptLambdaEvt->Draw();
+  //ptLambdaEvt->AddText(Form("# of #Lambda Events: %.0f",h1mmissK_remove->Integral(h1mmissK_remove->GetXaxis()->FindBin(1.06),h1mmissK_remove->GetXaxis()->FindBin(1.16)) - (Back_Fit->Integral(1.06,1.16) / 0.005))); ptLambdaEvt->Draw();
+  ptLambdaEvt->AddText(Form("Run: %i",option.Atoi()));
+  ptLambdaEvt->AddText(Form("# of #Lambda Events: %.0f",Gauss_Fit->Integral(1.0,1.25) / 0.005));
+  ptLambdaEvt->Draw();
+  //cout << Back_Fit->Integral(1.06,1.16) / 0.005 << endl;
+  //  cKine->Print(Form("lambda_%i.pdf",option.Atoi()));
+
+#if 1
+
+  // Make Asymmetry graphs
+
+  asym_pi->Sumw2();
+  asym_pi_rand->Sumw2();
+  asym_pi_subrand->Sumw2();
+  asym_K->Sumw2();
+  asym_K_rand->Sumw2();
+  asym_K_subrand->Sumw2();
+  asym_pi->SetAxisRange(-0.12,0.12,"Y");
+  asym_pi_rand->SetAxisRange(-0.12,0.12,"Y");
+  asym_pi_subrand->SetAxisRange(-0.12,0.12,"Y");
+  asym_K->SetAxisRange(-0.12,0.12,"Y");
+  asym_K_rand->SetAxisRange(-0.12,0.12,"Y");
+  asym_K_subrand->SetAxisRange(-0.12,0.12,"Y");
+  TH1F*          asym_pi_th[THBINS];
+  TH1F*          asym_K_th[THBINS];
+  Info("Terminate","Making th bin histos");
+  for(Int_t i=0;i<THBINS;i++) {
+    Float_t thmin=(THMAX/THBINS)*i;
+    Float_t thmax=(THMAX/THBINS)*(i+1);
+    // Need to put angle ranges in name with Form
+    asym_pi_th[i]           = new TH1F(Form("A_pi_%.1f-%.1f",thmin,thmax),
+				       Form("Pion Asymmetry %.1f - %.1f",thmin,thmax),
+				       PHIBINS, -3.14,3.14);
+    asym_pi_th[i]->SetAxisRange(-0.12,0.12,"Y");
+    asym_K_th[i]           = new TH1F(Form("A_K_%.1f-%.1f",thmin,thmax),
+				       Form("Kaon Asymmetry %.1f - %.1f",thmin,thmax),
+				       PHIBINS, -3.14,3.14);
+  }
+  for(Int_t i=0;i<THBINS;i++) {
+    asym_pi_th[i]->Sumw2();
+    asym_K_th[i]->Sumw2();
+  }
+
+  //C.Y. Loop over Out-of-plane, phi_xq bins
+  for(Int_t i=1;i<=PHIBINS;i++) {
+#if 1
+    //C.Y. Loop over In-Plane th_xq_cm bins
+    for(Int_t ith=1;ith<=THBINS;ith++) {
+      Float_t plus_pi = h2ph_q_thxcm_p_pi->GetBinContent(i,ith);
+      Float_t minus_pi = h2ph_q_thxcm_m_pi->GetBinContent(i,ith);
+      Float_t api=0.0;
+      Float_t errorpi=0.0;
+      if(plus_pi + minus_pi > 0.5) {
+	api = (plus_pi-minus_pi)/(plus_pi+minus_pi);
+	errorpi = 2*TMath::Sqrt(plus_pi*minus_pi*(plus_pi+minus_pi))/((plus_pi+minus_pi)*(plus_pi+minus_pi));
+      }
+      cout << i << " " << ith << " " << api << " " << errorpi << endl;
+      asym_pi_th[ith-1]->SetBinContent(i,api); 
+      asym_pi_th[ith-1]->SetBinError(i,errorpi); 
+    }
+#endif
+    // Asymmetry for pions
+    Float_t plus_pi = h1ph_q_p_pi->GetBinContent(i);
+    Float_t minus_pi = h1ph_q_m_pi->GetBinContent(i);
+    Float_t plus_pi_rand = h1ph_q_p_pi_rand->GetBinContent(i);
+    Float_t minus_pi_rand = h1ph_q_m_pi_rand->GetBinContent(i);
+    Float_t pi_rand_forasy = (plus_pi_rand+minus_pi_rand)/10.0;
+    Float_t pi_rand_forasy_err2 = (plus_pi_rand+minus_pi_rand)/100.0;
+
+    Float_t plus_K = h1ph_q_p_K->GetBinContent(i);
+    Float_t minus_K = h1ph_q_m_K->GetBinContent(i);
+    Float_t plus_K_rand = h1ph_q_p_K_rand->GetBinContent(i);
+    Float_t minus_K_rand = h1ph_q_m_K_rand->GetBinContent(i);
+    Float_t K_rand_forasy = (plus_K_rand+minus_K_rand)/10.0;
+    Float_t K_rand_forasy_err2 = (plus_K_rand+minus_K_rand)/100.0;
+
+    Info("Terminate","Filling asym_pi");
+    Float_t api=0.0;
+    Float_t errorpi=0.0;
+    Float_t api_subrand=0.0;
+    Float_t errorpi_subrand=0.0;
+    if(plus_pi+minus_pi > 0.5) {
+      api = (plus_pi-minus_pi)/(plus_pi+minus_pi);
+      errorpi = 2*TMath::Sqrt(plus_pi*minus_pi*(plus_pi+minus_pi))/((plus_pi+minus_pi)*(plus_pi+minus_pi));
+      api_subrand = (plus_pi-minus_pi)/(plus_pi+minus_pi-2*pi_rand_forasy);
+      errorpi_subrand = 2*TMath::Sqrt( (minus_pi-pi_rand_forasy)*(minus_pi-pi_rand_forasy)*plus_pi + 
+				       (plus_pi-pi_rand_forasy)*(plus_pi-pi_rand_forasy)*minus_pi + 
+				       (plus_pi-minus_pi)*(plus_pi-minus_pi)*pi_rand_forasy_err2)
+	/((plus_pi+minus_pi-pi_rand_forasy)*(plus_pi+minus_pi-pi_rand_forasy));
+    }
+    asym_pi->SetBinContent(i,api);
+    asym_pi->SetBinError(i,errorpi);
+    asym_pi_subrand->SetBinContent(i,api_subrand);
+    asym_pi_subrand->SetBinError(i,errorpi_subrand);
+
+    Info("Terminate","Filling asym_pi_rand");
+    Float_t api_rand=0.0;
+    Float_t errorpi_rand=0.0;
+    if(plus_pi_rand+minus_pi_rand > 0.5) {
+      api_rand = (plus_pi_rand-minus_pi_rand)/(plus_pi_rand+minus_pi_rand);
+      errorpi_rand = 2*TMath::Sqrt(plus_pi_rand*minus_pi_rand*(plus_pi_rand+minus_pi_rand))/((plus_pi_rand+minus_pi_rand)*(plus_pi_rand+minus_pi_rand));
+    }
+    asym_pi_rand->SetBinContent(i,api_rand);
+    asym_pi_rand->SetBinError(i,errorpi_rand);
+
+
+    Float_t aK=0.0;
+    Float_t errorK=0.0;
+    Float_t aK_subrand=0.0;
+    Float_t errorK_subrand=0.0;
+    if(plus_K+minus_K > 0.5) {
+      aK = (plus_K-minus_K)/(plus_K+minus_K);
+      errorK = 2*TMath::Sqrt(plus_K*minus_K*(plus_K+minus_K))/((plus_K+minus_K)*(plus_K+minus_K));
+      aK_subrand = (plus_K-minus_K)/(plus_K+minus_K-2*K_rand_forasy);
+      errorK_subrand = 2*TMath::Sqrt( (minus_K-K_rand_forasy)*(minus_K-K_rand_forasy)*plus_K + 
+				       (plus_K-K_rand_forasy)*(plus_K-K_rand_forasy)*minus_K + 
+				       (plus_K-minus_K)*(plus_K-minus_K)*K_rand_forasy_err2)
+	/((plus_K+minus_K-K_rand_forasy)*(plus_K+minus_K-K_rand_forasy));
+    }
+    asym_K->SetBinContent(i,aK);
+    asym_K->SetBinError(i,errorK);
+    asym_K_subrand->SetBinContent(i,aK_subrand);
+    asym_K_subrand->SetBinError(i,errorK_subrand);
+
+    Float_t aK_rand=0.0;
+    Float_t errorK_rand=0.0;
+    if(plus_K_rand+minus_K_rand > 0.5) {
+      aK_rand = (plus_K_rand-minus_K_rand)/(plus_K_rand+minus_K_rand);
+      errorK_rand = 2*TMath::Sqrt(plus_K_rand*minus_K_rand*(plus_K_rand+minus_K_rand))/((plus_K_rand+minus_K_rand)*(plus_K_rand+minus_K_rand));
+    }
+    asym_K_rand->SetBinContent(i,aK_rand);
+    asym_K_rand->SetBinError(i,errorK_rand);
+
+
+    cout << i << " " << api << " " << aK << endl;
+  }//end loop over phi_xq bins
+
+  TCanvas *cAsym = new TCanvas("Asym","Asymmetries");
+  cAsym->Divide(2,2);
+  cAsym->cd(1); asym_pi->Draw();
+  cAsym->cd(2); asym_pi_subrand->Draw();
+  cAsym->cd(3); asym_K->Draw();
+  cAsym->cd(4); asym_K_subrand->Draw();
+  cKine->Update();
+
+#if 1
+  TCanvas *cAsym2 = new TCanvas("Asym2","Asymmetry in th_cm bins",1000,1000);
+  cAsym2->Divide(2,THBINS/2);
+
+  for(Int_t i=1;i<=THBINS;i++) {
+    cAsym2->cd(i);
+    asym_pi_th[i-1]->Draw();
+  }
+
+  cAsym2->Update();
+#endif
+#endif
+
+  //Start output of .root file with all histograms
+  
+  // Save TCanvas
+  //  cKine->Print(Form("../OUTPUT/Kinematics_Run%i.pdf",option.Atoi()));
+
+  TFile *Histogram_file = new TFile(Form("../HISTOGRAMS/KaonLT_Run%i.root",option.Atoi()),"RECREATE");
+  TDirectory *DCuts = Histogram_file->mkdir("Spectrometer Delta and Calorimeter Cuts"); DCuts->cd();
+  h1HMS_delta->Write("HMS Delta Before Cuts"); h1HMS_delta_cut->Write("HMS Delta After Cuts");
+  h1SHMS_delta->Write("SHMS Delta Before Cuts"); h1SHMS_delta_cut->Write("SHMS Delta After Cuts");
+  HMS_electron->Write("HMS Calorimeter Before Cuts"); HMS_electron_cut->Write("HMS Calorimeter After Cuts");
+  h1SHMS_electron->Write("SHMS Calorimeter Before Cuts"); h1SHMS_electron_cut->Write("SHMS Calorimeter After Cuts");
+
+  TDirectory *DAngles = Histogram_file->mkdir("Spectrometer Angular Cuts"); DAngles->cd();
+  h1HMS_th->Write("HMS Theta Before Cuts"); h1HMS_th_cut->Write("HMS Theta After Cuts");
+  h1SHMS_th->Write("SHMS Theta Before Cuts"); h1SHMS_th_cut->Write("SHMS Theta After Cuts");
+  h1HMS_ph->Write("HMS Phi Before Cuts"); h1HMS_ph_cut->Write("HMS Phi After Cuts");
+  h1SHMS_ph->Write("SHMS Phi Before Cuts"); h1SHMS_ph_cut->Write("SHMS Phi After Cuts");
+
+  TDirectory *DRand = Histogram_file->mkdir("Random Subtraction Summary"); DRand->cd();
+  h1mmissK_cut->Write("Kaon Missing Mass, with Randoms");
+  h1mmissK_rand->Write("Kaon Missing Mass, only Randoms");
+  h1mmissK_remove->Write("Kaon Missing Mass, Randoms Removed");
+  h1mmisspi_cut->Write("Pion Missing Mass, with Randoms");
+  h1mmisspi_rand->Write("Pion Missing Mass, only Randoms");
+  h1mmisspi_remove->Write("Pion Missing Mass, Randoms Removed");
+  h1mmissp_cut->Write("Proton Missing Mass, with Randoms");
+  h1mmissp_rand->Write("Proton Missing Mass, only Randoms");
+  h1mmissp_remove->Write("Proton Missing Mass, Randoms Removed");
+
+  TDirectory *DKaon = Histogram_file->mkdir("Kaon Identification Summary"); DKaon->cd();
+  h2SHMSK_kaon->Write("SHMS HGC vs Aerogel, no cuts");
+  h2SHMSK_kaon_cut->Write("SHMS HGC vs Aerogel, with cuts");
+  h2SHMSK_pion->Write("SHMS HGC vs CAL, no cuts");
+  h2SHMSK_pion_cut->Write("SHMS HGC vs CAL, with cuts");
+  h2ROC1_Coin_Beta_noID_kaon->Write("Kaon-Electron Coincidence Time, no cuts");
+  h2ROC1_Coin_Beta_kaon->Write("Kaon-Electron Coincidence Time, with cuts");
+  h1mmissK->Write("Kaon Missing Mass, no cuts");
+  h1mmissK_remove->Write("Kaon Missing Mass, with cuts");
+
+  TDirectory *DPion = Histogram_file->mkdir("Pion Identification Summary"); DPion->cd();
+  h2SHMSpi_kaon->Write("SHMS HGC vs Aerogel, no cuts");
+  h2SHMSpi_kaon_cut->Write("SHMS HGC vs Aerogel, with cuts");
+  h2SHMSpi_pion->Write("SHMS HGC vs CAL, no cuts");
+  h2SHMSpi_pion_cut->Write("SHMS HGC vs CAL, with cuts");
+  h2ROC1_Coin_Beta_noID_pion->Write("Pion-Electron Coincidence Time, no cuts");
+  h2ROC1_Coin_Beta_pion->Write("Pion-Electron Coincidence Time, with cuts");
+  h1mmisspi->Write("Pion Missing Mass, no cuts");
+  h1mmisspi_remove->Write("Pion Missing Mass, with cuts");
+
+  TDirectory *DProton = Histogram_file->mkdir("Proton Identification Summary"); DProton->cd();
+  h2SHMSp_kaon->Write("SHMS HGC vs Aerogel, no cuts");
+  h2SHMSp_kaon_cut->Write("SHMS HGC vs Aerogel, with cuts");
+  h2SHMSp_pion->Write("SHMS HGC vs CAL, no cuts");
+  h2SHMSp_pion_cut->Write("SHMS HGC vs CAL, with cuts");
+  h2ROC1_Coin_Beta_noID_proton->Write("Proton-Electron Coincidence Time, no cuts");
+  h2ROC1_Coin_Beta_proton->Write("Proton-Electron Coincidence Time, with cuts");
+  h1mmissp->Write("Proton Missing Mass, no cuts");
+  h1mmissp_remove->Write("Proton Missing Mass, with cuts");
+
+  TDirectory *DKine = Histogram_file->mkdir("Higher Order Kinematics Summary"); DKine->cd();
+  h2WvsQ2->Write("W vs Q2");
+  h2tvsph_q->Write("t vs phi");
+  h1epsilon->Write("epsilon");
+  h1ph_q_p_pi->Write("phip_pi");
+  h1ph_q_m_pi->Write("phim_pi");
+  h1ph_q_p_K->Write("phip_K");
+  h1ph_q_m_K->Write("phim_K");
+  asym_pi->Write("A_pi");
+  asym_pi_rand->Write("A_pi_rand");
+  asym_K->Write("A_K");
+  asym_K_rand->Write("A_K_rand");
+  h1mmissK_remove->Write("Kaon Missing Mass, with cuts");
+
+  TDirectory *DEDTM = Histogram_file->mkdir("Accepted EDTM Events"); DEDTM->cd();
+  EDTM->Write("EDTM TDC Time");
+
+  TDirectory *DASY = Histogram_file->mkdir("Asymmetries"); DASY->cd();
+  asym_pi->Write("A_pi");
+  asym_pi_rand->Write("A_pi_rand");
+  asym_pi_subrand->Write("A_pi_subrand");
+  asym_K->Write("A_K");
+  asym_K_rand->Write("A_K_rand");
+  asym_K_subrand->Write("A_K_subrand");
+  for(Int_t i=0;i<THBINS;i++) {
+    Float_t thmin=(THMAX/THBINS)*i;
+    Float_t thmax=(THMAX/THBINS)*(i+1);
+    asym_pi_th[i]->Write(Form("A_pi Theta Bin %d",i+1));
+    for(Int_t iphi=0;iphi< PHIBINS;iphi++) {
+      Float_t asy = asym_pi_th[i]->GetBinContent(iphi+1);
+      Float_t asyerr = asym_pi_th[i]->GetBinError(iphi+1);
+      Float_t phi = asym_pi_th[i]->GetBinCenter(iphi+1);
+      cout << i << " " << thmin << " " << thmax << " " << phi << " " << asy << " " << asyerr << endl;
+    }
+  }
+
+  Histogram_file->Close();
+  
+  //cout << Form("Number of good kaon events: %.0f +/- %.0f\n",200*Lambda_Fit_Full->Integral(1.0,1.25),sqrt(200*Lambda_Fit_Full->Integral(1.0,1.25)));
+  //cout << Form("Number of good kaon events: %.0f +/- %.0f\n",h1mmissK_remove->Integral(h1mmissK_remove->GetXaxis()->FindBin(1.06),h1mmissK_remove->GetXaxis()->FindBin(1.16)));
+
+  // values for controlling format
+  /*
+  const string sep = "	" ;
+  const int total_width = 154;
+  const string line = sep + string( total_width-1, '-' ) + '|' ;
+
+
+  ofstream myfile1;
+  myfile1.open ("kaonyieldVar", fstream::app);
+  myfile1 << Form("%.0f     %.0f     %.0f     ", 200*Lambda_Fit_Full->Integral(1.0,1.25), sqrt(200*Lambda_Fit_Full->Integral(1.0,1.25)), EDTM->GetEntries());
+  myfile1.close();*/
+}

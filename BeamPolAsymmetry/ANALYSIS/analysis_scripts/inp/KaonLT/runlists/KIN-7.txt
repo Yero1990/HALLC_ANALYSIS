@@ -1,0 +1,15 @@
+#Aerogel changed to SP-11 -> https://logbooks.jlab.org/entry/3604756
+#Kinematics changed for H(e,e'K+): Q2=4.4, W=2.74
+#SHMS: P = +5.389 GeV/c, theta_shms = 9.808 deg
+#HMS:  P = -4.712 GeV/c, theta_hms  = 17.08 deg
+4965
+4966
+4967
+4968
+4969
+4970
+4971
+4972
+4973
+4974
+4975

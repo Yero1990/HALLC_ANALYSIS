@@ -1,0 +1,116 @@
+Kaon LT Beam-Spin Asymmetry Analysis
+
+Date: August 11, 2020
+
+-------QUESTIONS TO ASK IN MEETING-------
+I have run lists from S. Wood, indicating when the IHWP was in or out,
+which I can use to flip the sign on the helicity quartet signal.
+The run list Steve compiled was from: 4865 - 8138
+
+From the Kaon LT page: https://redmine.jlab.org/issues/423#note-3,
+R. Trotta has compiled a list of runs: 4865 - 5232, which are good for analysis
+
+What about runs from: 5300 ~ 8000 ??? Why are these runs NOT listed in the Kaon LT Redmine? 
+Peter Bosted mention Kaon LT had two run periods: Fall 2018 (4800 - 5200 or so, same beam energy from Halls C,B,
+used formula theta_prec) an Spring 2019 (7800-8100)
+
+From the HCLOG: Coin Runs: (4865 - 7045) --> Fall 2018 run period  (ANALYZE THIS RUN PERIOD FIRST, since A, B
+had 10.6 GeV beam, and polarization was mostly longitudinal to C)
+                            (~ 7500 - 8100) --> Spring 2019 period (Kaon LT)
+
+
+
+Outline the analysis steps necessary to carry out the Kaon LT Beam Spin Asymmetry Analysis (BSA)
+at Hall C using opportunistic longitudinal polarized beam delivered to Hall B, which resulted in
+significant beam polarization delivered to Hall C during the Fall 2018 run period.
+
+The ultimate goal of this analysis is to get publishable results for the H(e,e'K+) and H(e,e'pi+) beam-spin asymmetries at large Q2
+
+
+STEPS:
+0) Try to reproduce the beam asymmetry calculated by S. Wood for a single Kaon LT kinematic setting first, using the steps outlined below.
+
+1) Determine whether the IHWP was IN or OUT for all the Kaon LT runs. (This was done by S. Wood, and I have the list of runs)
+   *A wave plate is an optical divide that alters the polarization state of a light wave traveling through it (Wikipedia)
+
+   I. Check the Hall C beam polarization for these runs (should be at least >50%) for meaningful analysis. (S. Wood calculated Hall C pol
+   to be ~longitudinal for the Fall 2018 run period, where Halls A & B had the same beam energy)  ﻿
+      (How do we actually measure Hall C average beam polarization without using the Hall C polarimeter?)
+         --From Steve: We should determine if the asymmetry is statistically significant. If it is, the we should ask D. Gaskell how to
+	 determine the beam polarization.
+      Hall B measured ~88% polarized beam periodically, however, the spin precesses in the Hall C arc, which results in the electron
+      spin NOT being completely aligned along the beam momentum (nearly longitudinally polarized). See Steve Wood’s talk: https://github.com/Yero1990/HallC_PostDoc/blob/master/BeamPolAsymmetry/Helicity_2019.pdf
+      The spin precession angle is proportional to the beam energy and the bend angle of the electron at the Hall C arc. 
+
+  II. Once the Kaon LT runs with high beam polarization have been selected, add the THcHelicity module to the replay script to get the
+      relevant beam helicity variables and do a 1st pass of the full replay to start analyzing the ROOTfiles (ref. times, time windows, calibrations, etc.)
+
+      Question 1: Has the Kaon LT group selected the runs for which there is good beam polarization in Hall C ?  NO (P. Bosted has looked at Kaon LT runs, as a well as S. Wood)
+
+      Question 2: Has the Kaon LT group added the THcHelicity Module to the replay scripts so that the beam-helicity leaf variables are in their ROOTfiles?
+                  If so, could I have a copy of the Kaon LT ROOTfiles to save time doing the replays myself?
+		  Also, could I have a copy of the standard.kinematics (asumming spec. angles have been checked against camera, and spec. moemntum
+		  is corrected).  --> It might be easier to simply clone the Kaon LT repo and replay the runs with the pre-determined parameters and THcHelicity
+     Answer 2: R. Trotta will notify me when they do a full replay of Kaon LT after making some changes.
+
+      Question 3: Does the Kaon LT group do their analysis in python? Is there python code for analyzing the beam asymmetry? NO. Otherwise, I can write my
+      own set of C++ functions just for the beam asymmetry analysis.
+
+      Question 4: Has the Kaon LT group only looked at H(e,e'K+)?  What about selecting the pions in the Missing Mass Spectra?
+                  For the beam-asymmetry analysis, I think both need to be done so that the Kaon and pion asymmetry may be extracted separately.
+
+2) Set reference times, detector time windows and perform detector calibrations (Ideally, the Kaon LT group has already done these analyses as well as determine the PID cuts. The beam asymmetry analysis SHOULD
+   use the same PID cuts to select kaons / pions to determine the asymmetry. This way, our beam asymmetry results are consistent with the Kaon LT group results on the unpolarized cross sections).
+
+   I. The Kaon LT run list in Redmine is grouped based on the kinematics: (Q2, W, shms_angle).
+      Question 1: Did the reference times / detector times windows change with setting?  Or, were ref. times/det. time windows/det. calibrations done separately for each kinematic setting?
+
+      Question 2: Which detectors did the Kaon LT group calibrated? Maybe I can use those calibration results as well. Similarly for the ref. time windows and det. time window cuts YES.
+      
+3) Extract Beam-Spin Asymmetries for H(e,e'K+) and H(e,e'pi+)
+
+   I. Apply efficiency corrections to data yield. Asymmetry is defined as: Asym = (N+ - N- ) / (N+ + N-), where N+, N- are the detected particles (either K+ or pi+)
+      which correspond either a "+" or "-" polarized electron which trasnferred the longitudinal polarization to the K+ or pi+ via the One-Photon Exchange Approximation (OPEA)
+
+      Question 1: Since a ratio of the corrected yield for "+" and "-" is taken, which correction factors actually cancel out in the asymmetry?
+                  One would have to look at the trigger rates to make a determination. I would think for similar trigger rates of N+ and N-, have similar efficiencies
+      
+  II. Calculate the beam-spin asymmetries after applying the necessary corrections to the N+ and N- yields.
+
+      Question 1: When I calculate Asym = (N+ - N- ) / (N+ + N-), I imagine it should NOT be done event by event since that would result in Asym = 1 always.
+                  Im guessing I have to fill a histogram for N+ and N- separately. However, which histogram? Maybe cos(phi_cm) for the Kaon / Pion?
+		  That is, the beam asymmetry as a function of the out of plane angle of the Kaon and pion.
+
+      Question 2: How should I bin the asymmetries in Hall C? Should I calculate the beam asymmetry for each Kaon LT kin. setting separately?
+                  Steve Wood mentioned I could combine the central angle settings. 
+
+
+THEORY QUESTIONS:
+
+The theoretical cross sections for Kaon LT has a 5th structure function which corresponds to the beam-asymmetry is there was polarized beam.
+Theoretically, the Kaon LT cross section can be separated into an unpolarized and polarized part. Im ONLY analyzing the polarized part, whereas the Kaon LT group is looking at the unpolarized part.
+
+Question 0: Does a Kaon LT model for the cross sections exist in SIMC? Older Pion and Kaon models.  *** Look for param06.f in SIMC ***  Used SIMC to compare data/SIMC acceptance and kinematics, DELTA, XPTAR, YPTAR, MissingMass, etc.
+            What model is the Kaon LT group using to make comparisons to theory? *** param06.f in SIMC ***
+	    What theory/models can we compare our beam asymmetry results for the H(e,e'K+) and H(e,e'pi+) ?
+
+Question 1: For the Kaon LT group, how is this struture function integrated out of the unpolarized cross sections? Is it by integrating over sin (phi_cm), i.e., NOT binning in sin(phi_cm)?
+
+(see my beam_asymmetry_questions.key slides) Since the theoretical cross section can be expressed as: d_sig / d_Omega_(K+, pi+) = sigma_unpol + (h * sig_LT_prime * sin(phi_cm_(K+, pi+) ) 
+                                             where, sigma_LT_prime is the polarized or 5th structure function. Then theoretically, one can express the asymmetry as:
+					     A_LT_prime = h * sig_LT_prime * sin(phi_cm_(K+, pi+) / sig_unpol.
+
+To extract the polarized structure function requires the knowledge of the unpolarized cross section. This can be determined experimentally (Kaon LT group working on it!)
+Or, the beam asymmetry can simply be compared directly to the theoretical beam asymmetry, if a model for the theoretical Kaon LT cross sections is given?
+
+
+-------NOTES FROM THE MEETING------
+** P. Bosted had requested polarized e- beam
+** ~bosted/ptc/corrlist.txt  ----> corrected momenta for Kaon LT, checked camera angles
+** skimfiles, each line is an event (PeterB.C produces these skimfiles)
+** /group/c-sidis/bostes/simc/infiles  (SIMC files),    Look at makesimcfiles.f,  
+** Stephen Stepanyan (keeps track of Hall B polarization)
+** Ask Garth for Kaon LT mailing lists. --DONE
+** Richard Trotta will notify me next week, when the KaonLT group
+   finishes doing a full replay of KaonLT with correctecly implemented THcHelicity  
+---------------------------------------

@@ -1,0 +1,8 @@
+This directory contains dummy inpt files necessary for the
+baseAnaluzer.cpp code to run.
+
+The main putpose is to carry out live time studies/tests. Some of the
+methods may not be necessary to use and can be commented out. For example,
+CombineHistos, or WriteHist methods can be ignored in these tests.
+
+The relevant runs are located in /runlists directory

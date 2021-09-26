@@ -1,0 +1,7 @@
+#Kinematics changed for H(e,e'K+): Q2=3, W=2.32,
+#SHMS: P = +3.486 GeV/c, theta_shms = 15.18 deg
+#HMS:  P = -6.590 GeV/c, theta_hms  = 11.91 deg 
+4865
+4866
+4867
+4868
