@@ -456,7 +456,6 @@ void baseAnalyzer::SetFileNames()
   input_CutFileName = trim(split(FindString("cuts_file", main_controls_fname.Data())[0], '=')[1]);
   input_HBinFileName = trim(split(FindString("hist_file", main_controls_fname.Data())[0], '=')[1]);
   input_SetFileName = trim(split(FindString("fname_file", main_controls_fname.Data())[0], '=')[1]);
-
   
   //Define Input (.root) File Name Patterns (read principal ROOTfile from experiment)
   temp = trim(split(FindString("input_ROOTfilePattern", input_SetFileName.Data())[0], '=')[1]);
@@ -466,7 +465,8 @@ void baseAnalyzer::SetFileNames()
   //Define Input (.report) File Name Pattern (read principal REPORTfile from experiment)
   temp = trim(split(FindString("input_REPORTPattern", input_SetFileName.Data())[0], '=')[1]);
   data_InputReport = Form(temp.Data(), run);
-    
+
+
   //----------------------------------
   //----OUTPUTS (USER WRITES OUT)-----
   //----------------------------------
@@ -2455,7 +2455,7 @@ void baseAnalyzer::ApplyWeight()
   //FullWeight = 1. / (total_charge_bcm_cut * hTrkEff * pTrkEff * tLT_trig * tgtBoil_corr * hadAbs_corr);
 
   //For testing purposes, only normalize by total charge
-  FullWeight = 1. / total_charge_bcm_cut;
+  FullWeight = 1.; // / total_charge_bcm_cut;
   
   //Scale Data Histograms by Full Weight (Each run for a particular kinematics can then be combined, once they are scaled by the FullWeight)
 
@@ -2949,11 +2949,12 @@ void baseAnalyzer::run_data_analysis()
   EventLoop();
 
   CalcEff();
-  //ApplyWeight();
+  ApplyWeight();
 
-  //WriteHist();
+  WriteHist();
   WriteReport();
-  //CombineHistos();
+  CombineHistos();
+
   //------------------
   
 }

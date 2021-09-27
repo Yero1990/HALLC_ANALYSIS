@@ -58,7 +58,7 @@ c_pBetaNtrk_max = 1.5
 
 #---------DATA/SIMC ANALYSIS CUTS (SPECIFIC FORMAT FOR HELICITY ANALYSIS)----------
 
-# For a the description of each of these cuts: See the 'helicityAnalyzer.h' header file 
+# For a description of each of these cuts: See the 'helicityAnalyzer.h' header file 
 # Three analysis are done in the same code (Kaon, Pion, Proton) beam asymmetry (use the cuts for the relevant analyses)
 
 #------Acceptance Cuts------

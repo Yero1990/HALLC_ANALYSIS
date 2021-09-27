@@ -7,8 +7,8 @@ Date Created: August 22, 2020
 #ifndef BASE_ANALYZER_H
 #define BASE_ANALYZER_H
 
-#include "utils/parse_utils.h" //useful C++ string parsing utilities
-#include "utils/hist_utils.h" //useful C++ histogram bin extraction utility
+#include "./UTILS/parse_utils.h" //useful C++ string parsing utilities
+#include "./UTILS/hist_utils.h" //useful C++ histogram bin extraction utility
 
 class baseAnalyzer
 {

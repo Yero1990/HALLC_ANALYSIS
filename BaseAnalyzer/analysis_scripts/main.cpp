@@ -1,7 +1,5 @@
 #include "baseAnalyzer.h"
 #include "baseAnalyzer.cpp"
-#include "helicityAnalyzer.h"
-#include "helicityAnalyzer.cpp"
 #include <iostream>
 
 int main()
@@ -44,7 +42,7 @@ int main()
   analysis_type  = trim(split(FindString("analysis_type", "main_controls.inp")[0], '=')[1]);
   electron_arm   = trim(split(FindString("electron_arm", "main_controls.inp")[0], '=')[1]);
   daq_mode       = trim(split(FindString("daq_mode", "main_controls.inp")[0], '=')[1]);
-  helicity_flag       = stoi(split(FindString("helicity", "main_controls.inp")[0], '=')[1]);
+  helicity_flag  = stoi(split(FindString("helicity", "main_controls.inp")[0], '=')[1]);
   
   //Read list of data runs to analyze
   ifstream ifs;
@@ -61,19 +59,12 @@ int main()
       run = stoi(line);
 
       cout << "============================" << endl;
-      cout << "ANALYZING KAON LT RUN: " << run << endl;
+      cout << "ANALYZING RUN: " << run << endl;
       cout << "============================" << endl;
+
       //----initialize baseAnalyzer (base class)----
-      
-      //baseAnalyzer ba(run, daq_mode.Data(), electron_arm.Data(), analysis_type.Data(), 0);
-      //ba.run_data_analysis();
-      
-      
-      //----initialize helicityAnalyzer (derived class)-----
-      
-      //testing a derived class (for beam asymmetry analysis)
-      helicityAnalyzer h(run, daq_mode.Data(), electron_arm.Data(), analysis_type.Data(),  helicity_flag);
-      h.run_helicity_analysis();
+      baseAnalyzer ba(run, daq_mode.Data(), electron_arm.Data(), analysis_type.Data(), 0);
+      ba.run_data_analysis();
 
        
     }

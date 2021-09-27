@@ -949,7 +949,7 @@ void helicityAnalyzer::EventLoop()
 
 		  //--------------------------------------------------------------------
 		  //---------HISTOGRAM CATEGORY: Particle Identification (PID)----------
-		  //           >>>>  INHERITED FROM baseAnalyzer CLASS  <<<<<
+		  //               INHERITED FROM baseAnalyzer CLASS 
 		  //--------------------------------------------------------------------
 
 		  // C.Y. NEED TO: Make Spectrometer Acceptance Cuts here (BASED ON THE 1D ACCEPTANCE HISTOGRAMS FILLED BELOW)
@@ -1472,7 +1472,7 @@ void helicityAnalyzer::ApplyWeight()
   hadAbs_corr = 1.;   //Assume no hadron absorption for now
   hadAbs_corr_err = -1.;
 
-  //Modify Full Weight accordingly as Kaon LT group gets has results for certain corrections
+  //Modify Full Weight accordingly as Kaon LT group gets results for certain corrections
   //FullWeight = 1. / (total_charge_bcm_cut * hTrkEff * pTrkEff * tLT_trig * tgtBoil_corr * hadAbs_corr);
 
   //For testing purposes, only normalize by total charge.
