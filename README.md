@@ -1,7 +1,7 @@
 # HALL C ANALYSIS
 This repository stores a general as well as experiment-specific upper-level analysis codes. Each experiment-specific code inherits its methods from the base analyzer code. 
 
-I will also (in the future) add a directory for genric 
+I will also (in the future) add a directory for generic 
 low-level analysis codes (for example, codes to set reference times, time windows, detector calibrations, etc.)
 
 ## Upper-Level Analysis Overview
@@ -34,3 +34,8 @@ Assuming all the necessary input files are in place, then from relevant `analysi
 `root -l main.cpp`
 
 **NOTE**: Usually in experiment, there are multiplle kinematics measured, and for each kinematic, multiple runs are taken to gain the desired statistical precision. Currently, our analysis code is structured to take multiple runs of the same kinematics. So if  multiple kinematics settings are being analyzed, it is suggested that the user makes additional directories with the kinematics identifier (KIN-I, KIN-II, etc.), to store these files, and keep the directorty structure organized and clean. There are no specific guides or direction as to how to manage multiple kinematics files, so the user must get creative.
+
+## To-Do List
+Currently, analysis class is ONLY set up to analyze coincidence mode DAQ
+and only experimental data. The code needs to be updated to analyze SIMC
+as well.
