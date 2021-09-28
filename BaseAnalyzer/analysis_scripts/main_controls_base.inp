@@ -41,7 +41,7 @@ combine_histos = 1
 # Set Input File Names Path
 #---------------------------
 
-fname_file =   inp/base/set_basic_filenames.inp
-cuts_file  =   inp/base/set_basic_cuts.inp
-hist_file  =   inp/base/set_basic_histos.inp
-run_list   =   inp/base/runlist.txt
+fname_file =   inp/set_basic_filenames.inp
+cuts_file  =   inp/set_basic_cuts.inp
+hist_file  =   inp/set_basic_histos.inp
+run_list   =   inp/runlist.txt
