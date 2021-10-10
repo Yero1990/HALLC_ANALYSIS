@@ -1,0 +1,5 @@
+input_ROOTfilePattern=/u/group/c-kaonlt/USERS/cyero/HALLC_ANALYSIS/BeamPolAsymmetry/analysis_scripts/ROOTfiles/coin_replay_Full_%d_-1.root
+input_REPORTPattern=/u/group/c-kaonlt/USERS/cyero/HALLC_ANALYSIS/BeamPolAsymmetry/analysis_scripts/REPORT_OUTPUT/replay_coin_production_%d_-1.report
+output_ROOTfilePattern=/u/group/c-kaonlt/USERS/cyero/HALLC_ANALYSIS/BeamPolAsymmetry/analysis_scripts/OUTPUT/basic_histos_%d.root
+output_ROOTfilePattern_final=/u/group/c-kaonlt/USERS/cyero/HALLC_ANALYSIS/BeamPolAsymmetry/analysis_scripts/OUTPUT/basic_histos_final.root
+output_REPORTPattern=/u/group/c-kaonlt/USERS/cyero/HALLC_ANALYSIS/BeamPolAsymmetry/analysis_scripts/OUTPUT/basic_report.txt

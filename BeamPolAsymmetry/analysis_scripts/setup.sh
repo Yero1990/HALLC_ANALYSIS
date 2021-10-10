@@ -7,14 +7,14 @@ echo "Setting Filename PATH Variables . . ."
 
 # set path to wtite the filenames input file (make sure this coincides with
 # the symlink filename path in the main_controls.inp file
-ofname="./inp/KaonLT/set_basic_filenames_KaonLT.inp"
+ofname="./inp/KaonLT/set_basic_filenames_KaonLT_ifarm.inp"
 
 
 ### Check if the required directories do not exist ###
 if [ ! -d ${PWD}"/ROOTfiles" ] 
 then
     echo "Directory ./ROOTfiles DOES NOT exist."
-    echo "You MUST create (or symbolically link) ./ROOTfiles direcotry. Exiting Now . . .  "
+    echo "You MUST create (or symbolically link) ./ROOTfiles directory. Exiting Now . . .  "
     exit 2
 fi
 
@@ -33,7 +33,7 @@ fi
 
 
 #define file paths and filename patterns (where %d is a placeholder for the run number)
-input_ROOTfilePattern=${PWD}"/ROOTfiles/coin_replay_Full_%d_100000.root"            #input analysis ROOTfile naming pattern
+input_ROOTfilePattern=${PWD}"/ROOTfiles/coin_replay_Full_%d_-1.root"            #input analysis ROOTfile naming pattern
 input_REPORTPattern=${PWD}"/REPORT_OUTPUT/replay_coin_production_%d_-1.report"      #REPORT OUTPUT (usually created by hallc_replay) naming pattersn
 
 output_ROOTfilePattern=${PWD}"/OUTPUT/basic_histos_%d.root"                         # output ROOTfile per run results

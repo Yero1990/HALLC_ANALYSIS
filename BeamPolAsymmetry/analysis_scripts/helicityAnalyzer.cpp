@@ -677,7 +677,7 @@ void helicityAnalyzer::EventLoop()
     {
       cout << "Loop over Data Events | nentries -->  " << nentries << endl;
       
-      for(int ientry=0; ientry<nentries; ientry++)
+      for(int ientry=0; ientry<50000; ientry++)
 	{
 	  
 	  tree->GetEntry(ientry);
@@ -1830,12 +1830,12 @@ void helicityAnalyzer::BinExtraction()
   //Call the histogram utility function to extract information (see header 'utils/hist_utils.h' in baseAnalyzer.h)
 
   //Extract Bin Information Per Run
-  extract_2d_hist(H_thxqCM_vs_phxq_K_pos_rand_sub,  "phi_xq [deg]", "th_xq_CM [deg]", Form("pos_hel_Kaon_%d.txt", run));
-  extract_2d_hist(H_thxqCM_vs_phxq_Pi_pos_rand_sub, "phi_xq [deg]", "th_xq_CM [deg]", Form("pos_hel_Pion_%d.txt", run));
+  extract_2d_hist(H_thxqCM_vs_phxq_K_pos_rand_sub,  "phi_xq [deg]", "th_xq_CM [deg]", Form("OUTPUT/pos_hel_Kaon_%d.txt", run));
+  extract_2d_hist(H_thxqCM_vs_phxq_Pi_pos_rand_sub, "phi_xq [deg]", "th_xq_CM [deg]", Form("OUTPUT/pos_hel_Pion_%d.txt", run));
   //extract_2d_hist(H_thxqCM_vs_phxq_P_pos_rand_sub,  "phi_xq [deg]", "th_xq_CM [deg]", Form("pos_hel_Proton_%d.txt", run));
    
-  extract_2d_hist(H_thxqCM_vs_phxq_K_neg_rand_sub,  "phi_xq [deg]", "th_xq_CM [deg]", Form("neg_hel_Kaon_%d.txt", run));
-  extract_2d_hist(H_thxqCM_vs_phxq_Pi_neg_rand_sub, "phi_xq [deg]", "th_xq_CM [deg]", Form("neg_hel_Pion_%d.txt", run));
+  extract_2d_hist(H_thxqCM_vs_phxq_K_neg_rand_sub,  "phi_xq [deg]", "th_xq_CM [deg]", Form("OUTPUT/neg_hel_Kaon_%d.txt", run));
+  extract_2d_hist(H_thxqCM_vs_phxq_Pi_neg_rand_sub, "phi_xq [deg]", "th_xq_CM [deg]", Form("OUTPUT/neg_hel_Pion_%d.txt", run));
   //extract_2d_hist(H_thxqCM_vs_phxq_P_neg_rand_sub,  "phi_xq [deg]", "th_xq_CM [deg]", Form("neg_hel_Proton_%d.txt", run));
 
   //Extract Bin Information For the combined runs 
@@ -1847,20 +1847,20 @@ void helicityAnalyzer::BinExtraction()
 
   //pos hel
   outROOT->GetObject("hel_plots/H_thxqCM_vs_phxq_K_pos_rand_sub", h2_total);
-  extract_2d_hist(h2_total, "phi_xq [deg]", "th_xq_CM [deg]", "pos_hel_Kaon_combined.txt");
+  extract_2d_hist(h2_total, "phi_xq [deg]", "th_xq_CM [deg]", "OUTPUT/pos_hel_Kaon_combined.txt");
 
   outROOT->GetObject("hel_plots/H_thxqCM_vs_phxq_Pi_pos_rand_sub", h2_total);
-  extract_2d_hist(h2_total, "phi_xq [deg]", "th_xq_CM [deg]", "pos_hel_Pion_combined.txt");
+  extract_2d_hist(h2_total, "phi_xq [deg]", "th_xq_CM [deg]", "OUTPUT/pos_hel_Pion_combined.txt");
 
   //outROOT->GetObject("hel_plots/H_thxqCM_vs_phxq_P_pos_rand_sub", h2_total);
   //extract_2d_hist(h2_total, "phi_xq [deg]", "th_xq_CM [deg]", "pos_hel_Proton_combined.txt");
 
   //neg hel
   outROOT->GetObject("hel_plots/H_thxqCM_vs_phxq_K_neg_rand_sub", h2_total);
-  extract_2d_hist(h2_total, "phi_xq [deg]", "th_xq_CM [deg]", "neg_hel_Kaon_combined.txt");
+  extract_2d_hist(h2_total, "phi_xq [deg]", "th_xq_CM [deg]", "OUTPUT/neg_hel_Kaon_combined.txt");
   
   outROOT->GetObject("hel_plots/H_thxqCM_vs_phxq_Pi_neg_rand_sub", h2_total);
-  extract_2d_hist(h2_total, "phi_xq [deg]", "th_xq_CM [deg]", "neg_hel_Pion_combined.txt");
+  extract_2d_hist(h2_total, "phi_xq [deg]", "th_xq_CM [deg]", "OUTPUT/neg_hel_Pion_combined.txt");
 
   //outROOT->GetObject("hel_plots/H_thxqCM_vs_phxq_P_neg_rand_sub", h2_total);
   //extract_2d_hist(h2_total, "phi_xq [deg]", "th_xq_CM [deg]", "neg_hel_Proton_combined.txt");
