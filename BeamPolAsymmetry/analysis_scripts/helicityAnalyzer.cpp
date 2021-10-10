@@ -677,7 +677,7 @@ void helicityAnalyzer::EventLoop()
     {
       cout << "Loop over Data Events | nentries -->  " << nentries << endl;
       
-      for(int ientry=0; ientry<50000; ientry++)
+      for(int ientry=0; ientry<nentries; ientry++)
 	{
 	  
 	  tree->GetEntry(ientry);

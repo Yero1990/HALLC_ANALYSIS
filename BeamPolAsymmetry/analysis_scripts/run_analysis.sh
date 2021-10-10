@@ -7,7 +7,7 @@ CMD2="root -l -q -b \"main.cpp\""
 
 eval ${CMD1}
 
-#source /site/12gev_phys/softenv.sh 2.3
+source /site/12gev_phys/softenv.sh 2.3
     
 eval ${CMD2}
 
