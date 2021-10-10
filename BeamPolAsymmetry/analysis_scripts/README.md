@@ -22,3 +22,19 @@ During production data-taking, the DAQ was set to COIN MODE (coincidence mode) a
 * SHMS (hadron) identification is primarily done with a coincidence time cut on the relevant hadron in question
 	* **Pion / Kaon Separation**: 	Provided by the Heavy Gas Cherenkov for central momenta P >  3.4 GeV/c. The type of gas/ pressure are configured such that the detector will **NOT** emit Cherenkov radiation (signal) for a Kaon, but it will for a Pion. Usually, a cut on the number of photoelectrons is done ( hgcer_npeSum < 1.5 npe ), for example.
 	* **Proton / Kaon Separation**: Provided by the Aerogel Cherenkov for central momenta P > 3 GeV/c. The Aerogel Chereknov is configured such that a signal will be emitted if the particle is a Kaon. A cut on the number of photoelectrons is done, (paero_npeSum > 1.5 npe), for example.
+
+## How-To Guide
+The `main.cpp` reads the relevant parameters from the `main_controls.inp` file and uses these parameters to initialize an instance of the `helicityAnalyzer` class.  The instantiated object then calls a method of the class: `run_helicity_analysis()`. This method calls all the other necessary methods (in a particular order) to carry out the full helicity analysis.
+
+To successfully run the analyzer, here are some helpful hints: <br>
+
+* check and execute the `setup.sh` shell script, as this creates the input file where the paths and name patterns of the input/output `ROOTfile` and `REPORT` files are defined <br> 
+<b>NOTE:</b> 1. make sure to define the filename patterns of the files to be read in as well as the files to be created 2. make sure the symbolic link of the `inp/set_basic_filenames.inp` points to the correct filename created by the shell script.
+
+* check the parameters set in the `main_controls.inp` file and make sure they make sense for the specific analysis to be carried out
+	* pay specific attention to setting the proper input filenames <br> 
+	  <b>NOTE:</b> the files in the `./inp` directory point to symbolic links which
+	  should be checkeed to make sure they are pointing to the correct filenames 
+	  (execute the `ls -ltrh` command to reveal the link path) 
+	  
+* once the input filenames are properly setup and read in the `main_controls.inp` file, run the analysis code: `root -l main.cpp`	

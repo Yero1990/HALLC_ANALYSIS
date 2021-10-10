@@ -42,7 +42,7 @@ combine_histos = 1
 # Set Input File Names
 #------------------------
 
-fname_file =   inp/KaonLT/set_basic_filenames_KaonLT.inp
-cuts_file  =   inp/KaonLT/set_basic_cuts_KaonLT_KIN-1.inp
-hist_file  =   inp/KaonLT/set_basic_histos_KaonLT_KIN-1.inp
-run_list   =   inp/KaonLT/runlists/KIN-1.txt
+fname_file =   inp/set_basic_filenames.inp
+cuts_file  =   inp/set_basic_cuts.inp
+hist_file  =   inp/set_basic_histos.inp
+run_list   =   inp/runlist.txt

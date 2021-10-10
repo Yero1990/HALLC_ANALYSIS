@@ -44,7 +44,7 @@ int main()
   analysis_type  = trim(split(FindString("analysis_type", "main_controls.inp")[0], '=')[1]);
   electron_arm   = trim(split(FindString("electron_arm", "main_controls.inp")[0], '=')[1]);
   daq_mode       = trim(split(FindString("daq_mode", "main_controls.inp")[0], '=')[1]);
-  helicity_flag       = stoi(split(FindString("helicity", "main_controls.inp")[0], '=')[1]);
+  helicity_flag  = stoi(split(FindString("helicity", "main_controls.inp")[0], '=')[1]);
   
   //Read list of data runs to analyze
   ifstream ifs;
