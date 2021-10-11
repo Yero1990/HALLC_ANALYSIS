@@ -63,7 +63,7 @@ c_pBetaNtrk_max = 1.5
 
 #------Acceptance Cuts------
 # Electron (HMS) Arm Momentum Acceptance, Delta [%] 
-edelta_cut_flag = 0
+edelta_cut_flag = 1
 edelta_min = -8.
 edelta_max = 8.
 

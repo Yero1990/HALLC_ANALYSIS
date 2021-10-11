@@ -678,7 +678,7 @@ void helicityAnalyzer::EventLoop()
     {
       cout << "Loop over Data Events | nentries -->  " << nentries << endl;
       
-      for(int ientry=0; ientry<nentries; ientry++)
+      for(int ientry=0; ientry<20000; ientry++)
 	{
 	  
 	  tree->GetEntry(ientry);
@@ -921,9 +921,9 @@ void helicityAnalyzer::EventLoop()
 		  // via a grep command on the corresponding input cuts file (set_basic_cuts_KaonLT.inp)
 
 		  //----Acceptance Cuts----		  
-		  if(edelta_cut_flag){c_edelta = e_delta>=c_edelta_min && e_delta<=c_edelta_max;} 
+		  if(edelta_cut_flag){c_edelta = e_delta>=edelta_min && e_delta<=edelta_max;} 
 		  else{c_edelta=1;} 
-		  
+	       
 		  //General Cuts
 		  //Bool_t accp_cuts = abs(e_delta)<=edelta_max && h_delta>=hdelta_min && h_delta<=hdelta_max;
 		  Bool_t accp_cuts = c_edelta && h_delta>=hdelta_min && h_delta<=hdelta_max;
@@ -1692,7 +1692,7 @@ void helicityAnalyzer::WriteReport()
 
   
   cout << "Calling WriteReport() . . ." << endl;
-
+  cout << "edelta_cut_flag ----> " << edelta_cut_flag << endl;
   
   if(analysis=="data"){
 
@@ -1718,7 +1718,7 @@ void helicityAnalyzer::WriteReport()
       out_file << Form("# electron arm: %s                        ", e_arm_name.Data() ) << endl;
       out_file << "#                                              " << endl;
       out_file << "#---Acceptance Cuts--- " << endl;
-      if(edelta_cut_flag)        {out_file << Form("# e-arm (HMS) Momentum Acceptance: (%.3f, %.3f) %%", edelta_min, edelta_max ) << endl;}
+      if(edelta_cut_flag) {out_file << Form("# e-arm (HMS) Momentum Acceptance: (%.3f, %.3f) %%", edelta_min, edelta_max ) << endl;}
       out_file << "#                                     " << endl;
       out_file << "#                       " << endl;
       out_file << "# Units: charge [mC] | currnet [uA] | rates [kHz] |  efficiencies [fractional form]                       " << endl;
