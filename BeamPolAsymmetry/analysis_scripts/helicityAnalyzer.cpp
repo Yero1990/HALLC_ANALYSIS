@@ -291,6 +291,7 @@ void helicityAnalyzer::ReadInputFile(string ftype="")
       //Example of how to read in parameters is in the baseAnalyzer::ReadInputFile()
 
       //Read IN acceptance cuts
+      edelta_cut_flag = stoi(split(FindString("edelta_cut_flag", input_CutFileName.Data())[0], '=')[1]);
       edelta_min = stod(split(FindString("edelta_min", input_CutFileName.Data())[0], '=')[1]);
       edelta_max = stod(split(FindString("edelta_max", input_CutFileName.Data())[0], '=')[1]);
 
@@ -919,8 +920,14 @@ void helicityAnalyzer::EventLoop()
 		  // Define the beam asymmetry boolean flags to define cuts to be used later on. The limits read in here can be searched quickly
 		  // via a grep command on the corresponding input cuts file (set_basic_cuts_KaonLT.inp)
 
+		  //----Acceptance Cuts----		  
+		  if(edelta_cut_flag){c_edelta = e_delta>=c_edelta_min && e_delta<=c_edelta_max;} 
+		  else{c_edelta=1;} 
+		  
 		  //General Cuts
-		  Bool_t accp_cuts = abs(e_delta)<=edelta_max && h_delta>=hdelta_min && h_delta<=hdelta_max;
+		  //Bool_t accp_cuts = abs(e_delta)<=edelta_max && h_delta>=hdelta_min && h_delta<=hdelta_max;
+		  Bool_t accp_cuts = c_edelta && h_delta>=hdelta_min && h_delta<=hdelta_max;
+
 		  Bool_t elec_pid = hcer_npesum>=elec_hcer_npe_thrs && hcal_etottracknorm>=elec_hcal_thrs;
 
 		  //Kaon Analysis Cuts: H(e,e'K+)X,  
@@ -1710,7 +1717,9 @@ void helicityAnalyzer::WriteReport()
       out_file << Form("# DAQ Mode: %s | Trigger: %s              ", daq_mode.Data(), trig_type.Data()) << endl;
       out_file << Form("# electron arm: %s                        ", e_arm_name.Data() ) << endl;
       out_file << "#                                              " << endl;
-      out_file << "#---Cuts still need to be defined (testing for now) . . . --- " << endl;
+      out_file << "#---Acceptance Cuts--- " << endl;
+      if(edelta_cut_flag)        {out_file << Form("# e-arm (HMS) Momentum Acceptance: (%.3f, %.3f) %%", edelta_min, edelta_max ) << endl;}
+      out_file << "#                                     " << endl;
       out_file << "#                       " << endl;
       out_file << "# Units: charge [mC] | currnet [uA] | rates [kHz] |  efficiencies [fractional form]                       " << endl;
       out_file << "#                       " << endl;

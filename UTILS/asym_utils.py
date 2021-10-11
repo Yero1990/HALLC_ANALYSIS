@@ -43,8 +43,8 @@ def calc_asym(particle="Kaon",  kin_group="KIN-1"):
     #The central values are: thxq_cm = [2.5, 7.5, 12.5 17.5, 22.5, 27.5, 32.5, 37.5] +/- 2.5 deg
         
     #Read datafiles (extracted from 2D bin information of thxq_CM_vs_phxq)
-    fname_pos = '../OUTPUT_Pass1/%s/pos_hel_%s_combined.txt'%(kin_group, particle) 
-    fname_neg = '../OUTPUT_Pass1/%s/neg_hel_%s_combined.txt'%(kin_group, particle)  
+    fname_pos = '../BeamPolAsymmetry/analysis_scripts/OUTPUT/%s/pos_hel_%s_combined.txt'%(kin_group, particle) 
+    fname_neg = '../BeamPolAsymmetry/analysis_scripts/OUTPUT/%s/neg_hel_%s_combined.txt'%(kin_group, particle)  
 
     asy_pos = dfile(fname_pos)
     asy_neg = dfile(fname_neg)
@@ -86,7 +86,7 @@ def calc_asym(particle="Kaon",  kin_group="KIN-1"):
 # ybins      =  %i    | th_xq_CM [deg]
 # xbins      =  %i    | phi_xq   [deg]
 # ybin width =  %.3f  (or +/- %.3f deg)
-    # xbin width =  %.3f  (or +/- %.3f deg)
+# xbin width =  %.3f  (or +/- %.3f deg)
 #
 # header definitions:
 # ib:         (x,y)  bin number 
@@ -526,6 +526,19 @@ def plot_report(kin_group=""):
 def main():
     print("Plotting Asym")
 
+
+    #calc_asym("Kaon", "KIN-1")
+    #calc_asym("Pion", "KIN-1")
+
+    combine_thcm_bins(particle="Kaon", group="KIN-1")
+    combine_thcm_bins(particle="Pion", group="KIN-1")
+    
+    plot_asym("KIN-1", "Kaon", 0)
+    plot_asym("KIN-1", "Kaon", 1)
+
+    plot_asym("KIN-1", "Pion", 0)
+    plot_asym("KIN-1", "Pion", 1)
+    
     '''
     #combined multiple Kaon LT kinematics with the same HMS setting (and varying SHMS angles)
     calc_asym_combined(np.array(["KIN-1", "KIN-2", "KIN-3"]),              "Kaon", "group-1")
