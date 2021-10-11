@@ -78,32 +78,87 @@ protected:
   //-----------------------------------------------------------------------------
 
   //---accpetance cuts variables---
+  Bool_t accp_cuts;
+  
   Float_t edelta_min;  
   Float_t edelta_max;  
 
   Float_t hdelta_min; 
   Float_t hdelta_max;
 
+  Float_t ztarDiff_min;
+  Float_t ztarDiff_max;
+  
   //----PID cuts variables-----
   //-electron PID-
+  Bool_t elec_pid;
   Float_t elec_hcer_npe_thrs;      //threhsold on HMS cherenkov to select electrons
   Float_t elec_hcal_thrs;          //threhsold on HMS calorimeter total energy normalized by track momentum to select electrons
   
   //-Kaon PID-
+  Bool_t kaon_pid;
+
+  Bool_t K_paero_npe_flag;
+  Bool_t c_K_paero_npe;
   Float_t K_paero_npe_thrs;          //threhsold on aerogel number of photo-electrons
+  
+  Bool_t K_phgcer_npe_flag;
+  Bool_t c_K_phgcer_npe;
   Float_t K_phgcer_npe_thrs;         //threshold on heavy gas cherenkv number of photo-electrons
+
+  
+  Bool_t K_beta_flag;
+  Bool_t kaon_beta_cut;
   Float_t K_beta_min, K_beta_max;    //particle beta cut
+
+  Bool_t eK_ctime_flag;
+  Bool_t eK_ctime_cut;
+  Bool_t eK_ctime_cut_rand;
   Float_t eK_ctime_thrs;             //threshold minimum cut on absolute value of electron-Kaon coin time: e.g.,  |ctime| < eK_ctime_min
 
+  Bool_t kaon_MM_cut;
+
   //-Pion PID-
+  Bool_t pion_pid;
+
+  Bool_t Pi_phgcer_npe_flag;
+  Bool_t c_Pi_phgcer_npe;
   Float_t Pi_phgcer_npe_thrs;        //threshold on heavy gas cherenkv number of photo-electrons
+
+  
+  Bool_t Pi_beta_flag;
+  Bool_t pion_beta_cut;
   Float_t Pi_beta_min, Pi_beta_max;  //particle beta cut
+
+  Bool_t ePi_ctime_flag;
+  Bool_t ePi_ctime_cut;
+  Bool_t ePi_ctime_cut_rand;
   Float_t ePi_ctime_thrs;            //threshold minimum cut on absolute value of electron-Pion coin time: e.g.,  |ctime| < eK_ctime_min
 
+  Bool_t pion_MM_cut;
+
+
   //-Proton PID-
-  Float_t P_paero_npe_thrs;          //threhsold on aerogel number of photo-electrons
-  Float_t P_phgcer_npe_thrs;         //threshold on heavy gas cherenkv number of photo-electrons
+
+  Bool_t proton_pid;
+
+  Bool_t proton_beta_flag;
+  Bool_t proton_beta_cut;
   Float_t P_beta_min, P_beta_max;    //particle beta cut
+
+  Bool_t eP_ctime_flag;
+  Bool_t eP_ctime_cut;
+  Bool_t eP_ctime_cut_rand;
+
+  Bool_t proton_MM_cut;
+
+  Bool_t P_aero_npe_flag;
+  Float_t P_paero_npe_thrs;          //threhsold on aerogel number of photo-electrons
+
+  Bool_t P_phgcer_npe_flag;
+  Float_t P_phgcer_npe_thrs;         //threshold on heavy gas cherenkv number of photo-electrons
+
+  Bool_t eP_ctime_flag;
   Float_t eP_ctime_thrs;             //threshold minimum cut on absolute value of electron-Proton coin time: e.g.,  |ctime| < eK_ctime_min
 
   //----Kinematics Cuts----

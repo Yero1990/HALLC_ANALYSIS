@@ -295,44 +295,78 @@ void helicityAnalyzer::ReadInputFile(string ftype="")
       edelta_min = stod(split(FindString("edelta_min", input_CutFileName.Data())[0], '=')[1]);
       edelta_max = stod(split(FindString("edelta_max", input_CutFileName.Data())[0], '=')[1]);
 
+      hdelta_cut_flag = stoi(split(FindString("hdelta_cut_flag", input_CutFileName.Data())[0], '=')[1]);
       hdelta_min = stod(split(FindString("hdelta_min", input_CutFileName.Data())[0], '=')[1]);
       hdelta_max = stod(split(FindString("hdelta_max", input_CutFileName.Data())[0], '=')[1]);
 
+      // Z-Reaction Vertex Difference Cut
+      ztarDiff_cut_flag = stoi(split(FindString("ztarDiff_cut_flag", input_CutFileName.Data())[0], '=')[1]);
+      ztarDiff_min = stod(split(FindString("ztarDiff_min", input_CutFileName.Data())[0], '=')[1]);
+      ztarDiff_max = stod(split(FindString("ztarDiff_max", input_CutFileName.Data())[0], '=')[1]);
+    
       //Read IN PID cuts
+
       //-electron-
+      hcer_pidCut_flag = stoi(split(FindString("hcer_pidCut_flag", input_CutFileName.Data())[0], '=')[1]);
       elec_hcer_npe_thrs = stod(split(FindString("elec_hcer_npe_thrs", input_CutFileName.Data())[0], '=')[1]);
+      
+      hetot_trkNorm_pidCut_flag = stoi(split(FindString("hetot_trkNorm_pidCut_flag", input_CutFileName.Data())[0], '=')[1]);
       elec_hcal_thrs     = stod(split(FindString("elec_hcal_thrs", input_CutFileName.Data())[0], '=')[1]);
 
       //-Kaon-
+      K_paero_npe_flag  = stoi(split(FindString("K_paero_npe_flag", input_CutFileName.Data())[0], '=')[1]);
       K_paero_npe_thrs  = stod(split(FindString("K_paero_npe_thrs", input_CutFileName.Data())[0], '=')[1]);
+
+      K_phgcer_npe_flag  = stoi(split(FindString("K_phgcer_npe_flag", input_CutFileName.Data())[0], '=')[1]);
       K_phgcer_npe_thrs = stod(split(FindString("K_phgcer_npe_thrs", input_CutFileName.Data())[0], '=')[1]);
+
+      K_beta_flag       = stoi(split(FindString("K_beta_flag", input_CutFileName.Data())[0], '=')[1]);
       K_beta_min        = stod(split(FindString("K_beta_min", input_CutFileName.Data())[0], '=')[1]);
       K_beta_max        = stod(split(FindString("K_beta_max", input_CutFileName.Data())[0], '=')[1]);
+
+      eK_ctime_flag     = stoi(split(FindString("eK_ctime_flag", input_CutFileName.Data())[0], '=')[1]);
       eK_ctime_thrs     = stod(split(FindString("eK_ctime_thrs", input_CutFileName.Data())[0], '=')[1]); 
 
-      //-Pi-
+      //-Pion-
+      Pi_phgcer_npe_flag  = stoi(split(FindString("Pi_phgcer_npe_flag", input_CutFileName.Data())[0], '=')[1]);
       Pi_phgcer_npe_thrs = stod(split(FindString("Pi_phgcer_npe_thrs", input_CutFileName.Data())[0], '=')[1]);
+
+      Pi_beta_flag       = stoi(split(FindString("Pi_beta_flag", input_CutFileName.Data())[0], '=')[1]);
       Pi_beta_min        = stod(split(FindString("Pi_beta_min", input_CutFileName.Data())[0], '=')[1]);
       Pi_beta_max        = stod(split(FindString("Pi_beta_max", input_CutFileName.Data())[0], '=')[1]);
+
+      ePi_ctime_flag     = stoi(split(FindString("ePi_ctime_flag", input_CutFileName.Data())[0], '=')[1]);
       ePi_ctime_thrs     = stod(split(FindString("ePi_ctime_thrs", input_CutFileName.Data())[0], '=')[1]); 
 
       //-Proton-
+      P_paero_npe_flag  = stoi(split(FindString("P_paero_npe_flag", input_CutFileName.Data())[0], '=')[1]);
       P_paero_npe_thrs  = stod(split(FindString("P_paero_npe_thrs", input_CutFileName.Data())[0], '=')[1]);
+
+      P_phgcer_npe_flag  = stoi(split(FindString("P_phgcer_npe_flag", input_CutFileName.Data())[0], '=')[1]);
       P_phgcer_npe_thrs = stod(split(FindString("P_phgcer_npe_thrs", input_CutFileName.Data())[0], '=')[1]);
+
+      P_beta_flag       = stoi(split(FindString("P_beta_flag", input_CutFileName.Data())[0], '=')[1]);
       P_beta_min        = stod(split(FindString("P_beta_min", input_CutFileName.Data())[0], '=')[1]);
       P_beta_max        = stod(split(FindString("P_beta_max", input_CutFileName.Data())[0], '=')[1]);
+
+      eP_ctime_flag     = stoi(split(FindString("eP_ctime_flag", input_CutFileName.Data())[0], '=')[1]);
       eP_ctime_thrs     = stod(split(FindString("eP_ctime_thrs", input_CutFileName.Data())[0], '=')[1]); 
 
       
       //----Read IN Kinematic cuts----
 
       //-Kaon Missing Mass-
+      MM_K_cut_flag = stoi(split(FindString("MM_K_cut_flag", input_CutFileName.Data())[0], '=')[1]);
       MM_K_min= stod(split(FindString("MM_K_min", input_CutFileName.Data())[0], '=')[1]);
       MM_K_max= stod(split(FindString("MM_K_max", input_CutFileName.Data())[0], '=')[1]);
+
       //-Pion Missing Mass-
+      MM_Pi_cut_flag = stoi(split(FindString("MM_Pi_cut_flag", input_CutFileName.Data())[0], '=')[1]);
       MM_Pi_min= stod(split(FindString("MM_Pi_min", input_CutFileName.Data())[0], '=')[1]);
       MM_Pi_max= stod(split(FindString("MM_Pi_max", input_CutFileName.Data())[0], '=')[1]);
+
       //-Proton Missing Mass-
+      MM_P_cut_flag = stoi(split(FindString("MM_P_cut_flag", input_CutFileName.Data())[0], '=')[1]);
       MM_P_min= stod(split(FindString("MM_P_min", input_CutFileName.Data())[0], '=')[1]);
       MM_P_max= stod(split(FindString("MM_P_max", input_CutFileName.Data())[0], '=')[1]);
 
@@ -920,36 +954,78 @@ void helicityAnalyzer::EventLoop()
 		  // Define the beam asymmetry boolean flags to define cuts to be used later on. The limits read in here can be searched quickly
 		  // via a grep command on the corresponding input cuts file (set_basic_cuts_KaonLT.inp)
 
-		  //----Acceptance Cuts----		  
-		  if(edelta_cut_flag){c_edelta = e_delta>=edelta_min && e_delta<=edelta_max;} 
-		  else{c_edelta=1;} 
-	       
-		  //General Cuts
-		  //Bool_t accp_cuts = abs(e_delta)<=edelta_max && h_delta>=hdelta_min && h_delta<=hdelta_max;
-		  Bool_t accp_cuts = c_edelta && h_delta>=hdelta_min && h_delta<=hdelta_max;
+		  //----Acceptance Cuts----
 
-		  Bool_t elec_pid = hcer_npesum>=elec_hcer_npe_thrs && hcal_etottracknorm>=elec_hcal_thrs;
+		  if(hdelta_cut_flag){c_hdelta = h_delta>=hdelta_min && h_delta<=hdelta_max;} 
+		  else{c_hdelta=1;}
+		  		  
+		  if(edelta_cut_flag){c_edelta = e_delta>=edelta_min && e_delta<=edelta_max;} 
+		  else{c_edelta=1;}
+		  
+		  if(ztarDiff_cut_flag){c_ztarDiff = ztar_diff>=ztarDiff_min && ztar_diff<=ztarDiff_max;} 
+		  else{c_ztarDiff=1;} 
+
+		  //---- Particle Identification Cuts ---
+
+		  //--electron--
+		  
+		  if(hcer_pidCut_flag){cpid_hcer_NPE_Sum = hcer_npesum>=elec_hcer_npe_thrs;}
+		  else{cpid_hcer_NPE_Sum = 1;}
+		  
+		  if(hetot_trkNorm_pidCut_flag){cpid_hetot_trkNorm =  hcal_etottracknorm>=elec_hcal_thrs;}
+		  else{cpid_hetot_trkNorm = 1;}
+		  
+		  //-- Kaon --
+		  if(K_paero_npe_flag) {c_K_paero_npe = paero_npesum>=K_paero_npe_thrs;}
+		  else{c_K_paero_npe = 1;}
+
+		  if(K_phgcer_npe_flag) {c_K_phgcer_npe = phgcer_npesum<=K_phgcer_npe_thrs;}
+		  else{c_K_phgcer_npe = 1;}
+
+		  if(K_beta_flag) { kaon_beta_cut = phod_gtr_beta>=K_beta_min && phod_gtr_beta<=K_beta_max; }
+		  else{ kaon_beta_cut=1; }
+
+		  if(eK_ctime_flag) {
+		    eK_ctime_cut = abs(eKCoinTime-K_ctime_offset) <= eK_ctime_thrs;
+		    eK_ctime_cut_rand = abs(eKCoinTime-K_ctime_offset) > eK_ctime_thrs && abs(eKCoinTime-K_ctime_offset) <= (eK_mult*eK_ctime_thrs);
+		  }
+		  else{
+		    eK_ctime_cut = 1;
+		    eK_ctime_cut_rand = 1;
+		  }
+
+		  if(MM_K_cut_flag) { kaon_MM_cut = MM_K >=MM_K_min && MM_K <=MM_K_max; }
+		  else { kaon_MM_cut = 1;}
+
+		  //-- Pion --
+		  if(Pi_phgcer_npe_flag) {c_Pi_phgcer_npe =  phgcer_npesum>=Pi_phgcer_npe_thrs;}
+		  else {c_Pi_phgcer_npe = 1;}
+
+
+		  
+		  //Acceptance Cuts
+		  accp_cuts = c_edelta && c_hdelta && c_ztarDiff;
+
+		  // electron PID Cuts
+		  elec_pid = cpid_hcer_NPE_Sum && cpid_hetot_trkNorm;
 
 		  //Kaon Analysis Cuts: H(e,e'K+)X,  
-		  Bool_t kaon_pid = paero_npesum>=K_paero_npe_thrs && phgcer_npesum<=K_phgcer_npe_thrs;
-		  Bool_t kaon_beta_cut = phod_gtr_beta>=K_beta_min && phod_gtr_beta<=K_beta_max;
-		  Bool_t eK_ctime_cut = abs(eKCoinTime-K_ctime_offset) <= eK_ctime_thrs;
-		  Bool_t eK_ctime_cut_rand = abs(eKCoinTime-K_ctime_offset) > eK_ctime_thrs && abs(eKCoinTime-K_ctime_offset) <= (eK_mult*eK_ctime_thrs);
-		  Bool_t kaon_MM_cut = 1;//MM_K >=MM_K_min && MM_K <=MM_K_max; 
-
+		  kaon_pid = c_K_paero_npe && c_K_phgcer_npe;		  
+		  
+		  
 		  //Pion Analysis Cuts: H(e,e'Pi+)X
-		  Bool_t pion_pid = phgcer_npesum>=Pi_phgcer_npe_thrs;
-		  Bool_t pion_beta_cut = phod_gtr_beta>=Pi_beta_min && phod_gtr_beta<=Pi_beta_max;
-		  Bool_t ePi_ctime_cut = abs(ePiCoinTime-Pi_ctime_offset) <= ePi_ctime_thrs;
-		  Bool_t ePi_ctime_cut_rand = abs(ePiCoinTime-Pi_ctime_offset) > ePi_ctime_thrs && abs(ePiCoinTime-Pi_ctime_offset) <= (ePi_mult*ePi_ctime_thrs);
-		  Bool_t pion_MM_cut = 1;//MM_Pi >=MM_Pi_min && MM_Pi <=MM_Pi_max; 
+		  pion_pid = c_Pi_phgcer_npe;
+		  pion_beta_cut = phod_gtr_beta>=Pi_beta_min && phod_gtr_beta<=Pi_beta_max;
+		  ePi_ctime_cut = abs(ePiCoinTime-Pi_ctime_offset) <= ePi_ctime_thrs;
+		  ePi_ctime_cut_rand = abs(ePiCoinTime-Pi_ctime_offset) > ePi_ctime_thrs && abs(ePiCoinTime-Pi_ctime_offset) <= (ePi_mult*ePi_ctime_thrs);
+		  pion_MM_cut = MM_Pi >=MM_Pi_min && MM_Pi <=MM_Pi_max; 
 		  
 		  //Proton Analysis Cuts: H(e,e'p)X,  
-		  Bool_t proton_pid = paero_npesum<=P_paero_npe_thrs && phgcer_npesum<=P_phgcer_npe_thrs;
-		  Bool_t proton_beta_cut = phod_gtr_beta>=P_beta_min && phod_gtr_beta<=P_beta_max;
-		  Bool_t eP_ctime_cut = abs(epCoinTime-P_ctime_offset) <= eP_ctime_thrs;
-		  Bool_t eP_ctime_cut_rand = abs(epCoinTime-P_ctime_offset) > eP_ctime_thrs && abs(epCoinTime-P_ctime_offset) <= (eP_mult*eP_ctime_thrs);
-		  Bool_t proton_MM_cut = 1;//MM_P >=MM_P_min && MM_P <=MM_P_max;
+		  proton_pid = paero_npesum<=P_paero_npe_thrs && phgcer_npesum<=P_phgcer_npe_thrs;
+		  proton_beta_cut = phod_gtr_beta>=P_beta_min && phod_gtr_beta<=P_beta_max;
+		  eP_ctime_cut = abs(epCoinTime-P_ctime_offset) <= eP_ctime_thrs;
+		  eP_ctime_cut_rand = abs(epCoinTime-P_ctime_offset) > eP_ctime_thrs && abs(epCoinTime-P_ctime_offset) <= (eP_mult*eP_ctime_thrs);
+		  proton_MM_cut = MM_P >=MM_P_min && MM_P <=MM_P_max;
 		  
 		  //----------------------Fill DATA Histograms-----------------------
 
@@ -1718,8 +1794,17 @@ void helicityAnalyzer::WriteReport()
       out_file << Form("# electron arm: %s                        ", e_arm_name.Data() ) << endl;
       out_file << "#                                              " << endl;
       out_file << "#---Acceptance Cuts--- " << endl;
-      if(edelta_cut_flag) {out_file << Form("# e-arm (HMS) Momentum Acceptance: (%.3f, %.3f) %%", edelta_min, edelta_max ) << endl;}
+      if(hdelta_cut_flag)   {out_file << Form("# h-arm (SHMS) Momentum Acceptance: (%.3f, %.3f) %%", hdelta_min, hdelta_max ) << endl;}
+      if(edelta_cut_flag)   {out_file << Form("# e-arm (HMS) Momentum Acceptance: (%.3f, %.3f) %%", edelta_min, edelta_max ) << endl;}
+      if(ztarDiff_cut_flag) {out_file << Form("# Z-Target Vertex Difference, ztar_diff: (%.3f, %.3f)", ztarDiff_min, ztarDiff_max)}
       out_file << "#                                     " << endl;
+      out_file << "# ---Particle Identification (PID) Cuts---" << endl;
+      out_file << "# electrons (HMS): " << endl;
+      
+      out_file << "# Kaons     (SHMS): " << endl;
+      out_file << "# Pions     (SHMS): " << endl;
+      out_file << "# Protons   (SHMS): " << endl;
+      
       out_file << "#                       " << endl;
       out_file << "# Units: charge [mC] | currnet [uA] | rates [kHz] |  efficiencies [fractional form]                       " << endl;
       out_file << "#                       " << endl;
