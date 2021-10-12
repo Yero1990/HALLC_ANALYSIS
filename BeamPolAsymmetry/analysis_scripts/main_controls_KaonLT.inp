@@ -18,7 +18,6 @@ electron_arm = HMS
 # (currently, the code accepts: LH2 and LD2)
 target_type = LH2
 
-
 # Select the DAQ mode of the experiment ('coin' or 'singles')
 daq_mode = coin
 

@@ -125,7 +125,6 @@ protected:
   Bool_t c_Pi_phgcer_npe;
   Float_t Pi_phgcer_npe_thrs;        //threshold on heavy gas cherenkv number of photo-electrons
 
-  
   Bool_t Pi_beta_flag;
   Bool_t pion_beta_cut;
   Float_t Pi_beta_min, Pi_beta_max;  //particle beta cut
@@ -142,7 +141,7 @@ protected:
 
   Bool_t proton_pid;
 
-  Bool_t proton_beta_flag;
+  Bool_t P_beta_flag;
   Bool_t proton_beta_cut;
   Float_t P_beta_min, P_beta_max;    //particle beta cut
 
@@ -152,13 +151,14 @@ protected:
 
   Bool_t proton_MM_cut;
 
-  Bool_t P_aero_npe_flag;
+  Bool_t P_paero_npe_flag;
+  Bool_t c_P_paero_npe; 
   Float_t P_paero_npe_thrs;          //threhsold on aerogel number of photo-electrons
 
   Bool_t P_phgcer_npe_flag;
+  Bool_t c_P_phgcer_npe; 
   Float_t P_phgcer_npe_thrs;         //threshold on heavy gas cherenkv number of photo-electrons
 
-  Bool_t eP_ctime_flag;
   Float_t eP_ctime_thrs;             //threshold minimum cut on absolute value of electron-Proton coin time: e.g.,  |ctime| < eK_ctime_min
 
   //----Kinematics Cuts----

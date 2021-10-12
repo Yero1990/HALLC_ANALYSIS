@@ -91,8 +91,6 @@ elec_hcer_npe_thrs = 2.0
 hetot_trkNorm_pidCut_flag = 1
 elec_hcal_thrs = 0.8
 
-# --------------------
-
 #--------------
 #-- Kaon PID --
 #--------------
@@ -128,7 +126,7 @@ ePi_ctime_thrs = 3.
 #---Proton PID---
 #----------------
 
-P_aero_npe_flag = 1
+P_paero_npe_flag = 1
 P_paero_npe_thrs = 1.5
 
 P_phgcer_npe_flag = 1

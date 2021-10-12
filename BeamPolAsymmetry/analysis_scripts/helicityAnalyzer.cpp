@@ -266,11 +266,12 @@ void helicityAnalyzer::SetFileNames()
 void helicityAnalyzer::ReadInputFile(string ftype="")
 {
   cout << "Calling Derived ReadInputFile() " << endl;
-
+  
   //Call the existing method, as is is needed to read in parameters from
   //main controls 
   if(ftype=="main_controls")
     {
+      cout << "reading main_controls.inp . . . " << endl;
       baseAnalyzer::ReadInputFile("main_controls");
     }
 
@@ -278,6 +279,7 @@ void helicityAnalyzer::ReadInputFile(string ftype="")
   //tracking efficiency cuts input file
   if(ftype=="trk_eff_cuts")
     {
+      cout << "reading trk_eff_cuts in set_basic_cuts.inp . . . " << endl;  
       baseAnalyzer::ReadInputFile("trk_eff_cuts");
     }
 
@@ -289,6 +291,8 @@ void helicityAnalyzer::ReadInputFile(string ftype="")
 
       //Read data analysis parameters here (in accordance with the analysis requirements)
       //Example of how to read in parameters is in the baseAnalyzer::ReadInputFile()
+      
+      cout << "reading analysis_cuts in set_basic_cuts.inp . . . " << endl;    
 
       //Read IN acceptance cuts
       edelta_cut_flag = stoi(split(FindString("edelta_cut_flag", input_CutFileName.Data())[0], '=')[1]);
@@ -1056,7 +1060,7 @@ void helicityAnalyzer::EventLoop()
 		  pion_pid = c_Pi_phgcer_npe;
 		  
 		  //Proton Analysis PID Cuts: H(e,e'p)X,  
-		  proton_pid = c_P_paero_npe && c_P_phgcer_npe
+		  proton_pid = c_P_paero_npe && c_P_phgcer_npe;
 		  
 		  //----------------------Fill DATA Histograms-----------------------
 
@@ -1826,15 +1830,16 @@ void helicityAnalyzer::WriteReport()
       out_file << "#---Acceptance Cuts--- " << endl;
       if(hdelta_cut_flag)   {out_file << Form("# SHMS Momentum Acceptance (P.gtr.dp): [%.3f, %.3f] %%", hdelta_min, hdelta_max ) << endl;}
       if(edelta_cut_flag)   {out_file << Form("# HMS  Momentum Acceptance (H.gtr.dp): [%.3f, %.3f] %%", edelta_min, edelta_max ) << endl;}
-      if(ztarDiff_cut_flag) {out_file << Form("# Z-Target Vertex Difference (P.react.z-H.react.z) : [%.3f, %.3f)", ztarDiff_min, ztarDiff_max)}      
+      if(ztarDiff_cut_flag) {out_file << Form("# Z-Target Vertex Difference (P.react.z-H.react.z) : [%.3f, %.3f)", ztarDiff_min, ztarDiff_max) << endl;}      
       out_file << "#                                     " << endl;
       out_file << "# ---Particle Identification (PID) Cuts---" << endl;
       out_file << "# NOTE: Coincidence time background selection is done by averaging a sample (left) and (right) of the main coincidence peak, where the sample is assumed to have the same structure on both sides." << endl;
       out_file << "# The sample background is then scaled to the background underneath the main coin peak, and subtracted." << endl;
       out_file << "#                                              " << endl;
       out_file << "# --> electrons (HMS): " << endl;
-      if(hcer_pidCut_flag)           {out_file << Form("# ", ) << endl; }
-      if(hetot_trkNorm_pidCut_flag)  {out_file << Form("# ", ) << endl; }
+      if(hcer_pidCut_flag)           {out_file << Form("# HMS Cherenkov NPE Sum (H.cer.npeSum) >= %.3f", elec_hcer_npe_thrs) << endl; }
+      if(hetot_trkNorm_pidCut_flag)  {out_file << Form("# HMS Calorimeter (H.cal.etottracknorm) Etot/Etrak >= %.3f", elec_hcal_thrs) << endl; }
+      out_file << "#                                              " << endl;
       out_file << "# --> Kaons     (SHMS): " << endl;
       if(K_paero_npe_flag)   {out_file << Form("# SHMS Aerogel NPE Sum   (P.aero.npeSum)  >= %.3f", K_paero_npe_thrs) << endl; }
       if(K_phgcer_npe_flag)  {out_file << Form("# SHMS Heavy Gas NPE Sum (P.hgcer.npeSum) <= %.3f", K_phgcer_npe_thrs) << endl; }
@@ -1845,6 +1850,7 @@ void helicityAnalyzer::WriteReport()
 	  out_file << Form("# eK Coincidence Time Background: abs( eK_coin_peak - offset(%.3f) ) > %.3f && abs( eK_coin_peak - offset(%.3f) ) <= (%.3f x %.3f) ns", K_ctime_offset, eK_ctime_thrs, K_ctime_offset, eK_mult, eK_ctime_thrs) << endl;
 	}
       if(MM_K_cut_flag)  {out_file << Form("# Kaon Missing Mass: [%.3f, %.3f] GeV/c^2", MM_K_min, MM_K_max) << endl; }
+      out_file << "#                                              " << endl;
       out_file << "# --> Pions     (SHMS): " << endl;
       if(Pi_phgcer_npe_flag)  {out_file << Form("# SHMS Heavy Gas NPE Sum (P.hgcer.npeSum) >= %.3f", Pi_phgcer_npe_thrs) << endl; }
       if(Pi_beta_flag)        {out_file << Form("# SHMS Hodoscope Beta    (P.gtr.beta):  [%.3f, %.3f]", Pi_beta_min, Pi_beta_max) << endl; }
@@ -1854,7 +1860,7 @@ void helicityAnalyzer::WriteReport()
 	  out_file << Form("# ePi Coincidence Time Background: abs( ePi_coin_peak - offset(%.3f) ) > %.3f && abs( ePi_coin_peak - offset(%.3f) ) <= (%.3f x %.3f) ns", Pi_ctime_offset, ePi_ctime_thrs, Pi_ctime_offset, ePi_mult, ePi_ctime_thrs) << endl;
 	}
       if(MM_Pi_cut_flag)  {out_file << Form("# Pion Missing Mass: [%.3f, %.3f] GeV/c^2", MM_Pi_min, MM_Pi_max) << endl; }
-      
+      out_file << "#                                              " << endl;
       out_file << "# --> Protons   (SHMS): " << endl;
       if(P_paero_npe_flag)    {out_file << Form("# SHMS Aerogel NPE Sum   (P.aero.npeSum)  <= %.3f", P_paero_npe_thrs) << endl; }
       if(P_phgcer_npe_flag)   {out_file << Form("# SHMS Heavy Gas NPE Sum (P.hgcer.npeSum) <= %.3f", P_phgcer_npe_thrs) << endl; }
