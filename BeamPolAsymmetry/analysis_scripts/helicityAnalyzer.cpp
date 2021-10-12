@@ -954,10 +954,12 @@ void helicityAnalyzer::EventLoop()
 		  // Define the beam asymmetry boolean flags to define cuts to be used later on. The limits read in here can be searched quickly
 		  // via a grep command on the corresponding input cuts file (set_basic_cuts_KaonLT.inp)
 
+		  //**NOTE: When a cut is defaulted to 1, it means that when it is applied, the event will always pass the cut (hence, =1 --> is always true, which allows events to pass and therefore, the CUT is not applied)
+
 		  //----Acceptance Cuts----
 
 		  if(hdelta_cut_flag){c_hdelta = h_delta>=hdelta_min && h_delta<=hdelta_max;} 
-		  else{c_hdelta=1;}
+		  else{c_hdelta=1;}  
 		  		  
 		  if(edelta_cut_flag){c_edelta = e_delta>=edelta_min && e_delta<=edelta_max;} 
 		  else{c_edelta=1;}
@@ -1000,32 +1002,61 @@ void helicityAnalyzer::EventLoop()
 		  //-- Pion --
 		  if(Pi_phgcer_npe_flag) {c_Pi_phgcer_npe =  phgcer_npesum>=Pi_phgcer_npe_thrs;}
 		  else {c_Pi_phgcer_npe = 1;}
+		  
+		  if(Pi_beta_flag) { pion_beta_cut = phod_gtr_beta>=Pi_beta_min && phod_gtr_beta<=Pi_beta_max; }
+		  else{ pion_beta_cut=1; }
 
+		  if(ePi_ctime_flag) {
+		    ePi_ctime_cut = abs(ePiCoinTime-Pi_ctime_offset) <= ePi_ctime_thrs;
+		    ePi_ctime_cut_rand = abs(ePiCoinTime-Pi_ctime_offset) > ePi_ctime_thrs && abs(ePiCoinTime-Pi_ctime_offset) <= (ePi_mult*ePi_ctime_thrs);
+		  }
+		  else{
+		    ePi_ctime_cut = 1;
+		    ePi_ctime_cut_rand = 1;
+		  }
+
+		  if(MM_Pi_cut_flag) { pion_MM_cut = MM_Pi >=MM_Pi_min && MM_Pi <=MM_Pi_max; }
+		  else { pion_MM_cut = 1;}
+
+		  //-- Proton --
+		  if(P_paero_npe_flag) {c_P_paero_npe = paero_npesum<=P_paero_npe_thrs;}
+		  else{c_P_paero_npe = 1;}
+
+		  if(P_phgcer_npe_flag) {c_P_phgcer_npe =  phgcer_npesum<=P_phgcer_npe_thrs;}
+		  else {c_P_phgcer_npe = 1;}
+		  
+		  if(P_beta_flag) { proton_beta_cut = phod_gtr_beta>=P_beta_min && phod_gtr_beta<=P_beta_max; }
+		  else{ proton_beta_cut=1; }
+
+		  if(eP_ctime_flag) {
+		    eP_ctime_cut = abs(epCoinTime-P_ctime_offset) <= eP_ctime_thrs;
+		    eP_ctime_cut_rand = abs(epCoinTime-P_ctime_offset) > eP_ctime_thrs && abs(epCoinTime-P_ctime_offset) <= (eP_mult*eP_ctime_thrs);
+		  }
+		  else{
+		    eP_ctime_cut = 1;
+		    eP_ctime_cut_rand = 1;
+		  }
+
+		  if(MM_P_cut_flag) { proton_MM_cut = MM_P >=MM_P_min && MM_P <=MM_P_max; }
+		  else { proton_MM_cut = 1;}
 
 		  
 		  //Acceptance Cuts
 		  accp_cuts = c_edelta && c_hdelta && c_ztarDiff;
 
-		  // electron PID Cuts
+		  //electron PID Cuts
 		  elec_pid = cpid_hcer_NPE_Sum && cpid_hetot_trkNorm;
 
-		  //Kaon Analysis Cuts: H(e,e'K+)X,  
+		  // --- Hadron PID Cuts (using SHMS HGC and AERO Cherenkovs) ----
+
+		  //Kaon Analysis PID Cuts: H(e,e'K+)X,  
 		  kaon_pid = c_K_paero_npe && c_K_phgcer_npe;		  
-		  
-		  
-		  //Pion Analysis Cuts: H(e,e'Pi+)X
+		  		  
+		  //Pion Analysis PID Cuts: H(e,e'Pi+)X
 		  pion_pid = c_Pi_phgcer_npe;
-		  pion_beta_cut = phod_gtr_beta>=Pi_beta_min && phod_gtr_beta<=Pi_beta_max;
-		  ePi_ctime_cut = abs(ePiCoinTime-Pi_ctime_offset) <= ePi_ctime_thrs;
-		  ePi_ctime_cut_rand = abs(ePiCoinTime-Pi_ctime_offset) > ePi_ctime_thrs && abs(ePiCoinTime-Pi_ctime_offset) <= (ePi_mult*ePi_ctime_thrs);
-		  pion_MM_cut = MM_Pi >=MM_Pi_min && MM_Pi <=MM_Pi_max; 
 		  
-		  //Proton Analysis Cuts: H(e,e'p)X,  
-		  proton_pid = paero_npesum<=P_paero_npe_thrs && phgcer_npesum<=P_phgcer_npe_thrs;
-		  proton_beta_cut = phod_gtr_beta>=P_beta_min && phod_gtr_beta<=P_beta_max;
-		  eP_ctime_cut = abs(epCoinTime-P_ctime_offset) <= eP_ctime_thrs;
-		  eP_ctime_cut_rand = abs(epCoinTime-P_ctime_offset) > eP_ctime_thrs && abs(epCoinTime-P_ctime_offset) <= (eP_mult*eP_ctime_thrs);
-		  proton_MM_cut = MM_P >=MM_P_min && MM_P <=MM_P_max;
+		  //Proton Analysis PID Cuts: H(e,e'p)X,  
+		  proton_pid = c_P_paero_npe && c_P_phgcer_npe
 		  
 		  //----------------------Fill DATA Histograms-----------------------
 
@@ -1768,7 +1799,6 @@ void helicityAnalyzer::WriteReport()
 
   
   cout << "Calling WriteReport() . . ." << endl;
-  cout << "edelta_cut_flag ----> " << edelta_cut_flag << endl;
   
   if(analysis=="data"){
 
@@ -1794,16 +1824,47 @@ void helicityAnalyzer::WriteReport()
       out_file << Form("# electron arm: %s                        ", e_arm_name.Data() ) << endl;
       out_file << "#                                              " << endl;
       out_file << "#---Acceptance Cuts--- " << endl;
-      if(hdelta_cut_flag)   {out_file << Form("# h-arm (SHMS) Momentum Acceptance: (%.3f, %.3f) %%", hdelta_min, hdelta_max ) << endl;}
-      if(edelta_cut_flag)   {out_file << Form("# e-arm (HMS) Momentum Acceptance: (%.3f, %.3f) %%", edelta_min, edelta_max ) << endl;}
-      if(ztarDiff_cut_flag) {out_file << Form("# Z-Target Vertex Difference, ztar_diff: (%.3f, %.3f)", ztarDiff_min, ztarDiff_max)}
+      if(hdelta_cut_flag)   {out_file << Form("# SHMS Momentum Acceptance (P.gtr.dp): [%.3f, %.3f] %%", hdelta_min, hdelta_max ) << endl;}
+      if(edelta_cut_flag)   {out_file << Form("# HMS  Momentum Acceptance (H.gtr.dp): [%.3f, %.3f] %%", edelta_min, edelta_max ) << endl;}
+      if(ztarDiff_cut_flag) {out_file << Form("# Z-Target Vertex Difference (P.react.z-H.react.z) : [%.3f, %.3f)", ztarDiff_min, ztarDiff_max)}      
       out_file << "#                                     " << endl;
       out_file << "# ---Particle Identification (PID) Cuts---" << endl;
-      out_file << "# electrons (HMS): " << endl;
+      out_file << "# NOTE: Coincidence time background selection is done by averaging a sample (left) and (right) of the main coincidence peak, where the sample is assumed to have the same structure on both sides." << endl;
+      out_file << "# The sample background is then scaled to the background underneath the main coin peak, and subtracted." << endl;
+      out_file << "#                                              " << endl;
+      out_file << "# --> electrons (HMS): " << endl;
+      if(hcer_pidCut_flag)           {out_file << Form("# ", ) << endl; }
+      if(hetot_trkNorm_pidCut_flag)  {out_file << Form("# ", ) << endl; }
+      out_file << "# --> Kaons     (SHMS): " << endl;
+      if(K_paero_npe_flag)   {out_file << Form("# SHMS Aerogel NPE Sum   (P.aero.npeSum)  >= %.3f", K_paero_npe_thrs) << endl; }
+      if(K_phgcer_npe_flag)  {out_file << Form("# SHMS Heavy Gas NPE Sum (P.hgcer.npeSum) <= %.3f", K_phgcer_npe_thrs) << endl; }
+      if(K_beta_flag)        {out_file << Form("# SHMS Hodoscope Beta    (P.gtr.beta):  [%.3f, %.3f]", K_beta_min, K_beta_max) << endl; }
+      if(eK_ctime_flag)
+	{
+	  out_file << Form("# eK Coincidence Time (CTime.eKCoinTime_ROC2): abs( eK_coin_peak - offset(%.3f) ) <= %.3f ns", K_ctime_offset, eK_ctime_thrs) << endl;
+	  out_file << Form("# eK Coincidence Time Background: abs( eK_coin_peak - offset(%.3f) ) > %.3f && abs( eK_coin_peak - offset(%.3f) ) <= (%.3f x %.3f) ns", K_ctime_offset, eK_ctime_thrs, K_ctime_offset, eK_mult, eK_ctime_thrs) << endl;
+	}
+      if(MM_K_cut_flag)  {out_file << Form("# Kaon Missing Mass: [%.3f, %.3f] GeV/c^2", MM_K_min, MM_K_max) << endl; }
+      out_file << "# --> Pions     (SHMS): " << endl;
+      if(Pi_phgcer_npe_flag)  {out_file << Form("# SHMS Heavy Gas NPE Sum (P.hgcer.npeSum) >= %.3f", Pi_phgcer_npe_thrs) << endl; }
+      if(Pi_beta_flag)        {out_file << Form("# SHMS Hodoscope Beta    (P.gtr.beta):  [%.3f, %.3f]", Pi_beta_min, Pi_beta_max) << endl; }
+      if(ePi_ctime_flag)
+	{
+	  out_file << Form("# ePi Coincidence Time (CTime.ePiCoinTime_ROC2): abs( ePi_coin_peak - offset(%.3f) ) <= %.3f ns", Pi_ctime_offset, ePi_ctime_thrs) << endl;
+	  out_file << Form("# ePi Coincidence Time Background: abs( ePi_coin_peak - offset(%.3f) ) > %.3f && abs( ePi_coin_peak - offset(%.3f) ) <= (%.3f x %.3f) ns", Pi_ctime_offset, ePi_ctime_thrs, Pi_ctime_offset, ePi_mult, ePi_ctime_thrs) << endl;
+	}
+      if(MM_Pi_cut_flag)  {out_file << Form("# Pion Missing Mass: [%.3f, %.3f] GeV/c^2", MM_Pi_min, MM_Pi_max) << endl; }
       
-      out_file << "# Kaons     (SHMS): " << endl;
-      out_file << "# Pions     (SHMS): " << endl;
-      out_file << "# Protons   (SHMS): " << endl;
+      out_file << "# --> Protons   (SHMS): " << endl;
+      if(P_paero_npe_flag)    {out_file << Form("# SHMS Aerogel NPE Sum   (P.aero.npeSum)  <= %.3f", P_paero_npe_thrs) << endl; }
+      if(P_phgcer_npe_flag)   {out_file << Form("# SHMS Heavy Gas NPE Sum (P.hgcer.npeSum) <= %.3f", P_phgcer_npe_thrs) << endl; }
+      if(P_beta_flag)         {out_file << Form("# SHMS Hodoscope Beta    (P.gtr.beta):  [%.3f, %.3f]", P_beta_min, P_beta_max) << endl; }
+      if(eP_ctime_flag)
+	{
+	  out_file << Form("# eP Coincidence Time (CTime.epCoinTime_ROC2): abs( eP_coin_peak - offset(%.3f) ) <= %.3f ns", P_ctime_offset, eP_ctime_thrs) << endl;
+	  out_file << Form("# eP Coincidence Time Background: abs( eP_coin_peak - offset(%.3f) ) > %.3f && abs( eP_coin_peak - offset(%.3f) ) <= (%.3f x %.3f) ns", P_ctime_offset, eP_ctime_thrs, P_ctime_offset, eP_mult, eP_ctime_thrs) << endl;
+	}
+      if(MM_P_cut_flag)  {out_file << Form("# Proton Missing Mass: [%.3f, %.3f] GeV/c^2", MM_P_min, MM_P_max) << endl; }
       
       out_file << "#                       " << endl;
       out_file << "# Units: charge [mC] | currnet [uA] | rates [kHz] |  efficiencies [fractional form]                       " << endl;
