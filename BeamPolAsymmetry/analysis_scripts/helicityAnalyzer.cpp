@@ -1075,7 +1075,7 @@ void helicityAnalyzer::EventLoop()
 		  //Apply acceptance cut (else, continue to next event withint loop)
 		  if(accp_cuts) { 		  
 		  
-		  //Fill all coincidence times to determin the offset for each
+		  //Fill all coincidence times to determine the offset for each
 		  H_eK_ctime->Fill(eKCoinTime-K_ctime_offset); //this ctime (inherited from baseAnalyzer) is used to set the K_ctime_offset and cuts)
 		  H_ePi_ctime->Fill(ePiCoinTime-Pi_ctime_offset);
 		  H_ep_ctime->Fill(epCoinTime-P_ctime_offset);
@@ -1095,6 +1095,7 @@ void helicityAnalyzer::EventLoop()
 		  H_pCalEtotTrkNorm->Fill(pcal_etottracknorm);
 		  H_pHodBetaNtrk->Fill(phod_beta_ntrk);
 		  H_pHodBetaTrk->Fill(phod_gtr_beta);		  
+
 		  //Fill 2D PID Correlations
 		  H_hcal_vs_hcer->Fill(hcal_etottracknorm, hcer_npesum);
 		  H_pcal_vs_phgcer->Fill(pcal_etottracknorm, phgcer_npesum);  
