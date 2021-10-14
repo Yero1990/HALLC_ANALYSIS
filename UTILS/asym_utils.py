@@ -526,13 +526,17 @@ def plot_report(kin_group=""):
 def main():
     print("Plotting Asym")
 
+    # calculate asymmetry for a specified kin. setting
+    # (output .txt file with numerical asymmetry is created)
+    calc_asym("Kaon", "KIN-1")
+    ccalc_asym("Pion", "KIN-1")
 
-    #calc_asym("Kaon", "KIN-1")
-    #calc_asym("Pion", "KIN-1")
-
+    # integrate over all th_xq_cm bins for specified kinematic
+    # (output .txt file with integrated numerical asymmetry is created)
     combine_thcm_bins(particle="Kaon", group="KIN-1")
     combine_thcm_bins(particle="Pion", group="KIN-1")
-    
+
+    # plot asymmetry for specified kin. setting, particle, binned (0) or integrated (1)  th_xq_cm bins
     plot_asym("KIN-1", "Kaon", 0)
     plot_asym("KIN-1", "Kaon", 1)
 
