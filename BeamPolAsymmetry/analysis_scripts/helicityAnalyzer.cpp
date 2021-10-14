@@ -1072,129 +1072,126 @@ void helicityAnalyzer::EventLoop()
 
 		  // C.Y. NEED TO: Make Spectrometer Acceptance Cuts here (BASED ON THE 1D ACCEPTANCE HISTOGRAMS FILLED BELOW)
 		  
-		  //Apply acceptance cut (else, continue to next event withint loop)
+		  //Apply acceptance cut (else, continue to next event within loop)
 		  if(accp_cuts) { 		  
+		    
+		    //Fill all coincidence times to determine the offset for each
+		    H_eK_ctime->Fill(eKCoinTime-K_ctime_offset); //this ctime (inherited from baseAnalyzer) is used to set the K_ctime_offset and cuts)
+		    H_ePi_ctime->Fill(ePiCoinTime-Pi_ctime_offset);
+		    H_ep_ctime->Fill(epCoinTime-P_ctime_offset);
+		    
 		  
-		  //Fill all coincidence times to determine the offset for each
-		  H_eK_ctime->Fill(eKCoinTime-K_ctime_offset); //this ctime (inherited from baseAnalyzer) is used to set the K_ctime_offset and cuts)
-		  H_ePi_ctime->Fill(ePiCoinTime-Pi_ctime_offset);
-		  H_ep_ctime->Fill(epCoinTime-P_ctime_offset);
+		    //Fill HMS Detectors
+		    H_hCerNpeSum->Fill(hcer_npesum);
+		    H_hCalEtotNorm->Fill(hcal_etotnorm);
+		    H_hCalEtotTrkNorm->Fill(hcal_etottracknorm);
+		    H_hHodBetaNtrk->Fill(hhod_beta_ntrk);
+		    H_hHodBetaTrk->Fill(hhod_gtr_beta);
+		    
+		    //Fill SHMS Detectors
+		    H_pHGCerNpeSum->Fill(phgcer_npesum);
+		    H_pAeroNpeSum->Fill(paero_npesum);
+		    H_pCalEtotNorm->Fill(pcal_etotnorm);
+		    H_pCalEtotTrkNorm->Fill(pcal_etottracknorm);
+		    H_pHodBetaNtrk->Fill(phod_beta_ntrk);
+		    H_pHodBetaTrk->Fill(phod_gtr_beta);		  
 
-		  
-		  //Fill HMS Detectors
-		  H_hCerNpeSum->Fill(hcer_npesum);
-		  H_hCalEtotNorm->Fill(hcal_etotnorm);
-		  H_hCalEtotTrkNorm->Fill(hcal_etottracknorm);
-		  H_hHodBetaNtrk->Fill(hhod_beta_ntrk);
-		  H_hHodBetaTrk->Fill(hhod_gtr_beta);
-		  
-		  //Fill SHMS Detectors
-		  H_pHGCerNpeSum->Fill(phgcer_npesum);
-		  H_pAeroNpeSum->Fill(paero_npesum);
-		  H_pCalEtotNorm->Fill(pcal_etotnorm);
-		  H_pCalEtotTrkNorm->Fill(pcal_etottracknorm);
-		  H_pHodBetaNtrk->Fill(phod_beta_ntrk);
-		  H_pHodBetaTrk->Fill(phod_gtr_beta);		  
+		    //Fill 2D PID Correlations
+		    H_hcal_vs_hcer->Fill(hcal_etottracknorm, hcer_npesum);
+		    H_pcal_vs_phgcer->Fill(pcal_etottracknorm, phgcer_npesum);  
+		    H_pcal_vs_paero->Fill(pcal_etottracknorm, paero_npesum);   
+		    H_paero_vs_phgcer->Fill(paero_npesum, phgcer_npesum); 	      		  
+		    
+		    //----------------------------------------------------------------------
+		    //---------HISTOGRAM CATEGORY: Spectrometer Acceptance  (ACCP)----------
+		    //----------------------------------------------------------------------
+		    
+		    //Fill SPECTROMETER  ACCEPTANCE (focal plane)
+		    H_exfp       ->Fill(e_xfp);
+		    H_eyfp       ->Fill(e_yfp);
+		    H_expfp      ->Fill(e_xpfp);
+		    H_eypfp      ->Fill(e_ypfp);
+		    
+		    H_hxfp       ->Fill(h_xfp);
+		    H_hyfp       ->Fill(h_yfp);
+		    H_hxpfp      ->Fill(h_xpfp);
+		    H_hypfp      ->Fill(h_ypfp);
+		    
+		    //Fill SPECTROMETER  ACCEPTANCE (reconstructed)		  
+		    H_eytar      ->Fill(e_ytar);
+		    H_exptar     ->Fill(e_xptar);
+		    H_eyptar     ->Fill(e_yptar);
+		    H_edelta     ->Fill(e_delta);
+		    
+		    H_hytar       ->Fill(h_ytar);
+		    H_hxptar      ->Fill(h_xptar);
+		    H_hyptar      ->Fill(h_yptar);
+		    H_hdelta      ->Fill(h_delta);
+		    
+		    //Fill SPECTROMETER AT REACTION VERTEX
+		    H_htar_x       ->Fill(htar_x);
+		    H_htar_y       ->Fill(htar_y);
+		    H_htar_z       ->Fill(htar_z);
+		    H_etar_x       ->Fill(etar_x);
+		    H_etar_y       ->Fill(etar_y);
+		    H_etar_z       ->Fill(etar_z);
 
-		  //Fill 2D PID Correlations
-		  H_hcal_vs_hcer->Fill(hcal_etottracknorm, hcer_npesum);
-		  H_pcal_vs_phgcer->Fill(pcal_etottracknorm, phgcer_npesum);  
-		  H_pcal_vs_paero->Fill(pcal_etottracknorm, paero_npesum);   
-		  H_paero_vs_phgcer->Fill(paero_npesum, phgcer_npesum); 	      		  
-		  
-		  //----------------------------------------------------------------------
-		  //---------HISTOGRAM CATEGORY: Spectrometer Acceptance  (ACCP)----------
-		  //----------------------------------------------------------------------
 
-		  //Fill SPECTROMETER  ACCEPTANCE (focal plane)
-		  H_exfp       ->Fill(e_xfp);
-		  H_eyfp       ->Fill(e_yfp);
-		  H_expfp      ->Fill(e_xpfp);
-		  H_eypfp      ->Fill(e_ypfp);
-		  
-		  H_hxfp       ->Fill(h_xfp);
-		  H_hyfp       ->Fill(h_yfp);
-		  H_hxpfp      ->Fill(h_xpfp);
-		  H_hypfp      ->Fill(h_ypfp);
+		    //--------------------------------------------------------
+		    //---------HISTOGRAM CATEGORY: Kinematics  (KIN)----------
+		    //--------------------------------------------------------
+		    
+		    //Fill Primary Kin Histos
+		    H_the    ->Fill(th_e/dtr);
+		    H_kf     ->Fill(kf);
+		    H_W      ->Fill(W);
+		    H_W2     ->Fill(W2);
+		    H_Q2     ->Fill(Q2);
+		    H_xbj    ->Fill(X);
+		    H_nu     ->Fill(nu);
+		    H_q      ->Fill(q);
+		    H_qx     ->Fill(qx);
+		    H_qy     ->Fill(qy);
+		    H_qz     ->Fill(qz);
+		    H_thq    ->Fill(th_q/dtr);
+		    H_phq    ->Fill(ph_q/dtr);
+		    H_epsilon->Fill(epsilon); 
+		    
+		    //Fill Secondary Kin Histos
+		    H_Em       ->Fill(Em);
+		    H_Pm       ->Fill(Pm);
+		    H_Pmx_lab  ->Fill(Pmx_lab);
+		    H_Pmy_lab  ->Fill(Pmy_lab);
+		    H_Pmz_lab  ->Fill(Pmz_lab);
+		    H_Pmx_q    ->Fill(Pmx_q);
+		    H_Pmy_q    ->Fill(Pmy_q);
+		    H_Pmz_q    ->Fill(Pmz_q);
+		    H_Tx       ->Fill(Tx);
+		    H_Tr       ->Fill(Tr);
+		    H_thx      ->Fill(th_x/dtr);
+		    H_Pf       ->Fill(Pf);		  
+		    H_Tx_cm    ->Fill(Tx_cm);
+		    H_Tr_cm    ->Fill(Tr_cm);		  
+		    
+		    //pid PID cuts Beta (redundant hsito from above, but with different name)
+		    H_Beta_noPID->Fill(phod_gtr_beta);
+		    
+		    
+		    //--------Start (Kaon LT) Helicity Analysis----------
+		    
+		    
+		    //=====================================
+		    //  KAON BEAM-SPIN ASYMMETRY ANALYSIS
+		    //=====================================
+		    
+		    //Fill Beta vs. Coin Time (Assuming Kaon Mass in Coin Time calculation)
+		    H_Beta_vs_ctime_K_noPID->Fill((eKCoinTime-K_ctime_offset), phod_gtr_beta);
+		    
+		    // C.Y. NEED TO: Make Kaon selection PID CUT HERE ! (BASED ON THE 2D PID CORRELATIONS FILLED ABOVE)
+		    if(kaon_pid && elec_pid) {
 		      
-		  //Fill SPECTROMETER  ACCEPTANCE (reconstructed)		  
-		  H_eytar      ->Fill(e_ytar);
-		  H_exptar     ->Fill(e_xptar);
-		  H_eyptar     ->Fill(e_yptar);
-		  H_edelta     ->Fill(e_delta);
-		  
-		  H_hytar       ->Fill(h_ytar);
-		  H_hxptar      ->Fill(h_xptar);
-		  H_hyptar      ->Fill(h_yptar);
-		  H_hdelta      ->Fill(h_delta);
-		  
-		  //Fill SPECTROMETER AT REACTION VERTEX
-		  H_htar_x       ->Fill(htar_x);
-		  H_htar_y       ->Fill(htar_y);
-		  H_htar_z       ->Fill(htar_z);
-		  H_etar_x       ->Fill(etar_x);
-		  H_etar_y       ->Fill(etar_y);
-		  H_etar_z       ->Fill(etar_z);
-
-
-		  //--------------------------------------------------------
-		  //---------HISTOGRAM CATEGORY: Kinematics  (KIN)----------
-		  //--------------------------------------------------------
-		  
-		  //Fill Primary Kin Histos
-		  H_the    ->Fill(th_e/dtr);
-		  H_kf     ->Fill(kf);
-		  H_W      ->Fill(W);
-		  H_W2     ->Fill(W2);
-		  H_Q2     ->Fill(Q2);
-		  H_xbj    ->Fill(X);
-		  H_nu     ->Fill(nu);
-		  H_q      ->Fill(q);
-		  H_qx     ->Fill(qx);
-		  H_qy     ->Fill(qy);
-		  H_qz     ->Fill(qz);
-		  H_thq    ->Fill(th_q/dtr);
-		  H_phq    ->Fill(ph_q/dtr);
-		  H_epsilon->Fill(epsilon); 
-		  
-		  //Fill Secondary Kin Histos
-		  H_Em       ->Fill(Em);
-		  H_Pm       ->Fill(Pm);
-		  H_Pmx_lab  ->Fill(Pmx_lab);
-		  H_Pmy_lab  ->Fill(Pmy_lab);
-		  H_Pmz_lab  ->Fill(Pmz_lab);
-		  H_Pmx_q    ->Fill(Pmx_q);
-		  H_Pmy_q    ->Fill(Pmy_q);
-		  H_Pmz_q    ->Fill(Pmz_q);
-		  H_Tx       ->Fill(Tx);
-		  H_Tr       ->Fill(Tr);
-		  H_thx      ->Fill(th_x/dtr);
-		  H_Pf       ->Fill(Pf);		  
-		  H_Tx_cm    ->Fill(Tx_cm);
-		  H_Tr_cm    ->Fill(Tr_cm);		  
-		  
-		  //pid PID cuts Beta (redundant hsito from above, but with different name)
-		  H_Beta_noPID->Fill(phod_gtr_beta);
-
-		  } // end accpetance cuts
-		  
-		  //--------Start (Kaon LT) Helicity Analysis----------
-
-
-		  //=====================================
-		  //  KAON BEAM-SPIN ASYMMETRY ANALYSIS
-		  //=====================================
-
-		  //Fill Beta vs. Coin Time (Assuming Kaon Mass in Coin Time calculation)
-		  H_Beta_vs_ctime_K_noPID->Fill((eKCoinTime-K_ctime_offset), phod_gtr_beta);
-
-		  // C.Y. NEED TO: Make Kaon selection PID CUT HERE ! (BASED ON THE 2D PID CORRELATIONS FILLED ABOVE)
-		  if(kaon_pid && elec_pid) {
-		  // if(1) {
-		      
-		    //C.Y. NEED TO: Make a Beta Cut HERE! (Based on the 1D and 2D Beta plots)
-		      //if(kaon_beta_cut) {
-		      if(1) {
+		      //C.Y. NEED TO: Make a Beta Cut HERE! (Based on the 1D and 2D Beta plots)
+		      if(kaon_beta_cut) {		    
 			
 			//Fill Beta (Kaon PID)
 			H_Beta_K_PID->Fill(phod_gtr_beta);
@@ -1208,17 +1205,14 @@ void helicityAnalyzer::EventLoop()
 			//------------------------------------------		    
 			
 			//C.Y. NEED TO: Make coin. time cut to select TRUE eK coin. time peak HERE !
-			if(eK_ctime_cut) {
-			  //if(1) {
+			if(eK_ctime_cut) {			
 			  
 			  H_eK_ctime_real->Fill(eKCoinTime-K_ctime_offset);			  
 			  H_MM_K_real->Fill(MM_K); 
-			  //H_Beta_K_real->Fill(phod_gtr_beta);
 			  
 			  //C.Y. NEED TO: Make a Kaon  Missing Mass Cut HERE !
-			  if(kaon_MM_cut){
-			  //if(1){
-
+			  if(kaon_MM_cut){			  
+			    
 			    //Fill Beta (with missing mass cut)
 			    H_Beta_K_real->Fill(phod_gtr_beta);
 			    
@@ -1231,65 +1225,57 @@ void helicityAnalyzer::EventLoop()
 			    
 			    //Check if event has "+" helicity
 			    if(hel_sign>0){
-			      //Fill Fill In-plane th_xq_cm "VS" Out-of-plane angle, ph_qx (pos helicity) for the Kaons 
-			      H_thxqCM_vs_phxq_K_pos->Fill(ph_xq/dtr, th_xq_cm/dtr);   //in deg
-			      
+			      //Fill Fill In-plane th_xq_cm "VS" Out-of-plane angle, ph_xq (pos helicity) for the Kaons 
+			      H_thxqCM_vs_phxq_K_pos->Fill(ph_xq/dtr, th_xq_cm/dtr);   //in deg			    
 			    }
+			    
 			    //Check if event has "-" helicity
 			    else if(hel_sign<0){
-			      //Fill Fill In-plane th_xq_cm "VS" Out-of-plane angle, ph_qx (neg helicity) for the Kaons
-			      H_thxqCM_vs_phxq_K_neg->Fill(ph_xq/dtr, th_xq_cm/dtr);   //in deg
-			      
+			      //Fill Fill In-plane th_xq_cm "VS" Out-of-plane angle, ph_xq (neg helicity) for the Kaons
+			      H_thxqCM_vs_phxq_K_neg->Fill(ph_xq/dtr, th_xq_cm/dtr);   //in deg			      
 			    }
-			  
+			    
 			  } // end missing mass cut around Lambda (1115), to select reaction channel, H(e,e'K+)MM, where MM=Lambda
+			  
+			} // end eK real coin. selection cut		     
 			
-			} // end eK real coin. selection cut
-
-		     
-		      
 			//------------------------------------------
 			//         RANDOM BKG KAON SELECTION
 			//------------------------------------------
 			
 			//C.Y. NEED TO: Make coin. time cut to select randoms (sample outside main peak) eK coin. time peak HERE !
-			if(eK_ctime_cut_rand) {
-			  //if(1) {
+			if(eK_ctime_cut_rand) {		      
 			  
 			  H_eK_ctime_rand->Fill(eKCoinTime-K_ctime_offset);
-			  H_MM_K_rand->Fill(MM_K);
-			  //H_Beta_K_rand->Fill(phod_gtr_beta);
+			  H_MM_K_rand->Fill(MM_K);			
 			  
 			  //C.Y. NEED TO: Make a Kaon  Missing Mass Cut HERE !
- 			  if(kaon_MM_cut){
-			    //if(1){
-
+			  if(kaon_MM_cut){			  
+			    
 			    //Fill Beta (with missing mass cut)
 			    H_Beta_K_rand->Fill(phod_gtr_beta);
 			    
 			    //Check if event has "+" helicity
 			    if(hel_sign>0){
 			      //Fill Fill In-plane th_xq_cm "VS" Out-of-plane angle, ph_qx (pos helicity) for the Kaons
-			      H_thxqCM_vs_phxq_K_pos_rand->Fill(ph_xq/dtr, th_xq_cm/dtr);  //in deg
-			      
-			    }
-			    //Check if event has "-" helicity
-			    else if(hel_sign<0){
-			      //Fill Fill In-plane th_xq_cm "VS" Out-of-plane angle, ph_qx (neg helicity) for the Kaons
-			      H_thxqCM_vs_phxq_K_neg_rand->Fill(ph_xq/dtr, th_xq_cm/dtr);  //in deg
-			      
+			      H_thxqCM_vs_phxq_K_pos_rand->Fill(ph_xq/dtr, th_xq_cm/dtr);  //in deg			    
 			    }
 			    
-			  }// end missing mass cut around Lambda (1115), to select reaction channel, H(e,e'K+)MM, where MM=Lambda
+			  //Check if event has "-" helicity
+			    else if(hel_sign<0){
+			      //Fill Fill In-plane th_xq_cm "VS" Out-of-plane angle, ph_qx (neg helicity) for the Kaons
+			      H_thxqCM_vs_phxq_K_neg_rand->Fill(ph_xq/dtr, th_xq_cm/dtr);  //in deg			    
+			    }
+			    
+			  } // end missing mass cut around Lambda (1115), to select reaction channel, H(e,e'K+)MM, where MM=Lambda
 			  
-			}// end eK random coin. selection
-
+			} // end eK random coin. selection
 			
 		      } // end Kaon Beta Cut
 		      
-		    }// end PID selection cut on SHMS (Kaons) and HMS (electrons)
-		 
-
+		    } // end PID selection cut on SHMS (Kaons) and HMS (electrons)
+		    
+		    
 		    //==============================================================================================================================
 		    
 		    //=====================================
@@ -1300,12 +1286,11 @@ void helicityAnalyzer::EventLoop()
 		    H_Beta_vs_ctime_Pi_noPID->Fill((ePiCoinTime-Pi_ctime_offset), phod_gtr_beta);
 		    
 		    // C.Y. NEED TO: Make Pion selection PID CUT HERE ! (BASED ON THE 2D PID CORRELATIONS FILLED ABOVE)
-		    if(pion_pid && elec_pid) {
-		      //if(1) {
+		    if(pion_pid && elec_pid) {		    
 		      
 		      //C.Y. NEED TO: Make a Beta Cut HERE! (Based on the 1D and 2D Beta plots)
-		      //if(pion_beta_cut) {
-		      if(1) {
+		      if(pion_beta_cut) {
+			
 			
 			//Fill Beta (Pion PID)
 			H_Beta_Pi_PID->Fill(phod_gtr_beta);
@@ -1319,31 +1304,27 @@ void helicityAnalyzer::EventLoop()
 			//------------------------------------------		    
 			
 			//C.Y. NEED TO: Make coin. time cut to select TRUE ePi coin. time peak HERE !
-			if(ePi_ctime_cut) {
-			  //if(1) {
+			if(ePi_ctime_cut) {		       
 			  
 			  H_ePi_ctime_real->Fill(ePiCoinTime-Pi_ctime_offset);
 			  H_MM_Pi_real->Fill(MM_Pi); 
-			  //H_Beta_Pi_real->Fill(phod_gtr_beta);
 			  
 			  //C.Y. NEED TO: Make a Pion  Missing Mass Cut HERE !
-			  if(pion_MM_cut){
-			    //if(1){			    
-
+			  if(pion_MM_cut){			    		    
+			    
 			    //Fill Beta (with missing mass cut)
 			    H_Beta_Pi_real->Fill(phod_gtr_beta);
-			     
+			    
 			    //Check if event has "+" helicity
 			    if(hel_sign>0){
 			      //Fill Fill In-plane th_xq_cm "VS" Out-of-plane angle, ph_qx (pos helicity) for the Pions 
-			      H_thxqCM_vs_phxq_Pi_pos->Fill(ph_xq/dtr, th_xq_cm/dtr);   //in deg
-			      
+			      H_thxqCM_vs_phxq_Pi_pos->Fill(ph_xq/dtr, th_xq_cm/dtr);   //in deg			    
 			    }
+			    
 			    //Check if event has "-" helicity
 			    else if(hel_sign<0){
 			      //Fill Fill In-plane th_xq_cm "VS" Out-of-plane angle, ph_qx (neg helicity) for the Pions
-			      H_thxqCM_vs_phxq_Pi_neg->Fill(ph_xq/dtr, th_xq_cm/dtr);   //in deg
-			      
+			      H_thxqCM_vs_phxq_Pi_neg->Fill(ph_xq/dtr, th_xq_cm/dtr);   //in deg			    
 			    }
 			    
 			  } // end missing mass cut around neutron (939.565), to select reaction channel, H(e,e'Pi+)MM, where MM=neutron
@@ -1357,43 +1338,39 @@ void helicityAnalyzer::EventLoop()
 			//------------------------------------------
 			
 			//C.Y. NEED TO: Make coin. time cut to select randoms (sample outside main peak) ePi coin. time peak HERE !
-			if(ePi_ctime_cut_rand) {
-			  //if(1) {
+			if(ePi_ctime_cut_rand) {		       
 			  
 			  H_ePi_ctime_rand->Fill(ePiCoinTime-Pi_ctime_offset);			  
-			  H_MM_Pi_rand->Fill(MM_Pi);
-			  //H_Beta_Pi_rand->Fill(phod_gtr_beta);
+			  H_MM_Pi_rand->Fill(MM_Pi);			
 			  
 			  //C.Y. NEED TO: Make a Pion  Missing Mass Cut HERE !
-			  if(pion_MM_cut){
-			  //if(1){
-
+			  if(pion_MM_cut){			 
+			    
 			    //Fill Beta (with missing mass cut)
 			    H_Beta_Pi_rand->Fill(phod_gtr_beta);
-
+			    
 			    //Check if event has "+" helicity
 			    if(hel_sign>0){
 			      //Fill Fill In-plane th_xq_cm "VS" Out-of-plane angle, ph_qx (pos helicity) for the Pions
-			      H_thxqCM_vs_phxq_Pi_pos_rand->Fill(ph_xq/dtr, th_xq_cm/dtr);  //in deg
-			      
+			      H_thxqCM_vs_phxq_Pi_pos_rand->Fill(ph_xq/dtr, th_xq_cm/dtr);  //in deg			    
 			    }
+			    
 			    //Check if event has "-" helicity
 			    else if(hel_sign<0){
 			      //Fill Fill In-plane th_xq_cm "VS" Out-of-plane angle, ph_qx (neg helicity) for the Pions
-			      H_thxqCM_vs_phxq_Pi_neg_rand->Fill(ph_xq/dtr, th_xq_cm/dtr);  //in deg
-			      
+			      H_thxqCM_vs_phxq_Pi_neg_rand->Fill(ph_xq/dtr, th_xq_cm/dtr);  //in deg			    
 			    }
 			    
 			  }// end missing mass cut around neutron (939.565), to select reaction channel, H(e,e'Pi+)MM, where MM=Pion
 			  
 			}// end ePi random coin. selection
-
+			
 		      } // end Pion Beta Cut
 		      
 		    }// end PID selection cut on SHMS (Pions) and HMS (electrons)
-
+		    
 		    //===================================================================================================================
-
+		    
 		    //=======================================
 		    //  PROTON BEAM-SPIN ASYMMETRY ANALYSIS
 		    //=======================================
@@ -1402,12 +1379,10 @@ void helicityAnalyzer::EventLoop()
 		    H_Beta_vs_ctime_P_noPID->Fill((epCoinTime-P_ctime_offset), phod_gtr_beta);
 		    
 		    // C.Y. NEED TO: Make Proton selection PID CUT HERE ! (BASED ON THE 2D PID CORRELATIONS FILLED ABOVE)
-		    if(proton_pid && elec_pid) {
-		    //if(1) {
+		    if(proton_pid && elec_pid) {		    
 		      
 		      //C.Y. NEED TO: Make a Beta Cut HERE! (Based on the 1D and 2D Beta plots)
-		      //if(proton_beta_cut) {
-		      if(1) {
+		      if(proton_beta_cut) {		      
 			
 			//Fill Beta (Proton PID)
 			H_Beta_P_PID->Fill(phod_gtr_beta);
@@ -1422,81 +1397,73 @@ void helicityAnalyzer::EventLoop()
 			
 			//C.Y. NEED TO: Make coin. time cut to select TRUE eP coin. time peak HERE !
 			if(eP_ctime_cut) {
-			  //if(1) {
 			  
 			  H_ep_ctime_real->Fill(epCoinTime-P_ctime_offset);			  
-			  H_MM_P_real->Fill(MM_P); 
-			  //H_Beta_P_real->Fill(phod_gtr_beta);
+			  H_MM_P_real->Fill(MM_P); 		       
 			  
 			  //C.Y. NEED TO: Make a Proton  Missing Mass Cut HERE !
-			  if(proton_MM_cut){
-			    //if(1){			    
-
+			  if(proton_MM_cut){			  			    
+			    
 			    //Fill Beta (with missing mass cut)
 			    H_Beta_P_real->Fill(phod_gtr_beta);
 			    
 			    //Check if event has "+" helicity
 			    if(hel_sign>0){
 			      //Fill Fill In-plane th_xq_cm "VS" Out-of-plane angle, ph_qx (pos helicity) for the Protons 
-			      H_thxqCM_vs_phxq_P_pos->Fill(ph_xq/dtr, th_xq_cm/dtr);   //in deg
-			      
+			      H_thxqCM_vs_phxq_P_pos->Fill(ph_xq/dtr, th_xq_cm/dtr);   //in deg			    
 			    }
+			    
 			    //Check if event has "-" helicity
 			    else if(hel_sign<0){
 			      //Fill Fill In-plane th_xq_cm "VS" Out-of-plane angle, ph_qx (neg helicity) for the Protons
-			      H_thxqCM_vs_phxq_P_neg->Fill(ph_xq/dtr, th_xq_cm/dtr);   //in deg
-			      
+			      H_thxqCM_vs_phxq_P_neg->Fill(ph_xq/dtr, th_xq_cm/dtr);   //in deg			      
 			    }
 			    
 			  } // end missing mass cut around "nothing ... ??" (0), to select reaction channel, H(e,e'p)MM, where MM = 0 [elastic?]
 			  
-			} // end eP real coin. selection cut
-			
-			
+			} // end eP real coin. selection cut						
 			
 			//------------------------------------------
 			//         RANDOM BKG PROTON SELECTION
 			//------------------------------------------
 			
 			//C.Y. NEED TO: Make coin. time cut to select randoms (sample outside main peak) eP coin. time peak HERE !
-			if(eP_ctime_cut_rand) {
-			  //if(1) {
+			if(eP_ctime_cut_rand) {		       
 			  
 			  H_ep_ctime_rand->Fill(epCoinTime-P_ctime_offset);			  
-			  H_MM_P_rand->Fill(MM_P);
-			  //H_Beta_P_rand->Fill(phod_gtr_beta);
+			  H_MM_P_rand->Fill(MM_P);		      
 			  
 			  //C.Y. NEED TO: Make a Proton  Missing Mass Cut HERE !
-			  if(proton_MM_cut){
-			    //if(1){
-
+			  if(proton_MM_cut){			  
+			    
 			    //Fill Beta (with missing mass cut)
 			    H_Beta_P_rand->Fill(phod_gtr_beta);
 			    
 			    //Check if event has "+" helicity
 			    if(hel_sign>0){
 			      //Fill Fill In-plane th_xq_cm "VS" Out-of-plane angle, ph_qx (pos helicity) for the Protons
-			      H_thxqCM_vs_phxq_P_pos_rand->Fill(ph_xq/dtr, th_xq_cm/dtr);  //in deg
-			      
+			      H_thxqCM_vs_phxq_P_pos_rand->Fill(ph_xq/dtr, th_xq_cm/dtr);  //in deg			      
 			    }
+			    
 			    //Check if event has "-" helicity
 			    else if(hel_sign<0){
 			      //Fill Fill In-plane th_xq_cm "VS" Out-of-plane angle, ph_qx (neg helicity) for the Protons
-			      H_thxqCM_vs_phxq_P_neg_rand->Fill(ph_xq/dtr, th_xq_cm/dtr);  //in deg
-			      
+			      H_thxqCM_vs_phxq_P_neg_rand->Fill(ph_xq/dtr, th_xq_cm/dtr);  //in deg			    
 			    }
 			    
 			  }// end missing mass cut around "nothing . . .?" (0), to select reaction channel, H(e,e'p)MM, where MM = 0 [elastic?]
 			  
 			}// end eP random coin. selection
-
+			
 		      } // end Proton Beta Cut
 		      
 		    }// end PID selection cut on SHMS (Protons) and HMS (electrons)
 
-		    //===================================================================================================================
-		    
-		    
+		  } // end accpetance cuts  
+		  
+		  //===================================================================================================================
+		  
+		  
 		}  //------END: REQUIRE "NO EDTM" CUT TO FILL DATA HISTOGRAMS-----
 	      
 	    }  //-----END: BCM Current Cut------
@@ -1508,30 +1475,31 @@ void helicityAnalyzer::EventLoop()
 	  if(gevnum==scal_evt_num[scal_read]){ scal_read++; }
 	  
 	  cout << "Helicity DataEventLoop: " << std::setprecision(2) << double(ientry) / nentries * 100. << "  % " << std::flush << "\r";
-
+	  
 	} //END DATA EVENT LOOP      
-
+      
     }//END DATA ANALYSIS
   
   if(analysis=="simc")
     {
       cout << "SIMC ANALYSIS needs to be done for Kaon LT Analysis (2018) . . . " << endl;
     }
-}
+  
+} //End helicityAnalyzer::EventLoop()
 
 //_______________________________________________________________________________
 void helicityAnalyzer::CalcEff()
 {
   cout << "Calling Derived CalcEff() . . . " << endl;
-
+  
   //As of now, there is nothing to add to the existing method from baseAnalyzer.
-
+  
   //Call the existing method, as it is needed to calculate live time / tracking eff.
   // as well as convert rates to kHz and charge to mC.
   baseAnalyzer::CalcEff();
   
   //HERE: Add additional calculations if needed.
-
+  
   //--Calculate HMS Tracking Efficiency--                                                                                                                 
 
   //HMS + helicity
@@ -1603,10 +1571,10 @@ void helicityAnalyzer::ApplyWeight()
   //Scale Data Histograms by Full Weight (Each run for a particular kinematics can then be combined, once they are scaled by the FullWeight)
   
   //----SCALE HISTOGRAMS BY LOOPING OVER LISTS----
-
+  
   //determine what class types are in the list
   TString class_name;
-      
+  
   
   //------------------------------------------
   //Lopp over hel_HList of histogram objects
@@ -1641,7 +1609,7 @@ void helicityAnalyzer::ApplyWeight()
       h2_i = (TH2F *)pid_HList->At(i); h2_i->Scale(FullWeight);
     }   
   }//end loop over pid_HList
-
+  
   //-----------------------------------------------------
   //Lopp over kin_HList of histogram objects (inherited)
   //----------------------------------------------------
