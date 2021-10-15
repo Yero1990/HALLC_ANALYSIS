@@ -58,12 +58,12 @@ c_pBetaNtrk_max = 1.5
 
 #---------DATA/SIMC ANALYSIS CUTS (SPECIFIC FORMAT FOR HELICITY ANALYSIS)----------
 
-# For a the description of each of these cuts: See the 'helicityAnalyzer.h' header file 
+# For a description of each of these cuts: See the 'helicityAnalyzer.h' header file 
 # Three analysis are done in the same code (Kaon, Pion, Proton) beam asymmetry (use the cuts for the relevant analyses)
 
 #------Acceptance Cuts------
 # Electron (HMS) Arm Momentum Acceptance, Delta [%] 
-edelta_cut_flag = 1 
+edelta_cut_flag = 1
 edelta_min = -8.
 edelta_max = 8.
 
@@ -72,31 +72,33 @@ hdelta_cut_flag = 1
 hdelta_min = -10.
 hdelta_max = 22.
 
-# Z-Reaction Vertex Difference, [cm]                         
-ztarDiff_cut_flag = 0                                                                            
-ztarDiff_min = -2.                                                                  
-ztarDiff_max = 2. 
+# Z-Reaction Vertex Difference, [cm]
+ztarDiff_cut_flag = 0
+ztarDiff_min = -2.
+ztarDiff_max = 2.
 
 #------PID Cuts------
 
-#--------------------
-#--- electron PID ---
-#--------------------
+#---------------------
+# --- electron PID ---
+#---------------------
 
-hcer_pidCut_flag = 1  
+# (HMS PID) Gas Cherenkov
+hcer_pidCut_flag = 1
 elec_hcer_npe_thrs = 2.0
 
+# (HMS PID) Calorimeter Total Energy Normalized By Track Momentum
 hetot_trkNorm_pidCut_flag = 1
-elec_hcal_thrs = 0.8 
+elec_hcal_thrs = 0.8
 
-#-----------------
-#--- Kaon PID ----
-#-----------------
+#--------------
+#-- Kaon PID --
+#--------------
 
 K_paero_npe_flag = 1
 K_paero_npe_thrs = 1.5
 
-K_phgcer_npe_flag = 1 
+K_phgcer_npe_flag = 1
 K_phgcer_npe_thrs = 1.5
 
 K_beta_flag = 1
@@ -104,13 +106,13 @@ K_beta_min = 0.7
 K_beta_max = 1.3
 
 eK_ctime_flag = 1
-eK_ctime_thrs = 4.0
+eK_ctime_thrs = 4.
 
-#----------------
-#--- Pion PID ---
-#----------------
+#--------------
+#-- Pion PID --
+#--------------
 
-Pi_phgcer_npe_flag = 1 
+Pi_phgcer_npe_flag = 1
 Pi_phgcer_npe_thrs = 1.5
 
 Pi_beta_flag = 1
@@ -118,11 +120,11 @@ Pi_beta_min = 0.5
 Pi_beta_max = 1.5
 
 ePi_ctime_flag = 1
-ePi_ctime_thrs = 3.0
+ePi_ctime_thrs = 3.
 
-#------------------
-#--- Proton PID ---
-#------------------
+#----------------
+#---Proton PID---
+#----------------
 
 P_paero_npe_flag = 1
 P_paero_npe_thrs = 1.5
@@ -135,32 +137,32 @@ P_beta_min = 0.5
 P_beta_max = 1.5
 
 eP_ctime_flag = 1
-eP_ctime_thrs = 3.3
+eP_ctime_thrs = 2.5
 
 # Missing Mass, MM [GeV]
-# -Kaons- (seleting a lmabda 1.115)
+# -Kaons- (seleting a missing lambda 1.115)
 MM_K_cut_flag = 1
 MM_K_min = 1.07
 MM_K_max = 1.16
 
-# -Pions- (selecting a neutron)
-MM_Pi_cut_flag = 1 
+# -Pions- (selecting a missing neutron)
+MM_Pi_cut_flag = 1
 MM_Pi_min = 0.89
 MM_Pi_max = 1.00
 
-# -Protons- (selecting elastic??)
-MM_P_cut_flag = 1 
+# -Protons- (selecting elastic?? or missing proton)
+MM_P_cut_flag = 1
 MM_P_min = -0.3
 MM_P_max = 0.3
 
 #----Coincidence Time Parameters----
 
 #time offset [ns] to center coin time about zero
-K_ctime_offset = 44.298
-Pi_ctime_offset = 43.7
-P_ctime_offset = 44.1
+K_ctime_offset = 47.0
+Pi_ctime_offset = 46.64
+P_ctime_offset = 47.03
 
-#multiple of coincidence randoms selection (must be >=2)
+#multiple of coincidence randoms selection (must be >=2 )
 eK_mult = 5.
 ePi_mult = 5.
 eP_mult = 5.

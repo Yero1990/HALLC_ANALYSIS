@@ -716,7 +716,7 @@ void helicityAnalyzer::EventLoop()
     {
       cout << "Loop over Data Events | nentries -->  " << nentries << endl;
       
-      for(int ientry=0; ientry<20000; ientry++)
+      for(int ientry=0; ientry<nentries; ientry++)
 	{
 	  
 	  tree->GetEntry(ientry);
@@ -1474,8 +1474,10 @@ void helicityAnalyzer::EventLoop()
 	  
 	  if(gevnum==scal_evt_num[scal_read]){ scal_read++; }
 	  
-	  cout << "Helicity DataEventLoop: " << std::setprecision(2) << double(ientry) / nentries * 100. << "  % " << std::flush << "\r";
-	  
+	  // print every 500000 events
+	  if (ientry % 500000 == 0){
+	    cout << "Helicity DataEventLoop: " << std::setprecision(2) << double(ientry) / nentries * 100. << "  % " << std::flush << "\r";
+	  }
 	} //END DATA EVENT LOOP      
       
     }//END DATA ANALYSIS

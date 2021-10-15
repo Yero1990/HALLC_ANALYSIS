@@ -1522,8 +1522,12 @@ void baseAnalyzer::ScalerEventLoop()
       prev_trig5_scaler = TRIG5_scaler;
       prev_trig6_scaler = TRIG6_scaler;
       prev_edtm_scaler = EDTM_scaler;
-            
-      cout << "ScalerEventLoop(PASS2): " << std::setprecision(2) << double(i) / scal_entries * 100. << "  % " << std::flush << "\r";
+      
+      // print every 100000 scaler reads
+      if (i % 100000 == 0){  
+	cout << "ScalerEventLoop(PASS2): " << std::setprecision(2) << double(i) / scal_entries * 100. << "  % " << std::flush << "\r";
+      }
+    
     } //End Scaler Read Loop
    
   //Subtract EDTM counts from trigger scalers

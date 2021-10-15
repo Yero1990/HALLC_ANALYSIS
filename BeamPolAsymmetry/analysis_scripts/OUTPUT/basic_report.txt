@@ -1,0 +1,55 @@
+#-------------------------------------
+#        Data Analysis Summary        
+#-------------------------------------
+#                                     
+# BCM4A  | Beam Current Threshold: > 10.00 uA 
+#                                     
+# DAQ Mode: coin | Trigger: trig5              
+# electron arm: HMS                        
+#                                              
+#---Acceptance Cuts--- 
+# SHMS Momentum Acceptance (P.gtr.dp): [-10.000, 22.000] %
+# HMS  Momentum Acceptance (H.gtr.dp): [-8.000, 8.000] %
+#                                     
+# ---Particle Identification (PID) Cuts---
+# NOTE: Coincidence time background selection is done by averaging a sample (left) and (right) of the main coincidence peak, where the sample is assumed to have the same structure on both sides.
+# The sample background is then scaled to the background underneath the main coin peak, and subtracted.
+#                                              
+# --> electrons (HMS): 
+# HMS Cherenkov NPE Sum (H.cer.npeSum) >= 2.000
+# HMS Calorimeter (H.cal.etottracknorm) Etot/Etrak >= 0.800
+#                                              
+# --> Kaons     (SHMS): 
+# SHMS Aerogel NPE Sum   (P.aero.npeSum)  >= 1.500
+# SHMS Heavy Gas NPE Sum (P.hgcer.npeSum) <= 1.500
+# SHMS Hodoscope Beta    (P.gtr.beta):  [0.700, 1.300]
+# eK Coincidence Time (CTime.eKCoinTime_ROC2): abs( eK_coin_peak - offset(44.298) ) <= 4.000 ns
+# eK Coincidence Time Background: abs( eK_coin_peak - offset(44.298) ) > 4.000 && abs( eK_coin_peak - offset(44.298) ) <= (5.000 x 4.000) ns
+# Kaon Missing Mass: [1.070, 1.160] GeV/c^2
+#                                              
+# --> Pions     (SHMS): 
+# SHMS Heavy Gas NPE Sum (P.hgcer.npeSum) >= 1.500
+# SHMS Hodoscope Beta    (P.gtr.beta):  [0.500, 1.500]
+# ePi Coincidence Time (CTime.ePiCoinTime_ROC2): abs( ePi_coin_peak - offset(43.700) ) <= 3.000 ns
+# ePi Coincidence Time Background: abs( ePi_coin_peak - offset(43.700) ) > 3.000 && abs( ePi_coin_peak - offset(43.700) ) <= (5.000 x 3.000) ns
+# Pion Missing Mass: [0.890, 1.000] GeV/c^2
+#                                              
+# --> Protons   (SHMS): 
+# SHMS Aerogel NPE Sum   (P.aero.npeSum)  <= 1.500
+# SHMS Heavy Gas NPE Sum (P.hgcer.npeSum) <= 1.500
+# SHMS Hodoscope Beta    (P.gtr.beta):  [0.500, 1.500]
+# eP Coincidence Time (CTime.epCoinTime_ROC2): abs( eP_coin_peak - offset(44.100) ) <= 3.300 ns
+# eP Coincidence Time Background: abs( eP_coin_peak - offset(44.100) ) > 3.300 && abs( eP_coin_peak - offset(44.100) ) <= (5.000 x 3.300) ns
+# Proton Missing Mass: [-0.300, 0.300] GeV/c^2
+#                       
+# Units: charge [mC] | currnet [uA] | rates [kHz] |  efficiencies [fractional form]                       
+#                       
+#! Run[i,0]/             charge[f,1]/        avg_current[f,2]/            hTrkEff[f,3]/        hTrkEff_err[f,4]/            pTrkEff[f,5]/        pTrkEff_err[f,6]/    tgt_boil_factor[f,7]/     tgt_boil_factor_err[f,8]/      hadAbs_factor[f,9]/      hadAbs_factor_err[f,10]/             cpuLT[f,11]/      cpuLT_err_Bi[f,12]/     cpuLT_err_Bay[f,13]/               tLT[f,14]/        tLT_err_Bi[f,15]/       tLT_err_Bay[f,16]/          S1X_rate[f,17]/     shms_Ps1_3of4_rate[f,18]/    hms_Ps3_elreal_rate[f,19]/     coin_Ps5_rate[f,18]/         edtm_rate[f,19]/        Ps1_factor[f,20]/        Ps3_factor[f,21]/        Ps5_factor[f,22]/       hTrkEff_pos[f,23]/   hTrkEff_err_pos[f,24]/       hTrkEff_neg[f,25]/   hTrkEff_err_neg[f,26]/       pTrkEff_pos[f,27]/   pTrkEff_err_pos[f,28]/       pTrkEff_neg[f,29]/   pTrkEff_err_neg[f,30]/         edtm_accp[f,31]/       edtm_scaler[f,32]/        trig5_accp[f,33]/      trig5_scaler[f,34]/
+   4871                  92.1203                  58.0406                 0.994264              7.85555e-05                 0.982464              0.000234068                        1                       -1                        1                       -1                 0.997935              3.41278e-05              3.41324e-05                  0.98318               0.00102067               0.00102239                  455.379                       116.037                       46.1988                  1.11451                0.0100014                     1025                      513                        1                 0.994165               0.00011317                 0.994369              0.000110965                 0.982482              0.000333872                 0.982486              0.000333744                    15607                    15874              1.76527e+06              1.76892e+06
+   4873                  90.5175                  43.6766                 0.995108              7.95454e-05                 0.984538              0.000237564                        1                       -1                        1                       -1                  0.99834              3.42674e-05              3.42746e-05                 0.986346              0.000806068              0.000807374                  344.496                        87.416                       34.8424                 0.681166                0.0100012                     1025                      513                        1                 0.995245              0.000112034                  0.99499              0.000114786                  0.98478              0.000336398                 0.984307              0.000341634                    20444                    20727              1.40934e+06              1.41168e+06
+   4874                  41.8633                  43.7232                 0.995192              0.000115739                  0.98455              0.000348366                        1                       -1                        1                       -1                 0.998456              4.85594e-05              4.85833e-05                 0.986843               0.00116434               0.00116859                  344.942                       87.4288                       34.9053                 0.682676                0.0100025                     1025                      513                        1                 0.995052              0.000167866                 0.995319              0.000162988                 0.984941              0.000490664                 0.984042              0.000506427                     9451                     9577                   652628                   653637
+   4875                  121.787                  48.3393                 0.995218              6.65649e-05                   0.9844              0.000192794                        1                       -1                        1                       -1                 0.999111              2.00469e-05               2.0052e-05                 0.992221              0.000553456              0.000554801                    379.9                       96.6921                       43.6022                 0.877284                0.0100011                     1025                      513                        1                 0.995209                9.517e-05                 0.995242              9.44937e-05                 0.984908              0.000270836                 0.983899              0.000278883                    25001                    25197              2.20828e+06              2.21025e+06
+   4876                  71.7822                  52.0311                 0.994551              8.89597e-05                 0.983411              0.000250862                        1                       -1                        1                       -1                 0.998986              2.65301e-05              2.65392e-05                 0.991084              0.000800303              0.000803376                  406.818                        104.09                       46.8953                  1.04307               0.00999998                     1025                      513                        1                 0.994561              0.000126842                 0.994546              0.000126627                 0.983294              0.000359216                 0.983601              0.000354904                    13673                    13796              1.43756e+06              1.43902e+06
+   4877                  135.354                  56.6355                 0.994548              6.43175e-05                  0.98336              0.000181531                        1                       -1                        1                       -1                 0.998974              1.92187e-05               1.9222e-05                 0.990962              0.000612175              0.000613514                   442.69                       113.097                       50.9515                  1.16109               0.00999998                     1025                      513                        1                 0.994576              9.14877e-05                 0.994529              9.17378e-05                 0.983374               0.00025903                 0.983434               0.00025762                    23683                    23899              2.77205e+06               2.7749e+06
+   4878                  161.595                   56.591                 0.994586              5.85487e-05                 0.982897              0.000168109                        1                       -1                        1                       -1                 0.998948              1.77758e-05              1.77783e-05                   0.9903              0.000579977              0.000580962                  443.645                       113.211                       51.0049                  1.16442                0.0100008                     1025                      513                        1                 0.994633              8.31219e-05                  0.99451              8.39343e-05                 0.982931              0.000239268                 0.982832              0.000239954                    28280                    28557              3.32149e+06              3.32499e+06
+   4879                  131.318                  51.7339                 0.994917              6.42793e-05                 0.983405              0.000187034                        1                       -1                        1                       -1                 0.999007              1.96786e-05              1.96824e-05                 0.991295              0.000583001              0.000584249                    406.9                       103.493                       46.6229                  1.00965                0.0100018                     1025                      513                        1                 0.994914              9.18268e-05                 0.994916              9.15497e-05                 0.983554              0.000265675                 0.983267              0.000267742                    25167                    25388              2.56028e+06              2.56283e+06

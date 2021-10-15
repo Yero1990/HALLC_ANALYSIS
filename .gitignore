@@ -1,4 +1,4 @@
-*.root
-*.report
+ROOTfiles/*.root
+REPORT_OUTPUT/*.report
 *.zip
 *.tar
