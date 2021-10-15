@@ -434,7 +434,7 @@ def plot_report(kin_group=""):
     tks  = 20   #general tick size (for both axes)
 
     #Read report file
-    fname_report = '../OUTPUT_Pass1/%s/basic_report.txt'%(kin_group) 
+    fname_report = '../BeamPolAsymmetry/analysis_scripts/OUTPUT/%s/basic_report.txt'%(kin_group) 
     print(fname_report)
     f = dfile(fname_report)
     
@@ -526,23 +526,34 @@ def plot_report(kin_group=""):
 def main():
     print("Plotting Asym")
 
+    kin_setting = "KIN-1"
+
+    '''
     # calculate asymmetry for a specified kin. setting
     # (output .txt file with numerical asymmetry is created)
-    calc_asym("Kaon", "KIN-1")
-    ccalc_asym("Pion", "KIN-1")
+    calc_asym("Kaon", "KIN-2")
+    calc_asym("Pion", "KIN-2")
 
     # integrate over all th_xq_cm bins for specified kinematic
     # (output .txt file with integrated numerical asymmetry is created)
-    combine_thcm_bins(particle="Kaon", group="KIN-1")
-    combine_thcm_bins(particle="Pion", group="KIN-1")
+    combine_thcm_bins(particle="Kaon", group="KIN-2")
+    combine_thcm_bins(particle="Pion", group="KIN-2")
 
     # plot asymmetry for specified kin. setting, particle, binned (0) or integrated (1)  th_xq_cm bins
-    plot_asym("KIN-1", "Kaon", 0)
-    plot_asym("KIN-1", "Kaon", 1)
+    plot_asym("KIN-2", "Kaon", 0)
+    plot_asym("KIN-2", "Kaon", 1)
 
-    plot_asym("KIN-1", "Pion", 0)
-    plot_asym("KIN-1", "Pion", 1)
+    plot_asym("KIN-2", "Pion", 0)
+    plot_asym("KIN-2", "Pion", 1)
+    '''
+
     
+    plot_report("KIN-1")
+    plot_report("KIN-1-FINAL")
+    plot_report("KIN-2")
+    
+    
+     
     '''
     #combined multiple Kaon LT kinematics with the same HMS setting (and varying SHMS angles)
     calc_asym_combined(np.array(["KIN-1", "KIN-2", "KIN-3"]),              "Kaon", "group-1")

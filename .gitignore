@@ -1,4 +1,4 @@
-ROOTfiles/*.root
-REPORT_OUTPUT/*.report
+BeamPolAsymmetry/analysis_scripts/ROOTfiles/*.root
+BaseAnalyzer/analysis_scripts/REPORT_OUTPUT/*.report
 *.zip
 *.tar
