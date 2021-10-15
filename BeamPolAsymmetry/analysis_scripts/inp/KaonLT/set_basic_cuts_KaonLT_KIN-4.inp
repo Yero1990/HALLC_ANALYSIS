@@ -63,50 +63,93 @@ c_pBetaNtrk_max = 1.5
 
 #------Acceptance Cuts------
 # Electron (HMS) Arm Momentum Acceptance, Delta [%] 
+edelta_cut_flag = 1 
 edelta_min = -8.
 edelta_max = 8.
 
 # Hadron (SHMS) Arm Momentum Acceptance, Delta [%] 
+hdelta_cut_flag = 1
 hdelta_min = -10.
 hdelta_max = 22.
 
-#------PID Cuts------
-#-electron PID-
-elec_hcer_npe_thrs = 2.0
-elec_hcal_thrs = 0.8
+# Z-Reaction Vertex Difference, [cm]                         
+ztarDiff_cut_flag = 0                                                                            
+ztarDiff_min = -2.                                                                  
+ztarDiff_max = 2. 
 
-#-Kaon PID-
+#------PID Cuts------
+
+#--------------------
+#--- electron PID ---
+#--------------------
+
+hcer_pidCut_flag = 1  
+elec_hcer_npe_thrs = 2.0
+
+hetot_trkNorm_pidCut_flag = 1
+elec_hcal_thrs = 0.8 
+
+#-----------------
+#--- Kaon PID ----
+#-----------------
+
+K_paero_npe_flag = 1
 K_paero_npe_thrs = 1.5
+
+K_phgcer_npe_flag = 1 
 K_phgcer_npe_thrs = 1.5
+
+K_beta_flag = 1
 K_beta_min = 0.7
 K_beta_max = 1.3
+
+eK_ctime_flag = 1
 eK_ctime_thrs = 3.7
 
-#-Pion PID-
+#----------------
+#--- Pion PID ---
+#----------------
+
+Pi_phgcer_npe_flag = 1 
 Pi_phgcer_npe_thrs = 1.5
+
+Pi_beta_flag = 1
 Pi_beta_min = 0.5
 Pi_beta_max = 1.5
+
+ePi_ctime_flag = 1
 ePi_ctime_thrs = 3.0
 
-#-Proton PID-
+#------------------
+#--- Proton PID ---
+#------------------
+
+P_paero_npe_flag = 1
 P_paero_npe_thrs = 1.5
+
+P_phgcer_npe_flag = 1
 P_phgcer_npe_thrs = 1.5
+
+P_beta_flag = 1
 P_beta_min = 0.5
 P_beta_max = 1.5
-eP_ctime_thrs = 3.3
 
-#-----Kinematics Cuts-----
+eP_ctime_flag = 1
+eP_ctime_thrs = 3.3
 
 # Missing Mass, MM [GeV]
 # -Kaons- (seleting a lmabda 1.115)
+MM_K_cut_flag = 1
 MM_K_min = 1.07
 MM_K_max = 1.14
 
 # -Pions- (selecting a neutron)
+MM_Pi_cut_flag = 1 
 MM_Pi_min = 0.89
 MM_Pi_max = 0.98
 
 # -Protons- (selecting elastic??)
+MM_P_cut_flag = 1 
 MM_P_min = -0.3
 MM_P_max = 0.3
 
