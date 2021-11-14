@@ -1,0 +1,54 @@
+#-------------------------------------
+#        Data Analysis Summary        
+#-------------------------------------
+#                                     
+# BCM4A  | Beam Current Threshold: > 10.00 uA 
+#                                     
+# DAQ Mode: coin | Trigger: trig5              
+# electron arm: HMS                        
+#                                              
+#---Acceptance Cuts--- 
+# SHMS Momentum Acceptance (P.gtr.dp): [-10.000, 22.000] %
+# HMS  Momentum Acceptance (H.gtr.dp): [-8.000, 8.000] %
+#                                     
+# ---Particle Identification (PID) Cuts---
+# NOTE: Coincidence time background selection is done by averaging a sample (left) and (right) of the main coincidence peak, where the sample is assumed to have the same structure on both sides.
+# The sample background is then scaled to the background underneath the main coin peak, and subtracted.
+#                                              
+# --> electrons (HMS): 
+# HMS Cherenkov NPE Sum (H.cer.npeSum) >= 2.000
+# HMS Calorimeter (H.cal.etottracknorm) Etot/Etrak >= 0.800
+#                                              
+# --> Kaons     (SHMS): 
+# SHMS Aerogel NPE Sum   (P.aero.npeSum)  >= 1.500
+# SHMS Heavy Gas NPE Sum (P.hgcer.npeSum) <= 1.500
+# SHMS Hodoscope Beta    (P.gtr.beta):  [0.700, 1.300]
+# eK Coincidence Time (CTime.eKCoinTime_ROC2): abs( eK_coin_peak - offset(44.298) ) <= 4.800 ns
+# eK Coincidence Time Background: abs( eK_coin_peak - offset(44.298) ) > 4.800 && abs( eK_coin_peak - offset(44.298) ) <= (5.000 x 4.800) ns
+# Kaon Missing Mass: [1.070, 1.170] GeV/c^2
+#                                              
+# --> Pions     (SHMS): 
+# SHMS Heavy Gas NPE Sum (P.hgcer.npeSum) >= 1.500
+# SHMS Hodoscope Beta    (P.gtr.beta):  [0.500, 1.500]
+# ePi Coincidence Time (CTime.ePiCoinTime_ROC2): abs( ePi_coin_peak - offset(43.700) ) <= 4.000 ns
+# ePi Coincidence Time Background: abs( ePi_coin_peak - offset(43.700) ) > 4.000 && abs( ePi_coin_peak - offset(43.700) ) <= (5.000 x 4.000) ns
+# Pion Missing Mass: [0.890, 1.000] GeV/c^2
+#                                              
+# --> Protons   (SHMS): 
+# SHMS Aerogel NPE Sum   (P.aero.npeSum)  <= 1.500
+# SHMS Heavy Gas NPE Sum (P.hgcer.npeSum) <= 1.500
+# SHMS Hodoscope Beta    (P.gtr.beta):  [0.500, 1.500]
+# eP Coincidence Time (CTime.epCoinTime_ROC2): abs( eP_coin_peak - offset(44.100) ) <= 3.300 ns
+# eP Coincidence Time Background: abs( eP_coin_peak - offset(44.100) ) > 3.300 && abs( eP_coin_peak - offset(44.100) ) <= (5.000 x 3.300) ns
+# Proton Missing Mass: [-0.300, 0.300] GeV/c^2
+#                       
+# Units: charge [mC] | currnet [uA] | rates [kHz] |  efficiencies [fractional form]                       
+#                       
+#! Run[i,0]/             charge[f,1]/        avg_current[f,2]/            hTrkEff[f,3]/        hTrkEff_err[f,4]/            pTrkEff[f,5]/        pTrkEff_err[f,6]/    tgt_boil_factor[f,7]/     tgt_boil_factor_err[f,8]/      hadAbs_factor[f,9]/      hadAbs_factor_err[f,10]/             cpuLT[f,11]/      cpuLT_err_Bi[f,12]/     cpuLT_err_Bay[f,13]/               tLT[f,14]/        tLT_err_Bi[f,15]/       tLT_err_Bay[f,16]/          S1X_rate[f,17]/     shms_Ps1_3of4_rate[f,18]/    hms_Ps3_elreal_rate[f,19]/     coin_Ps5_rate[f,18]/         edtm_rate[f,19]/        Ps1_factor[f,20]/        Ps3_factor[f,21]/        Ps5_factor[f,22]/       hTrkEff_pos[f,23]/   hTrkEff_err_pos[f,24]/       hTrkEff_neg[f,25]/   hTrkEff_err_neg[f,26]/       pTrkEff_pos[f,27]/   pTrkEff_err_pos[f,28]/       pTrkEff_neg[f,29]/   pTrkEff_err_neg[f,30]/         edtm_accp[f,31]/       edtm_scaler[f,32]/        trig5_accp[f,33]/      trig5_scaler[f,34]/
+   4882                  89.5745                  39.2008                 0.996007               0.00010069                 0.986844               0.00029251                        1                       -1                        1                       -1                 0.999497              2.70138e-05              2.70526e-05                 0.996062              0.000414324              0.000416565                  205.343                       29.3063                       35.4116                 0.301704                0.0100008                      513                      513                        1                 0.996078              0.000142454                  0.99593              0.000144807                 0.987082              0.000413697                 0.986629              0.000420095                    22762                    22852                   689051                   689398
+   4884                  45.5658                  39.2403                 0.996143              0.000138806                  0.98744                 0.000401                        1                       -1                        1                       -1                 0.999564              3.52171e-05              3.53317e-05                 0.996039              0.000582871              0.000589021                  204.623                       29.3828                       35.4701                 0.302407                0.0100009                      513                      513                        1                 0.996302              0.000194101                 0.995968              0.000202618                 0.987775              0.000565089                 0.987309              0.000575094                    11567                    11613                   351001                   351154
+   4885                  89.9416                  39.7244                 0.995762              0.000103158                 0.987067              0.000289556                        1                       -1                        1                       -1                 0.999444              2.82428e-05               2.8279e-05                 0.996423              0.000396762              0.000399151                  209.639                       29.7705                       35.9698                 0.307953                0.0100007                      513                      513                        1                 0.995878              0.000145289                 0.995665               0.00014859                 0.986917              0.000414959                 0.987354              0.000408798                    22562                    22643                   696861                   697249
+   4887                  90.5111                  38.7402                 0.995753              0.000103592                 0.987093              0.000289047                        1                       -1                        1                       -1                  0.99947              2.76368e-05              2.76744e-05                 0.995677              0.000429176               0.00043124                  204.953                       28.9267                       34.9347                 0.296613                 0.010001                      513                      513                        1                 0.995648              0.000149986                 0.995871               0.00014527                  0.98756              0.000406405                 0.986685               0.00041712                    23265                    23366                   692627                   692994
+   4888                  72.4646                  38.7469                 0.996064              0.000111292                 0.987553              0.000317191                        1                       -1                        1                       -1                  0.99953              2.90697e-05              2.91252e-05                 0.996151              0.000452787              0.000455848                  202.097                       28.9548                       34.9942                 0.297091                0.0100011                      513                      513                        1                 0.996186              0.000156476                 0.995934              0.000161096                 0.987366               0.00045708                 0.987702              0.000448448                    18632                    18704                   555359                   555620
+   4889                  80.0103                  56.7842                 0.994687              0.000118062                 0.984795              0.000312717                        1                       -1                        1                       -1                 0.999266              3.07389e-05              3.07657e-05                 0.994962               0.00059643              0.000600488                  299.151                       42.6798                       51.1899                 0.551025                0.0100013                      513                     1025                        1                 0.994811              0.000166528                 0.994534              0.000170825                 0.984452              0.000450903                 0.985038              0.000442947                    14021                    14092                   775837                   776407
+   4890                  80.5206                  56.7759                 0.994718              0.000117372                 0.985037              0.000309318                        1                       -1                        1                       -1                 0.999161              3.27555e-05              3.27804e-05                 0.992527              0.000723094              0.000726344                  297.837                       42.7011                       51.2488                 0.550694                 0.010002                      513                     1025                        1                 0.994519               0.00017095                 0.994903              0.000164263                 0.985504              0.000435287                  0.98454               0.00044796                    14079                    14185                   780350                   781005
