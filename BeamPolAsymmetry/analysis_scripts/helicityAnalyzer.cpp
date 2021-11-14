@@ -1474,9 +1474,9 @@ void helicityAnalyzer::EventLoop()
 	  
 	  if(gevnum==scal_evt_num[scal_read]){ scal_read++; }
 	  
-	  // print every 500000 events
-	  if (ientry % 500000 == 0){
-	    cout << "Helicity DataEventLoop: " << std::setprecision(2) << double(ientry) / nentries * 100. << "  % " << std::flush << "\r";
+	  // print every 100000 events
+	  if (ientry % 100000 == 0){
+	    cout << "Helicity DataEventLoop: " << ientry << "/" << nentries << "( " << std::setprecision(2) << double(ientry) / nentries * 100. << "  % )" << std::flush << "\r";
 	  }
 	} //END DATA EVENT LOOP      
       

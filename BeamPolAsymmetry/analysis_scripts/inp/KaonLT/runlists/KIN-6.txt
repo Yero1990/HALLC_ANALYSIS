@@ -2,31 +2,33 @@
 #SHMS: P = +4.983 GeV/c, theta_shms = 7.735 deg
 #HMS:  P = -5.292 GeV/c, theta_hms  = 11.159 deg
 #PART1
-4925
-4926
-4927
-4928
-4929
-4930
-4931
-4932
-4933
-4934
-4935
-4936
-4937
-4938
-4939
-4943
-4944
+#4925
+#4926
+#4927
+#4928
+#4929
+#4930
+#4931
+#4932
+#4933
+#4934
+#4935
+#4936
+#4937
+#4938
+#4939
+#4943
+#4944
 #PART2 (SPECTROMETER WAS MOVED, SO TREAT SEPARATELY, EVENT THOUGH SAME KINEMATICS)
 #SHMS (right) rotated to 7.735 degrees from 10.73 Degrees -> https://logbooks.jlab.org/entry/3604335
-4948
-4949
-4950
-4951
-4952
-4953
+#4948
+# Problematic ROOTfiles in: /u/group/c-kaonlt/USERS/cyero/HALLC_ANALYSIS/BeamPolAsymmetry/analysis_scripts/ROOTfiles/
+# Notified Stephen K. (4949, 4950, 4951)
+#4949
+#4950
+#4951
+#4952
+#4953
 4954
 4955
 4956
