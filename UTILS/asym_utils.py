@@ -482,7 +482,7 @@ def plot_report(kin_group=""):
     l2 = axes[0, 0].errorbar(run, htrk_pos, htrk_pos_err, marker='o', markerfacecolor='white', color='b', ls='none', label='+ hel')
     l3 = axes[0, 0].errorbar(run, htrk_neg, htrk_neg_err, marker='o', markerfacecolor='white', color='r', ls='none', label='= neg')
     axes[0,0].legend([l1, l2, l3], ['ALL', 'hel (pos)', 'hel (neg)' ])
-    axes[0,0].set_ylim(0.99, 1.0)
+    axes[0,0].set_ylim(htrk.min()-0.01, htrk.max()+0.01)
     axes[0,0].set_title('Hadron (SHMS) Tracking Efficiencies', fontsize=tfs)
     axes[0,0].set_xlabel('Run', fontsize=xlfs)
     axes[0,0].set_ylabel(r'Hadron Tracking Efficiency', fontsize=ylfs)
@@ -492,7 +492,7 @@ def plot_report(kin_group=""):
     l2 = axes[0, 1].errorbar(run, etrk_pos, etrk_pos_err, marker='o', markerfacecolor='white', color='b', ls='none', label='+ hel')
     l3 = axes[0, 1].errorbar(run, etrk_neg, etrk_neg_err, marker='o', markerfacecolor='white', color='r', ls='none', label='= neg')
     axes[0,1].legend([l1, l2, l3], ['ALL', 'hel (pos)', 'hel (neg)' ])
-    axes[0,1].set_ylim(0.92, 1.0)
+    axes[0,1].set_ylim(etrk.min()-0.01, etrk.max()+0.01)
     axes[0,1].set_title('Electron (HMS) Tracking Efficiencies', fontsize=tfs)
     axes[0,1].set_xlabel('Run', fontsize=xlfs)
     axes[0,1].set_ylabel(r'Electron Tracking Efficiency', fontsize=ylfs)
@@ -501,7 +501,7 @@ def plot_report(kin_group=""):
     l1, = axes[1, 0].plot(run, tLT,  marker='o', markerfacecolor='white', color='k', ls='none', label='EDTM Live Time')
     l2, = axes[1, 0].plot(run, cpuLT,  marker='o', markerfacecolor='white', color='r', ls='none', label='CPU Live Time')   
     axes[1,0].legend((l1,l2), ('Total (EDTM) Live Time', 'Computer Live Time'))
-    axes[1,0].set_ylim(0.96, 1.01)
+    axes[1,0].set_ylim(tLT.min()-0.01, cpuLT.max()+0.01)
     axes[1,0].set_title('Live Time', fontsize=tfs)
     axes[1,0].set_xlabel('Run', fontsize=xlfs)
     axes[1,0].set_ylabel(r'Live Time', fontsize=ylfs)
@@ -511,7 +511,8 @@ def plot_report(kin_group=""):
     l1, = axes[1, 1].plot(run, shms_rates,  marker='o', markerfacecolor='white', color='r', ls='none')   
     l2, = axes[1, 1].plot(run, hms_rates,  marker='o', markerfacecolor='white', color='b', ls='none')
     l3, = axes[1, 1].plot(run, coin_rates,  marker='o', markerfacecolor='white', color='k', ls='none')
-    axes[1,1].legend((l1,l2,l3), ('SHMS Rates', 'HMS Rates', 'Coincidence Rates'), loc='upper right')
+    axes[1,1].legend((l1,l2,l3), ('SHMS Rates', 'HMS Rates', 'Coincidence Rates'), loc='best')
+    axes[1,1].set_ylim(coin_rates.min()-10*coin_rates.min(), shms_rates.max()+0.25*shms_rates.max())
     axes[1,1].set_title('Trigger Rates', fontsize=tfs)
     axes[1,1].set_xlabel('Run', fontsize=xlfs)
     axes[1,1].set_ylabel(r'Trigger Rates [kHz]', fontsize=ylfs) 
@@ -526,7 +527,7 @@ def plot_report(kin_group=""):
 def main():
     print("Plotting Asym")
 
-    kin_set = "KIN-10"
+    kin_set = "KIN-16"
 
     
     # calculate asymmetry for a specified kin. setting

@@ -1,16 +1,16 @@
-#--Summary of KIN Nomenclature--
+# Kaon LT Beam-Asymmetry Analysis
 
 -------------group-1-----------------
 
-KIN-1 ::  H(e,e'K+): Q2=3, W=2.32
+KIN-1 ::  H(e,e'X): Eb=10.6 GeV, Q2=3 GeV^2, W=2.32 GeV 
 SHMS: P = +3.486 GeV/c, theta_shms = 15.18 deg
 HMS:  P = -6.590 GeV/c, theta_hms  = 11.91 deg
 
-KIN-2 ::  H(e,e'K+): Q2=3, W=2.32
+KIN-2 ::  H(e,e'X): Eb=10.6 GeV, Q2=3 GeV^2, W=2.32 GeV
 SHMS: P = +3.486 GeV/c, theta_shms = 18.18 deg
 HMS:  P = -6.590 GeV/c, theta_hms  = 11.91 deg 
 
-KIN-3 ::  H(e,e'K+): Q2=3, W=2.32
+KIN-3 ::  H(e,e'X): Eb=10.6 GeV, Q2=3 GeV^2, W=2.32 GeV
 SHMS: P = +3.486 GeV/c, theta_shms = 21.19 deg
 HMS:  P = -6.590 GeV/c, theta_hms  = 11.91 deg
 
@@ -18,15 +18,15 @@ HMS:  P = -6.590 GeV/c, theta_hms  = 11.91 deg
 
 -------------group-2-----------------
 
-KIN-4 ::  H(e,e'K+): Q2=2.115, W=2.95
+KIN-4 ::  H(e,e'X): Eb=10.6 GeV, Q2=2.115 GeV^2, W=2.95 GeV
 SHMS: P = +4.983 GeV/c, theta_shms = 13.743 deg
 HMS:  P = -5.292 GeV/c, theta_hms  = 11.159 deg
 
-KIN-5 ::  H(e,e'K+): Q2=2.115, W=2.95
+KIN-5 ::  H(e,e'X): Eb=10.6 GeV, Q2=2.115 GeV^2, W=2.95 GeV
 SHMS: P = +4.983 GeV/c, theta_shms = 10.735 deg
 HMS:  P = -5.292 GeV/c, theta_hms  = 11.159 deg
 
-KIN-6 ::  H(e,e'K+): Q2=2.115, W=2.95
+KIN-6 ::  H(e,e'X): Eb=10.6 GeV, Q2=2.115 GeV^2, W=2.95 GeV
 SHMS: P = +4.983 GeV/c, theta_shms = 7.735 deg
 HMS:  P = -5.292 GeV/c, theta_hms  = 11.159 deg
 
@@ -34,15 +34,15 @@ HMS:  P = -5.292 GeV/c, theta_hms  = 11.159 deg
 
 -------------group-3-----------------
 
-KIN-7 ::  H(e,e'K+): Q2=4.4, W=2.74
+KIN-7 ::  H(e,e'X): Eb=10.6 GeV, Q2=4.4 GeV^2, W=2.74 GeV
 SHMS: P = +5.389 GeV/c, theta_shms = 9.808 deg
 HMS:  P = -4.712 GeV/c, theta_hms  = 17.08 deg
 
-KIN-8 ::  H(e,e'K+): Q2=4.4, W=2.74
+KIN-8 ::  H(e,e'X): Eb=10.6 GeV, Q2=4.4 GeV^2, W=2.74 GeV
 SHMS: P = +5.389 GeV/c, theta_shms = 12.81 deg
 HMS:  P = -4.712 GeV/c, theta_hms  = 17.08 deg
 
-KIN-9 ::  H(e,e'K+): Q2=4.4, W=2.74
+KIN-9 ::  H(e,e'X): Eb=10.6 GeV, Q2=4.4 GeV^2, W=2.74 GeV
 SHMS: P = +5.389 GeV/c, theta_shms = 15.81 deg
 HMS:  P = -4.712 GeV/c, theta_hms  = 17.08 deg
 
@@ -53,34 +53,34 @@ HMS:  P = -4.712 GeV/c, theta_hms  = 17.08 deg
 *** Started to see a third peak (1.18) on
 the missing mass spectrum
 
-KIN-10 ::  H(e,e'K+): Q2=3, W=3.14  
+KIN-10 ::  H(e,e'X): Eb=10.6 GeV, Q2=3 GeV^2, W=3.14 GeV  
 SHMS: P = +6.053 GeV/c, theta_shms = 12.46 deg
 HMS:  P = -4.204 GeV/c, theta_hms  = 14.93 deg
 
-KIN-11 ::  H(e,e'K+): Q2=3, W=3.14,
+KIN-11 ::  H(e,e'X): Eb=10.6 GeV, Q2=3 GeV^2, W=3.14 GeV
 SHMS: P = +6.053 GeV/c, theta_shms = 9.41 deg
 HMS:  P = -4.204 GeV/c, theta_hms  = 14.93 deg
 
-KIN-12 ::  H(e,e'K+): Q2=3, W=3.14
+KIN-12 ::  H(e,e'X): Eb=10.6 GeV, Q2=3 GeV^2, W=3.14 GeV
 SHMS: P = +6.053 GeV/c, theta_shms = 6.495 deg
 HMS:  P = -4.204 GeV/c, theta_hms  = 14.93 deg
 
 -------------------------------------
 
 ------------group-5-----------------
-KIN-13 ::  H(e,e'K+): Q2=5.5, W=3.02
+KIN-13 ::  H(e,e'X): Eb=10.6 GeV, Q2=5.5 GeV^2, W=3.02 GeV
 SHMS: P = +6.842 GeV/c, theta_shms = 6.495 deg
 HMS:  P = -3.266 GeV/c, theta_hms  = 23.00 deg
 
-KIN-14 ::  H(e,e'K+): Q2=5.5, W=3.02
+KIN-14 ::  H(e,e'X): Eb=10.6 GeV, Q2=5.5 GeV^2, W=3.02 GeV
 SHMS: P = +6.842 GeV/c, theta_shms = 9.552 deg
 HMS:  P = -3.266 GeV/c, theta_hms  = 23.00 deg
 
-KIN-15 ::  H(e,e'K+): Q2=5.5, W=3.02
+KIN-15 ::  H(e,e'X): Eb=10.6 GeV, Q2=5.5 GeV^2, W=3.02 GeV
 SHMS: P = +6.842 GeV/c, theta_shms = 12.565 deg
 HMS:  P = -3.266 GeV/c, theta_hms  = 23.00 deg
 
-KIN-16 ::  H(e,e'K+): Q2=5.5, W=3.02
+KIN-16 ::  H(e,e'X): Eb=10.6 GeV, Q2=5.5 GeV^2, W=3.02 GeV
 SHMS: P = +6.842 GeV/c, theta_shms = 9.555 deg
 HMS:  P = -3.266 GeV/c, theta_hms  = 23.00 deg
 
