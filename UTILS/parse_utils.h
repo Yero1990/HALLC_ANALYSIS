@@ -1,6 +1,10 @@
 #ifndef PARSE_UTILS_H
 #define PARSE_UTILS_H
 
+/*
+  Author: C. Yero
+  Date: Jan 22, 2022 
+ */
 
 //The pasrse_utils.h header file contains useful functions for C++ string parsing
 
@@ -84,16 +88,39 @@ vector <string> split(string str, char del=':')
 }
 
 //_______________________________________________________________________________
-vector <string> FindString(string keyword, string fname)
+vector <string> FindString(string keyword, string fname, bool multi_line=false, int line_max=-1)
 {
   
   //Method: Finds string keyword in a given txt file. 
   //Returns the lines (stored in a vector) in which the keyword was found. Lines are counted from 0. 
+
+  /*
+    DEFINITION OF INPUT FUNCTION PARAMETERS:
+    'keyword'    : the actual keyword the user needs to find in the file
+    'fname'      : the filename full path where the keyword can be found
+    'multi_line' : boolean flag that gives the option to read not only the line where the keyword is found,
+    but also the subsequent lines below the keyword line.
+    'line_max' : maximum number of lines to be read, including the line where the keyword is found. 
+    For example, if line_max = 10, the first 10 lines (including the keyword line) will be stored into the line_found vector
+    
+    Example of usage for:
+
+    ---multi-line parameters---
+    
+    FindString("keyword_name", "path/to/filename.txt", true, 3)[0]
+    FindString("keyword_name", "path/to/filename.txt", true, 3)[1]
+    FindString("keyword_name", "path/to/filename.txt", true, 3)[2]
+    
+    --single-line parameter---
+    FindString("keyword_name", "path/to/filename.txt")[0]
+  
+  */
   
   ifstream ifile(fname);
   
   vector <string> line_found; //vector to store in which lines was the keyword found
-  
+
+  int line_fnd = -1;
   int line_cnt = 0;
   string line;                  //line string to read
   
@@ -108,15 +135,33 @@ vector <string> FindString(string keyword, string fname)
       
       if(found<0||found>1000){found=-1;} //not found
       if(cmt==";" || cmt=="#" || cmt=="!") {found=-1;}  //Found commented line. So Skip (You can add more definition of comments)
-      
+
       if(found!=-1){
-	
-	line_found.push_back(line);
-	
+	//cout << "position of line found = " << line_cnt <<  endl;
+	line_fnd = line_cnt;  //store line number where the keyword was found
+	//line_found.push_back(line);
 	
       } //end if statement
-    
+
+      //C.Y. Jan 22 || potentially read subsequent lines (in case of multi-line paramerers)
+      if(multi_line){
+	// read only single line, where the keyword was found
+	if ( (line_fnd!=-1) and (line_cnt<line_fnd+line_max) ){
+	  //cout << "line_cnt = " << line_cnt << ", line_fnd = " << line_fnd << endl;     
+	  //cout << "line --> " << line << endl;
+	  line_found.push_back(line);
+	}
+      }
+      
+      // Only read single-line keyword 
+      else if (line_fnd==line_cnt){
+	line_found.push_back(line);
+      }
+
+      
+      // increment line counter
       line_cnt++;
+      
     } //end readlines
 
   return line_found;
