@@ -10,8 +10,8 @@ Date Created: August 22, 2020
 using namespace std;
 
 //_______________________________________________________________________________
-baseAnalyzer::baseAnalyzer( int irun=-1, string mode="", string earm="", string ana_type="", Bool_t hel_flag=0)
-  : run(irun), daq_mode(mode), e_arm_name(earm), analysis(ana_type), helicity_flag(hel_flag)   //initialize member list 
+baseAnalyzer::baseAnalyzer( int irun=-1, string mode="", string earm="", string ana_type="", Bool_t hel_flag=0, string tgt_name="", string bcm_name="", double thrs=-1, string trig="", Bool_t combine_flag=0 )
+  : run(irun), daq_mode(mode), e_arm_name(earm), analysis(ana_type), helicity_flag(hel_flag), tgt_type(tgt_name), bcm_type(bcm_name), bcm_thrs(thrs), trig_type(trig), combine_runs_flag(combine_flag)   //initialize member list 
 {
 
   cout << "Calling BaseConstructor " << endl;
@@ -507,16 +507,16 @@ void baseAnalyzer::ReadInputFile(string ftype="")
     //==========================================
     
     //READ option to combine multiple runs, or treat them separately.
-    combine_histos = stoi(split(FindString("combine_histos", main_controls_fname.Data())[0], '=')[1]);
+    //combine_runs_flag = stoi(split(FindString("combine_histos", main_controls_fname.Data())[0], '=')[1]);
     
     //READ BCM and current threshold parameters
-    bcm_type = trim(split(FindString("bcm_type", main_controls_fname.Data())[0], '=')[1]);
-    current_thrs_bcm = stod(split(FindString("current_thrs_bcm", main_controls_fname.Data())[0], '=')[1]);
+    //bcm_type = trim(split(FindString("bcm_type", main_controls_fname.Data())[0], '=')[1]);
+    //bcm_thrs = stod(split(FindString("current_thrs_bcm", main_controls_fname.Data())[0], '=')[1]);
     
     //READ Trigger type to use as correction factor in the weight
-    trig_type = trim(split(FindString("trigger_type", main_controls_fname.Data())[0], '=')[1]);
+    //trig_type = trim(split(FindString("trigger_type", main_controls_fname.Data())[0], '=')[1]);
     
-    tgt_type = trim(split(FindString("target_type", main_controls_fname.Data())[0], '=')[1]);
+    //tgt_type = trim(split(FindString("target_type", main_controls_fname.Data())[0], '=')[1]);
     
     //==========================================
   
@@ -1490,8 +1490,8 @@ void baseAnalyzer::ScalerEventLoop()
 
     
       //Check If BCM Beam Current in Between Reads is Over Threshold
-      // if(abs(Scal_BCM_current-set_current)<current_thrs_bcm)
-      if(Scal_BCM_current>current_thrs_bcm)
+      // if(abs(Scal_BCM_current-set_current)<bcm_thrs)
+      if(Scal_BCM_current>bcm_thrs)
 	{
 	  
 	  //Turn Event Flag ON, if beam current is within threshold
@@ -2682,7 +2682,7 @@ void baseAnalyzer::WriteReport()
       out_file << "#        Data Analysis Summary        " << endl;
       out_file << "#-------------------------------------" << endl;
       out_file << "#                                     " << endl;
-      out_file << Form("# %s  | Beam Current Threshold: > %.2f uA ", bcm_type.Data(), current_thrs_bcm) << endl;
+      out_file << Form("# %s  | Beam Current Threshold: > %.2f uA ", bcm_type.Data(), bcm_thrs) << endl;
       out_file << "#                                     " << endl;
       out_file << Form("# DAQ Mode: %s | Trigger: %s              ", daq_mode.Data(), trig_type.Data()) << endl;
       out_file << Form("# electron arm: %s                        ", e_arm_name.Data() ) << endl;
@@ -2748,8 +2748,8 @@ void baseAnalyzer::CombineHistos()
 
 
   //Decide whether to combine all histograms or NOT. (Look in main_controls.inp)
-  //If the list of runs correspond to different kinematics, then they should NOT be combined (combine_histos=0)
-  if(combine_histos==0) return;   //exit this function if combine_histos == 0; 
+  //If the list of runs correspond to different kinematics, then they should NOT be combined (combine_runs_flag=0)
+  if(combine_runs_flag==0) return;   //exit this function if combine_runs_flag == 0; 
   
   //Check if combined ROOTfile exits, otherwise, create it and add the histograms from the 1st run on the list
   Bool_t file_not_exist = gSystem->AccessPathName(data_OutputFileName_combined.Data());
