@@ -1575,7 +1575,7 @@ void baseAnalyzer::ReadTree()
 
       // Global Variables
       tree->SetBranchAddress("g.evtyp",&gevtyp);
-      //tree->SetBranchAddress("g.evnum",&gevnum);
+      tree->SetBranchAddress("g.evnum",&gevnum);
 
       //This is meant to be used by the derived class, helicityAnalyzer.cpp (see 'helicity_flag' in main_controls.cpp)
       if(helicity_flag)
@@ -2245,8 +2245,8 @@ void baseAnalyzer::EventLoop()
 	  //next scaler read, which has a new data event upper limit
 	  // if there is no gevnum, then this can be replaced by (ientry + 1)
 	  //cout << "gevnum = " << std::setprecision(5) << gevnum << " " << " ientry = " << (ientry + 1) << " diff = " << (ientry + 1) - gevnum << endl;
-
-	  gevnum = ientry + 1;
+	  
+	  //gevnum = ientry + 1;
 
 	  if(gevnum==scal_evt_num[scal_read]){ scal_read++; }
 	  
