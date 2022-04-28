@@ -2,6 +2,7 @@ BeamPolAsymmetry/analysis_scripts/ROOTfiles/
 BeamPolAsymmetry/analysis_scripts/REPORT_OUTPUT/
 BaseAnalyzer/analysis_scripts/ROOTfiles/
 BaseAnalyzer/analysis_scripts/REPORT_OUTPUT/
+BaseAnalyzer/analysis_scripts/OUTPUT/
 
 *.zip
 *.tar

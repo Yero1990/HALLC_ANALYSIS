@@ -437,56 +437,7 @@ baseAnalyzer::~baseAnalyzer()
 }
 
 //_______________________________________________________________________________
-void baseAnalyzer::SetFileNames()
-{
-  cout << "Calling Base SetFileNames()  " << endl;
-
-  //-------------------------------
-  //----INPUTS (USER READS IN)-----
-  //-------------------------------
-
-    
-  TString temp; //temporary string placeholder
-
-  //Read IN Main Controls File Name (file is used to set general main control parameters)
-  main_controls_fname = "main_controls.inp";
-
-
-  //Read input parameter file nameas from the main_controls.inp file
-  input_CutFileName = trim(split(FindString("cuts_file", main_controls_fname.Data())[0], '=')[1]);
-  input_HBinFileName = trim(split(FindString("hist_file", main_controls_fname.Data())[0], '=')[1]);
-  input_SetFileName = trim(split(FindString("fname_file", main_controls_fname.Data())[0], '=')[1]);
-  
-  //Define Input (.root) File Name Patterns (read principal ROOTfile from experiment)
-  temp = trim(split(FindString("input_ROOTfilePattern", input_SetFileName.Data())[0], '=')[1]);
-  data_InputFileName = Form(temp.Data(),  run);
-
-
-  //Define Input (.report) File Name Pattern (read principal REPORTfile from experiment)
-  temp = trim(split(FindString("input_REPORTPattern", input_SetFileName.Data())[0], '=')[1]);
-  data_InputReport = Form(temp.Data(), run);
-
-
-  //----------------------------------
-  //----OUTPUTS (USER WRITES OUT)-----
-  //----------------------------------
-
-  //Define Output (.root) File Name Pattern (analyzed histos are written to this file)
-  temp = trim(split(FindString("output_ROOTfilePattern", input_SetFileName.Data())[0], '=')[1]);
-  data_OutputFileName = Form(temp.Data(), run);
-
-  //Define Output (.root) File Name Pattern (analyzed combined histos are written to this file)
-  temp = trim(split(FindString("output_ROOTfilePattern_final", input_SetFileName.Data())[0], '=')[1]);
-  data_OutputFileName_combined = temp.Data();
-
-  //Define Output (.txt) File Name Pattern (analysis report is written to this file)
-  temp = trim(split(FindString("output_REPORTPattern", input_SetFileName.Data())[0], '=')[1]);
-  report_OutputFileName = temp.Data();
-
-  
-}
-//_______________________________________________________________________________
-void baseAnalyzer::ReadInputFile(string ftype="")
+void baseAnalyzer::ReadInputFile()
 {
   cout << "Calling Base ReadInputFiles() . . . " << endl;
   
@@ -499,201 +450,205 @@ void baseAnalyzer::ReadInputFile(string ftype="")
     in accordance with the analysis requirements.
    */
 
+  input_FileNamePattern = "inp/set_basic_filenames.inp";
+  input_CutFileName     = "inp/set_basic_cuts.inp";
+  input_HBinFileName    = "inp/set_basic_histos.inp";
+
+  //==========================================
+  //     READ FILE NAME PATTERN
+  //==========================================
+
+  TString temp; //temporary string placeholder
+
+
   
-  if(ftype=="main_controls"){
-
-    //==========================================
-    //      READ MAIN CONTROLS PARAMETERS
-    //==========================================
-    
-    //READ option to combine multiple runs, or treat them separately.
-    //combine_runs_flag = stoi(split(FindString("combine_histos", main_controls_fname.Data())[0], '=')[1]);
-    
-    //READ BCM and current threshold parameters
-    //bcm_type = trim(split(FindString("bcm_type", main_controls_fname.Data())[0], '=')[1]);
-    //bcm_thrs = stod(split(FindString("current_thrs_bcm", main_controls_fname.Data())[0], '=')[1]);
-    
-    //READ Trigger type to use as correction factor in the weight
-    //trig_type = trim(split(FindString("trigger_type", main_controls_fname.Data())[0], '=')[1]);
-    
-    //tgt_type = trim(split(FindString("target_type", main_controls_fname.Data())[0], '=')[1]);
-    
-    //==========================================
+  //-------------------------------
+  //----INPUTS (USER READS IN)-----
+  //-------------------------------
   
-  }
+  //Define Input (.root) File Name Patterns (read principal ROOTfile from experiment)
+  temp = trim(split(FindString("input_ROOTfilePattern", input_FileNamePattern.Data())[0], '=')[1]);
+  data_InputFileName = Form(temp.Data(),  run);
 
-  if(ftype=="trk_eff_cuts"){
-    
-    //==========================================
-    //     READ TRACKING EFFICIENCY CUTS
-    //==========================================
-    
-    //HMS Tracking Efficiency Cut Flags / Limits
-    hdc_ntrk_cut_flag = stoi(split(FindString("hdc_ntrk_cut_flag", input_CutFileName.Data())[0], '=')[1]);
-    c_hdc_ntrk_min = stod(split(FindString("c_hdc_ntrk_min", input_CutFileName.Data())[0], '=')[1]);
-    
-    hScinGood_cut_flag = stoi(split(FindString("hScinGood_cut_flag", input_CutFileName.Data())[0], '=')[1]);
-    
-    hcer_cut_flag = stoi(split(FindString("hcer_cut_flag", input_CutFileName.Data())[0], '=')[1]);
-    c_hnpeSum_min = stod(split(FindString("c_hnpeSum_min", input_CutFileName.Data())[0], '=')[1]);
-    c_hnpeSum_max = stod(split(FindString("c_hnpeSum_max", input_CutFileName.Data())[0], '=')[1]);
-    
-    hetotnorm_cut_flag = stoi(split(FindString("hetotnorm_cut_flag", input_CutFileName.Data())[0], '=')[1]);
-    c_hetotnorm_min = stod(split(FindString("c_hetotnorm_min", input_CutFileName.Data())[0], '=')[1]);
-    c_hetotnorm_max = stod(split(FindString("c_hetotnorm_max", input_CutFileName.Data())[0], '=')[1]);
-    
-    hBeta_notrk_cut_flag = stoi(split(FindString("hBeta_notrk_cut_flag", input_CutFileName.Data())[0], '=')[1]);
-    c_hBetaNtrk_min = stod(split(FindString("c_hBetaNtrk_min", input_CutFileName.Data())[0], '=')[1]);
-    c_hBetaNtrk_max = stod(split(FindString("c_hBetaNtrk_max", input_CutFileName.Data())[0], '=')[1]);
-    
-    //SHMS Tracking Efficiency Cut Flags / Limits
-    pdc_ntrk_cut_flag = stoi(split(FindString("pdc_ntrk_cut_flag", input_CutFileName.Data())[0], '=')[1]);
-    c_pdc_ntrk_min = stod(split(FindString("c_pdc_ntrk_min", input_CutFileName.Data())[0], '=')[1]);
-    
-    pScinGood_cut_flag = stoi(split(FindString("pScinGood_cut_flag", input_CutFileName.Data())[0], '=')[1]);
-    
-    pngcer_cut_flag = stoi(split(FindString("pngcer_cut_flag", input_CutFileName.Data())[0], '=')[1]);
-    c_pngcer_npeSum_min = stod(split(FindString("c_pngcer_npeSum_min", input_CutFileName.Data())[0], '=')[1]);
-    c_pngcer_npeSum_max = stod(split(FindString("c_pngcer_npeSum_max", input_CutFileName.Data())[0], '=')[1]);
 
-    phgcer_cut_flag = stoi(split(FindString("phgcer_cut_flag", input_CutFileName.Data())[0], '=')[1]);
-    c_phgcer_npeSum_min = stod(split(FindString("c_phgcer_npeSum_min", input_CutFileName.Data())[0], '=')[1]);
-    c_phgcer_npeSum_max = stod(split(FindString("c_phgcer_npeSum_max", input_CutFileName.Data())[0], '=')[1]);
-    
-    petotnorm_cut_flag = stoi(split(FindString("petotnorm_cut_flag", input_CutFileName.Data())[0], '=')[1]);
-    c_petotnorm_min = stod(split(FindString("c_petotnorm_min", input_CutFileName.Data())[0], '=')[1]);
-    c_petotnorm_max = stod(split(FindString("c_petotnorm_max", input_CutFileName.Data())[0], '=')[1]);
-    
-    pBeta_notrk_cut_flag = stoi(split(FindString("pBeta_notrk_cut_flag", input_CutFileName.Data())[0], '=')[1]);
-    c_pBetaNtrk_min = stod(split(FindString("c_pBetaNtrk_min", input_CutFileName.Data())[0], '=')[1]);
-    c_pBetaNtrk_max = stod(split(FindString("c_pBetaNtrk_max", input_CutFileName.Data())[0], '=')[1]);
-    
-    
-    //==========================================
-    
-  }
+  //Define Input (.report) File Name Pattern (read principal REPORTfile from experiment)
+  temp = trim(split(FindString("input_REPORTPattern", input_FileNamePattern.Data())[0], '=')[1]);
+  data_InputReport = Form(temp.Data(), run);
 
-  if(ftype=="analysis_cuts"){
 
-    
-    //==========================================
-    //     READ Data/SIMC ANALYSIS CUTS
-    //==========================================
-    
-    //------PID Cuts-----
-    
-    //Coincidence time cuts (check which coin. time cut is actually being applied. By default: electron-proton cut is being applied)
-    
-    eKctime_pidCut_flag = stoi(split(FindString("eKctime_pidCut_flag", input_CutFileName.Data())[0], '=')[1]);  
-    cpid_eKctime_min = stod(split(FindString("cpid_eKctime_min", input_CutFileName.Data())[0], '=')[1]);
-    cpid_eKctime_max = stod(split(FindString("cpid_eKctime_max", input_CutFileName.Data())[0], '=')[1]);
-    
-    ePictime_pidCut_flag = stoi(split(FindString("ePictime_pidCut_flag", input_CutFileName.Data())[0], '=')[1]);
-    cpid_ePictime_min = stod(split(FindString("cpid_ePictime_min", input_CutFileName.Data())[0], '=')[1]);
-    cpid_ePictime_max = stod(split(FindString("cpid_ePictime_max", input_CutFileName.Data())[0], '=')[1]);
-    
-    ePctime_pidCut_flag = stoi(split(FindString("ePctime_pidCut_flag", input_CutFileName.Data())[0], '=')[1]);
-    cpid_ePctime_min = stod(split(FindString("cpid_ePctime_min", input_CutFileName.Data())[0], '=')[1]);
-    cpid_ePctime_max = stod(split(FindString("cpid_ePctime_max", input_CutFileName.Data())[0], '=')[1]);
-    
-    //(SHMS PID) Calorimeter Total Energy Normalized By Track Momentum
-    petot_trkNorm_pidCut_flag = stoi(split(FindString("petot_trkNorm_pidCut_flag", input_CutFileName.Data())[0], '=')[1]);
-    cpid_petot_trkNorm_min = stod(split(FindString("cpid_petot_trkNorm_min", input_CutFileName.Data())[0], '=')[1]);
-    cpid_petot_trkNorm_max = stod(split(FindString("cpid_petot_trkNorm_max", input_CutFileName.Data())[0], '=')[1]);
-    
-    //(SHMS PID) Noble Gas Cherenkov
-    pngcer_pidCut_flag = stoi(split(FindString("pngcer_pidCut_flag", input_CutFileName.Data())[0], '=')[1]);
-    cpid_pngcer_npeSum_min = stod(split(FindString("cpid_pngcer_npeSum_min", input_CutFileName.Data())[0], '=')[1]);
-    cpid_pngcer_npeSum_max = stod(split(FindString("cpid_pngcer_npeSum_max", input_CutFileName.Data())[0], '=')[1]);
-    
-    //(SHMS PID) Heavy Gas Cherenkov
-    phgcer_pidCut_flag = stoi(split(FindString("phgcer_pidCut_flag", input_CutFileName.Data())[0], '=')[1]);
-    cpid_phgcer_npeSum_min = stod(split(FindString("cpid_phgcer_npeSum_min", input_CutFileName.Data())[0], '=')[1]);
-    cpid_phgcer_npeSum_max = stod(split(FindString("cpid_phgcer_npeSum_max", input_CutFileName.Data())[0], '=')[1]);
-    
-    //(SHMS PID) Aerogel Cherenkov
-    paero_pidCut_flag = stoi(split(FindString("paero_pidCut_flag", input_CutFileName.Data())[0], '=')[1]);
-    cpid_paero_npeSum_min = stod(split(FindString("cpid_paero_npeSum_min", input_CutFileName.Data())[0], '=')[1]);
-    cpid_paero_npeSum_max = stod(split(FindString("cpid_paero_npeSum_max", input_CutFileName.Data())[0], '=')[1]);
-    
-    //(HMS PID) Calorimeter Total Energy Normalized By Track Momentum
-    hetot_trkNorm_pidCut_flag = stoi(split(FindString("hetot_trkNorm_pidCut_flag", input_CutFileName.Data())[0], '=')[1]);
-    cpid_hetot_trkNorm_min = stod(split(FindString("cpid_hetot_trkNorm_min", input_CutFileName.Data())[0], '=')[1]);
-    cpid_hetot_trkNorm_max = stod(split(FindString("cpid_hetot_trkNorm_max", input_CutFileName.Data())[0], '=')[1]);
-    
-    //(HMS PID) Gas Cherenkov
-    hcer_pidCut_flag = stoi(split(FindString("hcer_pidCut_flag", input_CutFileName.Data())[0], '=')[1]);
-    cpid_hcer_npeSum_min = stod(split(FindString("cpid_hcer_npeSum_min", input_CutFileName.Data())[0], '=')[1]);
-    cpid_hcer_npeSum_max = stod(split(FindString("cpid_hcer_npeSum_max", input_CutFileName.Data())[0], '=')[1]);
-    
-    //-----Kinematics Cuts------
-    
-    //4-Momentum Transfers [GeV^2]
-    Q2_cut_flag = stoi(split(FindString("Q2_cut_flag", input_CutFileName.Data())[0], '=')[1]);
-    c_Q2_min = stod(split(FindString("c_Q2_min", input_CutFileName.Data())[0], '=')[1]);
-    c_Q2_max = stod(split(FindString("c_Q2_max", input_CutFileName.Data())[0], '=')[1]);
-    
-    //Missing Energy [GeV]
-    Em_cut_flag = stoi(split(FindString("Em_cut_flag", input_CutFileName.Data())[0], '=')[1]);
-    c_Em_min = stod(split(FindString("c_Em_min", input_CutFileName.Data())[0], '=')[1]);
-    c_Em_max = stod(split(FindString("c_Em_max", input_CutFileName.Data())[0], '=')[1]);
-    
-    //Invariant Mass, W [GeV]
-    W_cut_flag = stoi(split(FindString("W_cut_flag", input_CutFileName.Data())[0], '=')[1]);
-    c_W_min = stod(split(FindString("c_W_min", input_CutFileName.Data())[0], '=')[1]);
-    c_W_max = stod(split(FindString("c_W_max", input_CutFileName.Data())[0], '=')[1]);
-    
-    //Missing Mass Cut (Check which MM Cut is actually being applied: By default, it should be proton MM)
-    
-    //Kaons
-    MM_K_cut_flag = stoi(split(FindString("MM_K_cut_flag", input_CutFileName.Data())[0], '=')[1]);
-    c_MM_K_min = stod(split(FindString("c_MM_K_min", input_CutFileName.Data())[0], '=')[1]);
-    c_MM_K_max = stod(split(FindString("c_MM_K_max", input_CutFileName.Data())[0], '=')[1]);
-    
-    //Pions
-    MM_Pi_cut_flag = stoi(split(FindString("MM_Pi_cut_flag", input_CutFileName.Data())[0], '=')[1]);
-    c_MM_Pi_min = stod(split(FindString("c_MM_Pi_min", input_CutFileName.Data())[0], '=')[1]);
-    c_MM_Pi_max = stod(split(FindString("c_MM_Pi_max", input_CutFileName.Data())[0], '=')[1]);
-    
-    //Protons
-    MM_P_cut_flag = stoi(split(FindString("MM_P_cut_flag", input_CutFileName.Data())[0], '=')[1]);
-    c_MM_P_min = stod(split(FindString("c_MM_P_min", input_CutFileName.Data())[0], '=')[1]);
-    c_MM_P_max = stod(split(FindString("c_MM_P_max", input_CutFileName.Data())[0], '=')[1]);
-    
-    //------Acceptance Cuts-------
-    
-    //Hadron Arm
-    hdelta_cut_flag = stoi(split(FindString("hdelta_cut_flag", input_CutFileName.Data())[0], '=')[1]);
-    c_hdelta_min = stod(split(FindString("c_hdelta_min", input_CutFileName.Data())[0], '=')[1]);
-    c_hdelta_max = stod(split(FindString("c_hdelta_max", input_CutFileName.Data())[0], '=')[1]);
-    
-    //Electron Arm
-    edelta_cut_flag = stoi(split(FindString("edelta_cut_flag", input_CutFileName.Data())[0], '=')[1]);
-    c_edelta_min = stod(split(FindString("c_edelta_min", input_CutFileName.Data())[0], '=')[1]);
-    c_edelta_max = stod(split(FindString("c_edelta_max", input_CutFileName.Data())[0], '=')[1]);
-    
-    // Z-Reaction Vertex Difference Cut
-    ztarDiff_cut_flag = stoi(split(FindString("ztarDiff_cut_flag", input_CutFileName.Data())[0], '=')[1]);
-    c_ztarDiff_min = stod(split(FindString("c_ztarDiff_min", input_CutFileName.Data())[0], '=')[1]);
-    c_ztarDiff_max = stod(split(FindString("c_ztarDiff_max", input_CutFileName.Data())[0], '=')[1]);
-    
-  }
+  //----------------------------------
+  //----OUTPUTS (USER WRITES OUT)-----
+  //----------------------------------
+
+  //Define Output (.root) File Name Pattern (analyzed histos are written to this file)
+  temp = trim(split(FindString("output_ROOTfilePattern", input_FileNamePattern.Data())[0], '=')[1]);
+  data_OutputFileName = Form(temp.Data(), run);
+
+  //Define Output (.root) File Name Pattern (analyzed combined histos are written to this file)
+  temp = trim(split(FindString("output_ROOTfilePattern_final", input_FileNamePattern.Data())[0], '=')[1]);
+  data_OutputFileName_combined = temp.Data();
+
+  //Define Output (.txt) File Name Pattern (analysis report is written to this file)
+  temp = trim(split(FindString("output_REPORTPattern", input_FileNamePattern.Data())[0], '=')[1]);
+  report_OutputFileName = temp.Data();
+
+
+  //==========================================
+  //     READ TRACKING EFFICIENCY CUTS
+  //==========================================
+  
+  //HMS Tracking Efficiency Cut Flags / Limits
+  hdc_ntrk_cut_flag = stoi(split(FindString("hdc_ntrk_cut_flag", input_CutFileName.Data())[0], '=')[1]);
+  c_hdc_ntrk_min = stod(split(FindString("c_hdc_ntrk_min", input_CutFileName.Data())[0], '=')[1]);
+  
+  hScinGood_cut_flag = stoi(split(FindString("hScinGood_cut_flag", input_CutFileName.Data())[0], '=')[1]);
+  
+  hcer_cut_flag = stoi(split(FindString("hcer_cut_flag", input_CutFileName.Data())[0], '=')[1]);
+  c_hnpeSum_min = stod(split(FindString("c_hnpeSum_min", input_CutFileName.Data())[0], '=')[1]);
+  c_hnpeSum_max = stod(split(FindString("c_hnpeSum_max", input_CutFileName.Data())[0], '=')[1]);
+  
+  hetotnorm_cut_flag = stoi(split(FindString("hetotnorm_cut_flag", input_CutFileName.Data())[0], '=')[1]);
+  c_hetotnorm_min = stod(split(FindString("c_hetotnorm_min", input_CutFileName.Data())[0], '=')[1]);
+  c_hetotnorm_max = stod(split(FindString("c_hetotnorm_max", input_CutFileName.Data())[0], '=')[1]);
+  
+  hBeta_notrk_cut_flag = stoi(split(FindString("hBeta_notrk_cut_flag", input_CutFileName.Data())[0], '=')[1]);
+  c_hBetaNtrk_min = stod(split(FindString("c_hBetaNtrk_min", input_CutFileName.Data())[0], '=')[1]);
+  c_hBetaNtrk_max = stod(split(FindString("c_hBetaNtrk_max", input_CutFileName.Data())[0], '=')[1]);
+  
+  //SHMS Tracking Efficiency Cut Flags / Limits
+  pdc_ntrk_cut_flag = stoi(split(FindString("pdc_ntrk_cut_flag", input_CutFileName.Data())[0], '=')[1]);
+  c_pdc_ntrk_min = stod(split(FindString("c_pdc_ntrk_min", input_CutFileName.Data())[0], '=')[1]);
+  
+  pScinGood_cut_flag = stoi(split(FindString("pScinGood_cut_flag", input_CutFileName.Data())[0], '=')[1]);
+  
+  pngcer_cut_flag = stoi(split(FindString("pngcer_cut_flag", input_CutFileName.Data())[0], '=')[1]);
+  c_pngcer_npeSum_min = stod(split(FindString("c_pngcer_npeSum_min", input_CutFileName.Data())[0], '=')[1]);
+  c_pngcer_npeSum_max = stod(split(FindString("c_pngcer_npeSum_max", input_CutFileName.Data())[0], '=')[1]);
+
+  phgcer_cut_flag = stoi(split(FindString("phgcer_cut_flag", input_CutFileName.Data())[0], '=')[1]);
+  c_phgcer_npeSum_min = stod(split(FindString("c_phgcer_npeSum_min", input_CutFileName.Data())[0], '=')[1]);
+  c_phgcer_npeSum_max = stod(split(FindString("c_phgcer_npeSum_max", input_CutFileName.Data())[0], '=')[1]);
+  
+  petotnorm_cut_flag = stoi(split(FindString("petotnorm_cut_flag", input_CutFileName.Data())[0], '=')[1]);
+  c_petotnorm_min = stod(split(FindString("c_petotnorm_min", input_CutFileName.Data())[0], '=')[1]);
+  c_petotnorm_max = stod(split(FindString("c_petotnorm_max", input_CutFileName.Data())[0], '=')[1]);
+  
+  pBeta_notrk_cut_flag = stoi(split(FindString("pBeta_notrk_cut_flag", input_CutFileName.Data())[0], '=')[1]);
+  c_pBetaNtrk_min = stod(split(FindString("c_pBetaNtrk_min", input_CutFileName.Data())[0], '=')[1]);
+  c_pBetaNtrk_max = stod(split(FindString("c_pBetaNtrk_max", input_CutFileName.Data())[0], '=')[1]);
+  
+  
+  //==========================================
+  
+  
+  
+  
+  //==========================================
+  //     READ Data/SIMC ANALYSIS CUTS
+  //==========================================
+  
+  //------PID Cuts-----
+  
+  //Coincidence time cuts (check which coin. time cut is actually being applied. By default: electron-proton cut is being applied)
+  
+  eKctime_pidCut_flag = stoi(split(FindString("eKctime_pidCut_flag", input_CutFileName.Data())[0], '=')[1]);  
+  cpid_eKctime_min = stod(split(FindString("cpid_eKctime_min", input_CutFileName.Data())[0], '=')[1]);
+  cpid_eKctime_max = stod(split(FindString("cpid_eKctime_max", input_CutFileName.Data())[0], '=')[1]);
+  
+  ePictime_pidCut_flag = stoi(split(FindString("ePictime_pidCut_flag", input_CutFileName.Data())[0], '=')[1]);
+  cpid_ePictime_min = stod(split(FindString("cpid_ePictime_min", input_CutFileName.Data())[0], '=')[1]);
+  cpid_ePictime_max = stod(split(FindString("cpid_ePictime_max", input_CutFileName.Data())[0], '=')[1]);
+  
+  ePctime_pidCut_flag = stoi(split(FindString("ePctime_pidCut_flag", input_CutFileName.Data())[0], '=')[1]);
+  cpid_ePctime_min = stod(split(FindString("cpid_ePctime_min", input_CutFileName.Data())[0], '=')[1]);
+  cpid_ePctime_max = stod(split(FindString("cpid_ePctime_max", input_CutFileName.Data())[0], '=')[1]);
+  
+  //(SHMS PID) Calorimeter Total Energy Normalized By Track Momentum
+  petot_trkNorm_pidCut_flag = stoi(split(FindString("petot_trkNorm_pidCut_flag", input_CutFileName.Data())[0], '=')[1]);
+  cpid_petot_trkNorm_min = stod(split(FindString("cpid_petot_trkNorm_min", input_CutFileName.Data())[0], '=')[1]);
+  cpid_petot_trkNorm_max = stod(split(FindString("cpid_petot_trkNorm_max", input_CutFileName.Data())[0], '=')[1]);
+  
+  //(SHMS PID) Noble Gas Cherenkov
+  pngcer_pidCut_flag = stoi(split(FindString("pngcer_pidCut_flag", input_CutFileName.Data())[0], '=')[1]);
+  cpid_pngcer_npeSum_min = stod(split(FindString("cpid_pngcer_npeSum_min", input_CutFileName.Data())[0], '=')[1]);
+  cpid_pngcer_npeSum_max = stod(split(FindString("cpid_pngcer_npeSum_max", input_CutFileName.Data())[0], '=')[1]);
+  
+  //(SHMS PID) Heavy Gas Cherenkov
+  phgcer_pidCut_flag = stoi(split(FindString("phgcer_pidCut_flag", input_CutFileName.Data())[0], '=')[1]);
+  cpid_phgcer_npeSum_min = stod(split(FindString("cpid_phgcer_npeSum_min", input_CutFileName.Data())[0], '=')[1]);
+  cpid_phgcer_npeSum_max = stod(split(FindString("cpid_phgcer_npeSum_max", input_CutFileName.Data())[0], '=')[1]);
+  
+  //(SHMS PID) Aerogel Cherenkov
+  paero_pidCut_flag = stoi(split(FindString("paero_pidCut_flag", input_CutFileName.Data())[0], '=')[1]);
+  cpid_paero_npeSum_min = stod(split(FindString("cpid_paero_npeSum_min", input_CutFileName.Data())[0], '=')[1]);
+  cpid_paero_npeSum_max = stod(split(FindString("cpid_paero_npeSum_max", input_CutFileName.Data())[0], '=')[1]);
+  
+  //(HMS PID) Calorimeter Total Energy Normalized By Track Momentum
+  hetot_trkNorm_pidCut_flag = stoi(split(FindString("hetot_trkNorm_pidCut_flag", input_CutFileName.Data())[0], '=')[1]);
+  cpid_hetot_trkNorm_min = stod(split(FindString("cpid_hetot_trkNorm_min", input_CutFileName.Data())[0], '=')[1]);
+  cpid_hetot_trkNorm_max = stod(split(FindString("cpid_hetot_trkNorm_max", input_CutFileName.Data())[0], '=')[1]);
+  
+  //(HMS PID) Gas Cherenkov
+  hcer_pidCut_flag = stoi(split(FindString("hcer_pidCut_flag", input_CutFileName.Data())[0], '=')[1]);
+  cpid_hcer_npeSum_min = stod(split(FindString("cpid_hcer_npeSum_min", input_CutFileName.Data())[0], '=')[1]);
+  cpid_hcer_npeSum_max = stod(split(FindString("cpid_hcer_npeSum_max", input_CutFileName.Data())[0], '=')[1]);
+  
+  //-----Kinematics Cuts------
+  
+  //4-Momentum Transfers [GeV^2]
+  Q2_cut_flag = stoi(split(FindString("Q2_cut_flag", input_CutFileName.Data())[0], '=')[1]);
+  c_Q2_min = stod(split(FindString("c_Q2_min", input_CutFileName.Data())[0], '=')[1]);
+  c_Q2_max = stod(split(FindString("c_Q2_max", input_CutFileName.Data())[0], '=')[1]);
+  
+  //Missing Energy [GeV]
+  Em_cut_flag = stoi(split(FindString("Em_cut_flag", input_CutFileName.Data())[0], '=')[1]);
+  c_Em_min = stod(split(FindString("c_Em_min", input_CutFileName.Data())[0], '=')[1]);
+  c_Em_max = stod(split(FindString("c_Em_max", input_CutFileName.Data())[0], '=')[1]);
+  
+  //Invariant Mass, W [GeV]
+  W_cut_flag = stoi(split(FindString("W_cut_flag", input_CutFileName.Data())[0], '=')[1]);
+  c_W_min = stod(split(FindString("c_W_min", input_CutFileName.Data())[0], '=')[1]);
+  c_W_max = stod(split(FindString("c_W_max", input_CutFileName.Data())[0], '=')[1]);
+  
+  //Missing Mass Cut (Check which MM Cut is actually being applied: By default, it should be proton MM)
+  
+  //Kaons
+  MM_K_cut_flag = stoi(split(FindString("MM_K_cut_flag", input_CutFileName.Data())[0], '=')[1]);
+  c_MM_K_min = stod(split(FindString("c_MM_K_min", input_CutFileName.Data())[0], '=')[1]);
+  c_MM_K_max = stod(split(FindString("c_MM_K_max", input_CutFileName.Data())[0], '=')[1]);
+  
+  //Pions
+  MM_Pi_cut_flag = stoi(split(FindString("MM_Pi_cut_flag", input_CutFileName.Data())[0], '=')[1]);
+  c_MM_Pi_min = stod(split(FindString("c_MM_Pi_min", input_CutFileName.Data())[0], '=')[1]);
+  c_MM_Pi_max = stod(split(FindString("c_MM_Pi_max", input_CutFileName.Data())[0], '=')[1]);
+  
+  //Protons
+  MM_P_cut_flag = stoi(split(FindString("MM_P_cut_flag", input_CutFileName.Data())[0], '=')[1]);
+  c_MM_P_min = stod(split(FindString("c_MM_P_min", input_CutFileName.Data())[0], '=')[1]);
+  c_MM_P_max = stod(split(FindString("c_MM_P_max", input_CutFileName.Data())[0], '=')[1]);
+  
+  //------Acceptance Cuts-------
+  
+  //Hadron Arm
+  hdelta_cut_flag = stoi(split(FindString("hdelta_cut_flag", input_CutFileName.Data())[0], '=')[1]);
+  c_hdelta_min = stod(split(FindString("c_hdelta_min", input_CutFileName.Data())[0], '=')[1]);
+  c_hdelta_max = stod(split(FindString("c_hdelta_max", input_CutFileName.Data())[0], '=')[1]);
+  
+  //Electron Arm
+  edelta_cut_flag = stoi(split(FindString("edelta_cut_flag", input_CutFileName.Data())[0], '=')[1]);
+  c_edelta_min = stod(split(FindString("c_edelta_min", input_CutFileName.Data())[0], '=')[1]);
+  c_edelta_max = stod(split(FindString("c_edelta_max", input_CutFileName.Data())[0], '=')[1]);
+  
+  // Z-Reaction Vertex Difference Cut
+  ztarDiff_cut_flag = stoi(split(FindString("ztarDiff_cut_flag", input_CutFileName.Data())[0], '=')[1]);
+  c_ztarDiff_min = stod(split(FindString("c_ztarDiff_min", input_CutFileName.Data())[0], '=')[1]);
+  c_ztarDiff_max = stod(split(FindString("c_ztarDiff_max", input_CutFileName.Data())[0], '=')[1]);
+  
+ 
   
 }
   
-//_______________________________________________________________________________
-void baseAnalyzer::SetCuts()
-{
-  cout << "Calling Base SetCuts() . . . " << endl;
-  
-  //Brief: Read the Input parameters/cuts from the input files 
-  
-  ReadInputFile("main_controls");
-  
-  ReadInputFile("trk_eff_cuts");
-  
-  ReadInputFile("analysis_cuts");
-}
+
 //_______________________________________________________________________________
 void baseAnalyzer::ReadReport()
 {
@@ -1876,7 +1831,7 @@ void baseAnalyzer::EventLoop()
 
 	  //Require a "Good Scintillator Hit" in the Fiducial Hodoscopoe Region
 	  if(hScinGood_cut_flag){c_hScinGood = hhod_GoodScinHit==1;}
-	  else{c_hScinGood=1;} //1 means allow all events (do not put hScinGood cut)
+	  else{c_hScinGood=1;} //1 means allow all events (i.e., do not put hScinGood cut other than 1)
 
 	  //Require HMS Cherenkov Cut (for electron or hadron selection)
 	  if(hcer_cut_flag){c_hcer_NPE_Sum = hcer_npesum >= c_hnpeSum_min && hcer_npesum <= c_hnpeSum_max;}
@@ -2015,7 +1970,8 @@ void baseAnalyzer::EventLoop()
 	  else{c_edelta=1;} 
 
 	  if(ztarDiff_cut_flag){c_ztarDiff = ztar_diff>=c_ztarDiff_min && ztar_diff<=c_ztarDiff_max;} 
-	  else{c_ztarDiff=1;} 
+	  else{c_ztarDiff=1;}
+	  
 	  //Combine All CUTS
 	  c_accpCuts = c_hdelta && c_edelta && c_ztarDiff;
 	  c_pidCuts = cpid_eP_ctime && cpid_petot_trkNorm && cpid_pngcer_NPE_Sum && cpid_phgcer_NPE_Sum && cpid_paero_NPE_Sum && cpid_hetot_trkNorm && cpid_hcer_NPE_Sum;
@@ -2940,8 +2896,7 @@ void baseAnalyzer::run_data_analysis()
   */
 
   //------------------
-  SetFileNames();
-  SetCuts();
+  ReadInputFile();
   ReadReport();
   SetHistBins();
   CreateHist();

@@ -24,9 +24,7 @@ public:
   //void run_simc_analysis();
   
   //Function prototypes
-  void SetFileNames();
-  void SetCuts();
-  void ReadInputFile(string ftype="");
+  void ReadInputFile();
   void ReadReport();
   void SetHistBins();
   void CreateHist();
@@ -108,7 +106,7 @@ protected:
   TString main_controls_fname;
   TString input_CutFileName;
   TString input_HBinFileName;
-  TString input_SetFileName;
+  TString input_FileNamePattern;
 
   ///Output .txt filenames
   TString report_OutputFileName;

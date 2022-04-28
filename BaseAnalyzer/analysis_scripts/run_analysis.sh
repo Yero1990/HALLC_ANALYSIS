@@ -1,36 +1,24 @@
 #!/bin/bash
- 
-# shell script to run main Hall C analysis
 
+# shell script to run CaFe analysis
 
-# user command line arguments 
-# example: >> run_analysis.sh $1 $2 $3
-#username=$1   # string
-#age=$2        # int
-#full_name=$3  # string
+runNum=3289
+daq_mode="coin"
+e_arm="SHMS"
+analysis_type="data"
+hel_flag=0
+target="LD2"
+bcm_type="BCM4A"
+bcm_thrs=5
+trig_type="trig6"
+combine_runs=0
 
-# create a variable to hold the input
-read -p "Please enter username: " username
-read -p "Please enter age: " age
-read -p "Please enter full name: " full_name
+CMD="root -l -q -b \"main_analysis.cpp(${runNum},    \\\"${daq_mode}\\\", 
+                                   \\\"${e_arm}\\\", \\\"${analysis_type}\\\",
+                                      ${hel_flag},   \\\"${target}\\\",
+                                   \\\"${bcm_type}\\\", ${bcm_thrs},
+                                   \\\"${trig_type}\\\", ${combine_runs}
+                     )\""
 
-echo "Username: $username";
-echo "Age: $age";
-echo "Full Name: $full_name";
-
-# Check if string is empty using -z. For more 'help test'    
-if [[ -z "$username" || -z "$age" ]]; then
-   printf '%s\n' "missing input"
-   exit 1
-
-else
-   # If userInput is not empty show what the user typed in and run ls -l
-   printf "You entered %s " "$userInput"
-fi
-
-# define command
-CMD="root -l -q -b \"test.C(\\\"${username}\\\", ${age}, \\\"${full_name}\\\")\""          
-
-echo "executing command: $CMD" 
-eval ${CMD}
-
+echo $CMD
+eval $CMD
